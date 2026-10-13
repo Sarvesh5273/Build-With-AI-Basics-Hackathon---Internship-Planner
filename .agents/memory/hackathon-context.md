@@ -6,7 +6,8 @@ description: Devpost "Build With AI: Basics" rules that constrain this project, 
 ## Hackathon constraints (verified from rules page, Oct 13 2026)
 - Deadline Oct 26 5pm EDT = Oct 27 2:30 AM IST. Judging Oct 27–31; winners ~Nov 5 IST.
 - Stage 1 pass/fail: built with Devpost Learn Skill Pack (challengepost/learn-ai-basics); public repo must contain approved scope.md, prd.md, spec.md (skill pack writes them in devpost/). Open-source license required, visible in repo About.
-- Must start from an empty folder during submission period. Old ideas OK, old code NOT. User's earlier project "Scout" (scout-careers.replit.app, internship discovery) must not be reused as code.
+- Must start from an empty folder during submission period. Old ideas OK, old code NOT. Pre-existing work incorporated must be disclosed.
+- User's "Scout" (scout-careers.replit.app, live internship discovery) was built the week of Oct 6 2026, inside the submission period, but WITHOUT the skill pack. Rule: never backfill planning docs onto Scout; the submission repo starts empty with the skill pack; any Scout code reuse is a disclosed step named in spec.md.
 - Stage 2 equal weights: Design, Potential Impact, Innovation, Presentation. Tie-break order starts with Design.
 - Judges don't run code: demo video under 3 min on YouTube/Vimeo is what they actually judge.
 - Skill pack rule: agent must not draft/rewrite the user's submission text (spelling/grammar only). Planning interviews are learner-led.
