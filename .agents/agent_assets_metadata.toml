@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "My03GG8lDJAbtiCNJ7evN"
+uri = "file://devpost/scope.html"
+type = "html"
+title = "Scope (approved) — visual companion"
+description = "Kernel, core loop diagram, and now/later/cut boundary for the hackathon project."
+logical_id = "fc26a890-e48d-45c6-bf05-5c77881c7973"
+content_hash = "sha256:69e95c6075c5290d96d6a546b0d36fc791fcb91c69a086cabe729cb8609a6f7e"
+size = 12820
+mtime_ms = 1791900712184
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/fc26a890-e48d-45c6-bf05-5c77881c7973/db9e3df6-04d4-4baa-b8a4-738445f7ab5c"
+storage_version_token = "1791900717403985"
+content_type = "text/html"

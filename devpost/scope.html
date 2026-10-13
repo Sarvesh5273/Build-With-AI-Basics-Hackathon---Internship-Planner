@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — Funded Internship Roadmap (approved)</title>
+<style>
+  :root{
+    --ink:#1d1b16; --muted:#6b665b; --paper:#f6f1e7; --card:#fffdf8; --line:#e3dacb;
+    --a:#0f5c4d; --a-soft:#dcebe6; --b:#b4532a; --b-soft:#f4e1d6; --c:#3b4a8f; --c-soft:#e1e4f3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Georgia,"Iowan Old Style","Palatino Linotype",serif}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 22px 80px}
+  .eyebrow{font:600 12px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(28px,4.4vw,42px);line-height:1.15;margin:.35em 0 .3em;font-weight:700}
+  h2{font:700 13px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:44px 0 14px}
+  p{margin:.4em 0}
+  .badge{display:inline-block;font:600 12px/1 ui-sans-serif,system-ui,sans-serif;padding:6px 10px;border-radius:999px;background:var(--a);color:#fff;margin-left:8px;vertical-align:middle}
+  .lede{font-size:19px;color:#3a362d;max-width:62ch}
+  .quote{border-left:4px solid var(--b);background:var(--card);padding:16px 20px;margin:12px 0;font-size:20px;font-style:italic}
+  .quote small{display:block;font:500 13px/1.4 ui-sans-serif,system-ui,sans-serif;font-style:normal;color:var(--muted);margin-top:6px}
+  .kernel{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .k{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .k b{display:block;font:700 15px/1.3 ui-sans-serif,system-ui,sans-serif;margin-bottom:6px}
+  .k:nth-child(1){border-top:5px solid var(--a)} .k:nth-child(2){border-top:5px solid var(--c)} .k:nth-child(3){border-top:5px solid var(--b)}
+  .gap{margin-top:12px;color:var(--muted);font-size:15px}
+  figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  figure svg{width:100%;height:auto;display:block}
+  figcaption{font:13px/1.4 ui-sans-serif,system-ui,sans-serif;color:var(--muted);margin-top:8px}
+  .steps{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+  .steps button{font:600 13px/1 ui-sans-serif,system-ui,sans-serif;border:1px solid var(--line);background:var(--card);padding:9px 12px;border-radius:999px;cursor:pointer;color:var(--ink)}
+  .steps button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .stepdesc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;min-height:66px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+  summary{cursor:pointer;padding:14px 16px;font:700 15px/1.3 ui-sans-serif,system-ui,sans-serif;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:20px;color:var(--muted)}
+  details[open] summary::after{content:"–"}
+  details ul{margin:0;padding:0 18px 14px 36px}
+  details li{margin:6px 0}
+  .tag{font:700 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:6px;margin-right:8px}
+  .now{background:var(--a-soft);color:var(--a)} .later{background:var(--c-soft);color:var(--c)} .cut{background:var(--b-soft);color:var(--b)} .risk{background:#efe8d8;color:#6b5a2a}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  footer{margin-top:50px;font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
+  @media (max-width:720px){.kernel,.two{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:no-preference){.stepdesc{transition:background .2s}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Devpost Learn · Build With AI: Basics · scope.md companion</div>
+  <h1>Untitled roadmap tool <span class="badge">Scope approved</span></h1>
+  <p class="lede">A roadmap tool for Indian undergrads chasing fully funded internships abroad. It shows which real programs you can actually apply to, how ready you really are for each, and a plan that fits around your university timetable.</p>
+
+  <h2>Finish line, in your words</h2>
+  <div class="quote">“see that roadmap and plan according to my internships and my university timetable”<small>scope.md › What “Working” Looks Like</small></div>
+
+  <h2>The unique kernel: three real inputs, one plan</h2>
+  <div class="kernel">
+    <div class="k"><b>Real program requirements</b>Quoted from official pages: skills, documents (SOP, recommendation letters), and in some cases a professor's acceptance.</div>
+    <div class="k"><b>Your verified level</b>From a short interview that checks what you can actually do. Not a self-rating.</div>
+    <div class="k"><b>Your timetable</b>Exam weeks and free hours, so each step lands in a week you can actually do it.</div>
+  </div>
+  <p class="gap">Study planners don't know the programs. Program lists don't know you. Neither knows your semester.</p>
+
+  <h2>Core loop</h2>
+  <figure>
+    <svg viewBox="0 0 860 250" role="img" aria-labelledby="loopTitle">
+      <title id="loopTitle">Core loop: taste test, eligibility, readiness interview, timetable-fitted roadmap, then return when the timetable changes or a step is done</title>
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b665b"/></marker></defs>
+      <g font-family="ui-sans-serif,system-ui,sans-serif">
+        <rect x="10" y="40" width="180" height="96" rx="14" fill="#dcebe6" stroke="#0f5c4d"/>
+        <text x="100" y="78" text-anchor="middle" font-weight="700" font-size="16" fill="#0f5c4d">1 · Taste test</text>
+        <text x="100" y="102" text-anchor="middle" font-size="12.5" fill="#1d1b16">real project descriptions</text>
+        <text x="100" y="120" text-anchor="middle" font-size="12.5" fill="#1d1b16">→ find a direction</text>
+        <rect x="230" y="40" width="180" height="96" rx="14" fill="#fffdf8" stroke="#1d1b16"/>
+        <text x="320" y="78" text-anchor="middle" font-weight="700" font-size="16">2 · Eligible programs</text>
+        <text x="320" y="102" text-anchor="middle" font-size="12.5">nationality · year</text>
+        <text x="320" y="120" text-anchor="middle" font-size="12.5">CGPA · branch</text>
+        <rect x="450" y="40" width="180" height="96" rx="14" fill="#e1e4f3" stroke="#3b4a8f"/>
+        <text x="540" y="78" text-anchor="middle" font-weight="700" font-size="16" fill="#3b4a8f">3 · Readiness</text>
+        <text x="540" y="102" text-anchor="middle" font-size="12.5">short interview</text>
+        <text x="540" y="120" text-anchor="middle" font-size="12.5">verifies your level</text>
+        <rect x="670" y="28" width="180" height="120" rx="14" fill="#f4e1d6" stroke="#b4532a" stroke-width="2"/>
+        <text x="760" y="66" text-anchor="middle" font-weight="700" font-size="16" fill="#b4532a">4 · Roadmap</text>
+        <text x="760" y="90" text-anchor="middle" font-size="12.5">per program, fitted to</text>
+        <text x="760" y="108" text-anchor="middle" font-size="12.5">exams + deadlines</text>
+        <text x="760" y="130" text-anchor="middle" font-size="12.5" font-weight="700">★ this week's step</text>
+        <line x1="190" y1="88" x2="228" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="410" y1="88" x2="448" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="630" y1="88" x2="668" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
+        <path d="M760 150 C760 225, 540 230, 545 140" fill="none" stroke="#6b665b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+        <text x="650" y="222" text-anchor="middle" font-size="12.5" fill="#6b665b">come back: exams change, new semester, step done → roadmap updates</text>
+      </g>
+    </svg>
+    <figcaption>Click through the steps below for what happens at each one.</figcaption>
+  </figure>
+  <div class="steps" role="group" aria-label="Core loop steps">
+    <button aria-pressed="true" data-i="0">1 · Taste test</button>
+    <button aria-pressed="false" data-i="1">2 · Eligible programs</button>
+    <button aria-pressed="false" data-i="2">3 · Readiness</button>
+    <button aria-pressed="false" data-i="3">4 · Roadmap</button>
+  </div>
+  <div class="stepdesc" id="stepdesc" aria-live="polite"></div>
+
+  <h2>Who it's for</h2>
+  <div class="two">
+    <div class="card"><b>The person</b><p>A 3rd-year B.Tech student at an Indian university (starting with VIT Pune), applying this cycle to MITACS Globalink, DAAD WISE, Charpak, or HENNGE. Has finished Python; doesn't know what to learn next or what research involves.</p></div>
+    <div class="card"><b>What they do today</b><p>Piece it together from scattered official pages, seniors' advice, and YouTube, then guess what to do in which week around exams.</p></div>
+  </div>
+
+  <h2>Proof-of-concept boundary</h2>
+  <details open><summary><span><span class="tag now">Now</span>Built in the proof of concept</span></summary><ul>
+    <li>A small curated set of fully funded programs open to Indian students. Every requirement has its official source and a quoted line.</li>
+    <li>A taste test using real project descriptions from programs that publish them.</li>
+    <li>An eligibility check: nationality, year, CGPA, branch.</li>
+    <li>A short AI readiness interview against what the programs need.</li>
+    <li>Timetable entered by hand: exam weeks and free hours per week.</li>
+    <li>A roadmap per program, scheduled around timetable and deadlines, with one highlighted next step.</li>
+  </ul></details>
+  <details><summary><span><span class="tag later">Later</span>Worth doing, not now</span></summary><ul>
+    <li>Reading a timetable from a photo (stretch goal, decided at the Oct 17 checkpoint).</li>
+    <li>A “re-check this program” button that reads the official page live and shows “verified today”.</li>
+    <li>More programs and countries; other universities' calendars.</li>
+  </ul></details>
+  <details><summary><span><span class="tag cut">Cut</span>Explicitly out, with reasons</span></summary><ul>
+    <li><b>Visa-approval odds</b>: no reliable public data, and a made-up probability wouldn't hold up. Official visa notes are shown instead.</li>
+    <li><b>SOP drafting</b>: not the problem being solved, and it raises honesty issues.</li>
+    <li><b>Professor finder / cold emails</b>: a separate, large problem.</li>
+    <li><b>Reminders and notifications</b>: not needed to prove the core idea.</li>
+    <li><b>Accounts and login</b>: not needed for a proof of concept.</li>
+  </ul></details>
+  <details><summary><span><span class="tag risk">If behind</span>Cut order at the Oct 17 checkpoint</span></summary><ul>
+    <li>The readiness interview becomes a simple self-check first. The taste test, eligibility check, and timetable-fitted roadmap stay.</li>
+  </ul></details>
+
+  <h2>Identity &amp; disclosure</h2>
+  <div class="two">
+    <div class="card"><b>Feel</b><p>Its own product, not a Scout reskin and not generic “AI app” styling. Honest and trustworthy: every requirement shows where it came from. Visual direction gets decided in the PRD.</p></div>
+    <div class="card"><b>Prior related work</b><p>Scout (built Oct 6, 2026 week, separate bounty, without the skill pack). No Scout code is used; only ideas carry over, such as quoting the source for every fact.</p></div>
+  </div>
+
+  <footer>Companion to <code>devpost/scope.md</code>, which is the canonical version. Status: approved.</footer>
+</main>
+<script>
+  const steps=[
+    "Browse real project descriptions from programs that publish them, and react to what interests you. This helps a student who doesn't yet know what “research” means find a direction.",
+    "Enter nationality, year, CGPA and branch. Only programs you can actually apply to stay on the list, each with its official source.",
+    "Answer a short interview that checks your level against what those programs need, instead of rating yourself.",
+    "See a roadmap per program, with steps placed around your exam weeks and real application deadlines. One step is highlighted for this week."
+  ];
+  const btns=[...document.querySelectorAll('.steps button')], d=document.getElementById('stepdesc');
+  function show(i){btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));d.textContent=steps[i];}
+  btns.forEach(b=>b.addEventListener('click',()=>show(+b.dataset.i)));show(0);
+</script>
+</body>
+</html>
