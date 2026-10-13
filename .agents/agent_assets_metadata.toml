@@ -14,3 +14,17 @@ mtime_ms = 1791900712184
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/fc26a890-e48d-45c6-bf05-5c77881c7973/db9e3df6-04d4-4baa-b8a4-738445f7ab5c"
 storage_version_token = "1791900717403985"
 content_type = "text/html"
+
+[[outputs]]
+id = "Rh61uHgnDhUCskNxpVh7B"
+uri = "file://devpost/prd.html"
+type = "html"
+title = "PRD (draft): visual companion"
+description = "Core journey, screen-by-screen behaviour with acceptance criteria, deadline handling, decisions, and boundary. Also previews the paper-planner look."
+logical_id = "5484e1e7-3b1b-464d-928f-2bd251cfbc6f"
+content_hash = "sha256:615a5b0ceff4b6ad1012361e3ef815ab0366cad066a770538968df59eae010c2"
+size = 19465
+mtime_ms = 1791911526680
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/5484e1e7-3b1b-464d-928f-2bd251cfbc6f/5ae8c31e-2d79-479b-86bf-204bbd36201d"
+storage_version_token = "1791911529103599"
+content_type = "text/html"
