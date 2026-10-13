@@ -5,334 +5,373 @@ status: draft
 
 # Untitled — Technical Spec
 
-**Requires revision before review or implementation.** The learner clarified that discovery must not be restricted to a fixed catalog: rebuild Scout-inspired, preference-driven discovery from scratch, let students filter and select internships, then assess readiness and generate roadmaps for those choices. The fixed-catalog architecture below is an unapproved proposal and no longer reflects that requirement. Retain its verified source findings and the accepted TypeScript stack; revise discovery, selection, source verification, cost controls, storage and the corresponding scope/PRD before approval. No application coding has begun.
-
-**Flow clarification:** reusable real questions about shared internship work genres → Scout-like preference questions → discovery/filtering/student selection → the already-agreed readiness, manual timetable and grouped Research/Company roadmaps. Preserve the downstream decisions; revise the technical discovery mechanism, not the product's roadmap behavior. The scope and PRD now reflect this correction.
-
-This is a blueprint, not application code. The learner accepted the recommended TypeScript stack; that approval does not approve the fixed-catalog proposal.
+Revised for the learner's explicit direction: **replicate Scout's relevant discovery functionality with TinyFish, implemented fresh**, then connect the student's choices to the agreed readiness and roadmap product. This replaces the rejected fixed-catalog proposal. It is planning, not application code.
 
 ## How This Works, In Plain Language
 
-The app has React screens and a small TypeScript server. A checked set of files holds program requirements, short official quotes, dates, and real examples of the work. The student reacts to examples, enters their details and exam weeks, and answers a short skills interview.
+First, the student answers real, source-grounded questions about common internship work genres. Similar internships share genres, so this is one reusable taste test—not a test for every internship.
 
-The server asks AI to assess those answers against a fixed rubric. AI does not decide eligibility, invent program requirements, or place deadlines. Ordinary code does those jobs: it checks the student's details, combines compatible preparation across programs, and fits the work into one shared budget of free hours.
+The next screen asks Scout-like questions about topics, locations, Research/Company interests, funding, visa needs and other preferences. A small TypeScript server uses TinyFish to search the web and read relevant official pages. It extracts evidence, labels unknown information honestly, and returns ranked results with filters and save/hide controls. The student chooses their targets; neither the taste test nor a hardcoded list chooses for them.
 
-Progress stays in the student's browser. Interview answers go to the AI service only when they submit them; there are no accounts, uploads, or application submissions. The app helps prepare an application, not guarantees selection.
+For those targets, the server checks the student's details against sourced criteria and assesses a short readiness interview with AI. Ordinary code groups compatible preparation, counts shared work once, and fits it into the student's free hours around exams. Shared steps serve the earliest deadline in their group. Closed or impossible-to-fit targets remain explicitly visible as closed or at risk.
+
+React provides the screens. Personal progress stays in the browser; short-lived server records support search, evidence and cost limits. No Scout import, Scout API call, existing Scout database, accounts, application submission or copied Scout code.
 
 ## The Core Journey Through the System
 
 Implements `prd.md > The Core Journey`.
 
-1. Checked example files → taste-test cards → reactions stored locally → a deterministic direction summary.
-2. Student details and timetable → shared validation → local eligibility rules and weekly capacity.
-3. Program files → Research/Company groups → eligibility reasons, evidence, current cycle status.
-4. Direction and relevant skills → a reviewed question bank → 6–8 short questions shown one at a time.
-5. Completed answers → one bounded server request → managed AI → validated assessment → saved locally.
-6. Assessment + program stages + timetable → deterministic scheduler → overview and track timelines.
-7. Step completion or timetable edit → recompute locally. On load, return to tab, and day change → re-check deadlines. No AI call just to reschedule.
+1. **Taste test:** reviewed genre questions grounded in real work → reactions → direction summary.
+2. **Scout-like questions:** direction suggests editable topics; student supplies discovery preferences.
+3. **Discovery:** server creates queries → TinyFish Search → candidate careers/program/ATS pages → TinyFish Fetch → structured extraction and evidence validation → deduplication and fit ranking.
+4. **Filter and choose:** student filters results, saves/hides listings, and explicitly selects targets. Selection is separate from bookmarking; changing a display filter never deselects targets.
+5. **Eligibility:** academic details plus conditional follow-ups → criteria checks → meets extracted criteria / not eligible / needs confirmation. Cycle status is separate.
+6. **Readiness and timetable:** selected targets' skills → question bank or grounded question pack → answers → one assessment call; manual exam weeks/free hours retained.
+7. **Roadmaps:** sources + selected targets + assessment + timetable → deterministic shared-task construction and one cross-track capacity ledger → overview and track timelines.
+8. **Return:** restore browser progress, re-check dates locally, and update allocations after completion/timetable edits. A date check is not a claim that official pages were re-fetched.
 
 ## Stack
 
-| Piece | Choice and rationale | Documentation |
+| Piece | Choice / rationale | Documentation |
 | --- | --- | --- |
-| Language | TypeScript throughout; accepted by the learner. One language rather than a React/Python split. | [TypeScript](https://www.typescriptlang.org/docs/) |
-| Screens | React, built with Vite; ordinary CSS variables and focused components. | [React](https://react.dev/learn), [Vite](https://vite.dev/guide/) |
-| Server | Node.js 24 + Express; one same-origin service rather than separate public frontend/backend deployments. Node 24 is already available here. | [Node](https://nodejs.org/docs/latest-v24.x/api/), [Express](https://expressjs.com/en/guide/routing.html) |
-| Validation | Zod for catalog, user-input, and AI-output schemas. TypeScript alone cannot validate external data. | [Zod](https://zod.dev/) |
-| AI | OpenAI through Replit AI Integrations; proposed model `gpt-4.1-mini`, with strict structured output. | [Replit managed AI](https://docs.replit.com/features/integrations/replit-ai-integrations), [model](https://developers.openai.com/api/docs/models/gpt-4.1-mini), [structured output](https://developers.openai.com/api/docs/guides/structured-outputs) |
-| Testing | Vitest for rules and API checks; browser tests for the full journey during build. | [Vitest](https://vitest.dev/guide/) |
-| Storage | Versioned JSON catalog files + browser localStorage. No database or authentication service. | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) |
+| Language | TypeScript throughout; accepted recommendation. One language for browser, rules and server. | [TypeScript](https://www.typescriptlang.org/docs/) |
+| UI | React + Vite; focused components and ordinary CSS tokens. | [React](https://react.dev/learn), [Vite](https://vite.dev/guide/) |
+| Server | Node.js 24 + Express, one same-origin service. Node 24 is already available here. | [Node](https://nodejs.org/docs/latest-v24.x/api/), [Express](https://expressjs.com/) |
+| Discovery | **TinyFish Search + Fetch, with controlled Agent fallback.** Explicitly chosen by the learner. | [Search](https://docs.tinyfish.ai/search-api/reference), [Fetch](https://docs.tinyfish.ai/fetch-api/reference), [Agent](https://docs.tinyfish.ai/agent-api/reference) |
+| AI | OpenAI through Replit AI Integrations; proposed `gpt-4.1-mini` for evidence extraction and readiness. | [Managed AI](https://docs.replit.com/features/integrations/replit-ai-integrations), [model](https://developers.openai.com/api/docs/models/gpt-4.1-mini), [structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs) |
+| Validation/tests | Zod at external-data boundaries; Vitest for rules, contracts and fixed-clock tests. Browser tests for the journey. | [Zod](https://zod.dev/), [Vitest](https://vitest.dev/guide/) |
+| Storage | Browser localStorage for personal progress; bounded, private server files for public-source snapshots, run ownership and quotas. No database/auth service for the single-instance POC. | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) |
 
-Pin compatible package versions and retain the lockfile during the first build step, after maintenance, dependency, vulnerability, and license checks. No application dependencies have been installed in this planning phase.
+Pin compatible versions and the lockfile at the first build step after maintenance, vulnerability and license checks. No app dependencies are installed yet. TinyFish can use native server `fetch`; an SDK is optional after vetting, not copied from Scout.
 
 ### Component Licensing
 
-React, Vite, TypeScript, Express, Zod, Vitest, and the OpenAI SDK publish permissive licenses; verify the actual installed versions and their dependencies before committing.
+Verify the installed versions and transitive licenses of every dependency before committing. Preserve third-party notices.
 
-React Bits is **not plain MIT**. The [current license](https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md), read during planning, permits use as part of an application but prohibits selling, sublicensing, or redistributing the components themselves, including bundles and ports. Keep the original notice on any included component and list it in THIRD_PARTY_NOTICES.md; do not describe that component as covered by our own app license.
+[React Bits' current license](https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md) is **MIT with a Commons Clause condition, not plain MIT**. It permits use as part of an application but restricts selling, sublicensing or redistributing the components themselves, including bundles/ports. Any included component retains its notice and appears in THIRD_PARTY_NOTICES.md, separately from our app license.
 
-React Bits is optional, not a core dependency. Use a ready-made component only if it improves this flow, works with keyboard/reduced motion, and passes its individual license review. Do not add an animation library solely for decoration or ship a component collection. If its restrictions are unsuitable, choose a permissively licensed equivalent. No blanket commercial/legal clearance is claimed.
+Use ready-made interactions where helpful, but React Bits is not mandatory. Choose accessible, reduced-motion-friendly components after individual license review; use a permissively licensed equivalent if its restrictions do not fit. Do not redistribute a component library or claim blanket legal clearance.
 
 ## Where It Runs and How Someone Tries It
 
-One web app in this Replit project. During build, create its web artifact and one managed workflow; this spec does not create either or start application coding.
+Create a fresh web artifact in this Replit project during the build phase, with one managed workflow and one server on `0.0.0.0:5000`. The artifact's generated location determines the app directory; the structure below describes the files inside it.
 
-Planned commands, **not yet available**:
+Planned commands, **not implemented yet**:
 
-- `npm ci` — install from the committed lockfile after initial setup.
-- `npm run dev` — start Express on `0.0.0.0:5000` with Vite middleware; open `/` in Replit Preview.
-- `npm run check` — TypeScript checks.
-- `npm test` — automated tests.
-- `npm run validate:data` — check catalog schemas, quotes, references, cycles, and dependencies.
-- `npm run build` then `npm start` — production build and single-server startup.
+- Initial setup installs vetted packages and creates the lockfile; thereafter `npm ci`.
+- `npm run dev` — Express with Vite middleware; open `/` in Replit Preview.
+- `npm run check`, `npm test`, `npm run validate:data` — types, tests and curated-question/source validation.
+- `npm run build` followed by `npm start` — built client + same-origin API.
 
-In development Vite must accept the Replit proxied host. In app code use relative `/api/...` URLs, never hardcoded localhost. Production serves the built client and API from the same origin.
+App requests use relative `/api/...` paths. Vite must accept Replit's proxied development host. No hardcoded localhost in app code.
 
-The demo requires a short video and public GitHub repository; publishing is optional and does not replace either. A real deployment is not authorized by this plan. Provider access must be available to run the live interview; a repository clone must clearly explain managed-AI setup rather than promise a keyless local clone will work.
+TinyFish needs server-side `TINYFISH_API_KEY`. No matching TinyFish connector was returned by the integration lookup; **do not substitute Parallel/Tavily or claim TinyFish is already connected**. Request the key through the workspace Secrets flow during setup, never chat, source files or the browser. Do not read or copy Scout's credentials.
 
-### Coding Start
+Managed AI activation/configuration is also an early build gate. Obtain the actual platform-provided settings, not guessed proxy URLs or environment-variable names. Without configuration, show explicit unavailability; do not replace live discovery with unlabelled fixtures.
 
-The learner explicitly requested notice before coding starts. After approval of this spec, end the planning task and prepare the build sequence. Say plainly that application coding is starting before creating scaffolding, installing app packages, or writing app files. Do not treat stack approval as permission to start early.
+Required submission: short demo video + public GitHub repository containing approved planning docs. Publishing is optional, not a substitute for either. A clone needs documented provider setup; it will not magically inherit this workspace's integrations or secrets. Publishing is not authorized by this spec.
+
+**Before application coding:** explicitly tell the learner it is starting. Scope/PRD/spec edits are planning, not that notice. This planning task does not create scaffolding or install app packages.
 
 ## Look and Feel
 
-Implements `prd.md > Look and Feel`.
+Implements `prd.md > Look and Feel`; preserve the agreed **paper planner with bold accents** and a distinct identity from Scout.
 
-Paper-planner base, dark ink, white/off-white cards, strong flat highlight, thick outlines and modest hard shadows. Chunky headings; readable body text. Official excerpts look like source clips. Deadline/at-risk states use text as well as color. Exam weeks use a hatch plus an “Exam week” label.
+Off-white/grid-paper base, dark ink, chunky headings, strong flat highlighter accents, thick outlines and modest hard shadows. Sources appear as clipped excerpts; deadline/at-risk states include text, not just color. Exam weeks are hatched and labelled.
 
-Use CSS tokens for easy manual UI edits. Phone: one-column guided flow and vertically stacked weeks. Desktop: wider overview and week groups, without requiring horizontal scrolling to read tasks. Minimum 44px touch targets; visible keyboard focus; labelled fields; accessible source disclosure; loading/error announcements. Optional transitions respect reduced motion. Do not make essential controls dependent on animation or hover.
-
-## Verified Data Sources and Publication Gate
-
-Official pages were read on **2026-10-13**. These are findings, not a completed dataset. Each shipped entry still needs its own reviewed rules and evidence records. Start with a small catalog rather than require eight names before the app works.
-
-| Program | Evidence from the official source | Use in the first catalog |
-| --- | --- | --- |
-| [KAUST VSRP](https://admissions.kaust.edu.sa/study/internships) | “VSRP internship is a fully funded program.” Benefits include stipend, housing, airfare; applications are “All year round.” Year, GPA, language, and documents matter. | Research, rolling. [Public project pages](https://admissions.kaust.edu.sa/internship/search) are usable taste-test sources. |
-| [OIST](https://www.oist.jp/admissions/research-internship/program-description) | Air ticket, furnished accommodation, allowance. [Application page](https://www.oist.jp/admissions/research-internship/apply-research-internship) gives Spring 2027 deadline **Oct 15, 2026, 23:59 JST**, last-two-years eligibility, documents, and **JPY 5,000 application fee**. | Research, dated cycle. Show the fee despite funded placement. [Public faculty/project availability](https://www.oist.jp/admissions/research-internship/ri-faculty-project-availability) provides real examples and explicitly discourages contacting faculty for approval before applying. |
-| [EPFL E3](https://eee.epfl.ch/) | Portal says open, deadline **Nov 1, 2026**. [Funding page](https://eee.epfl.ch/program-at-a-glance/) says allowance covers accommodation/living and travel costs are covered. | Research candidate with a verified current date. Before publication, finish the linked eligibility/application rules and verify deadline cutoff/time zone and any funding limitations; do not guess them. |
-| [HENNGE GIP](https://recruit.hennge.com/en/gip) | Benefits include subsidy, airfare, insurance. Steps: registration → coding challenge + CV/cover letter → HR and online interviews. Applications close when slots fill. | Company, rolling/capacity-dependent, with clearly stated funding details. Real pathway descriptions can supply a few company examples; do not invent different employers to fill cards. |
-| [Mitacs Globalink](https://www.mitacs.ca/our-programs/globalink-research-internship-students/) | “Summer 2027 student applications has now concluded.” Indian eligibility includes an eligible institution and country-specific grade rules. | Closed-cycle evidence, not an open target. Do not invent a next deadline or call partial airfare contributions an unconditional promise of zero expenses. |
-| [DAAD WISE official entry](https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database?daad&detail=50015295&origin=4&page=1&q&status=1&subjectGrps) | “This programme is not available right now.” | Exclude from active scheduling unless an official current call is found. This alone does not establish permanent discontinuation. |
-| [Charpak Summer Training](https://www.inde.campusfrance.org/france-excellence-charpak-summer-training-scholarship) | “NOT cover medical or travel expenses, travel insurance or accommodation assistance.” 2026 call closed. | Exclude from the fully funded active catalog. Earlier planning named it too broadly. |
-
-Keep funding component-by-component: stipend, housing, travel, insurance, fees, caps, and unsupported costs. “Fully funded” must never mean every possible expense is zero.
-
-### Evidence-Based Clarifications for Review
-
-These refine the approved PRD and must be accepted in spec review before implementation; do not silently edit the approved PRD:
-
-1. **Taste-test research sources are not MITACS-only.** Use accessible official KAUST and OIST examples, correctly labelled. The MITACS portal was reached, but public unauthenticated access to individual project descriptions was not verified. A third-party copied catalog is not sufficient evidence of official public accessibility.
-2. **Four profile fields do not establish full eligibility.** Ask small conditional follow-ups when a rule requires institution, degree type, study dates/remaining semesters, English evidence, or age threshold. Prefer yes/no confirmations over collecting date of birth or identity documents. Missing or unconvertible evidence gets **Needs confirmation**, not Eligible.
-3. **Not every program has a fixed deadline.** Rolling programs use an editable personal apply-by target, labelled “Your target—not an official deadline.” Unannounced future calls get no invented dates. A published date without cutoff time is visibly date-only/unconfirmed; schedule before that day conservatively.
-4. **Post-application stages may occur later.** Application preparation must be before its deadline. Actual selection events appear at their published date or as “After application—date not published.” Never force an interview event to precede application merely to satisfy a timeline check.
-5. **Assessment is bounded evidence, not certification.** “Ready” means the answer met this question's rubric, not independently verified mastery or selection probability. Unanswered skills are “Not assessed,” not magically ready.
-
-After acceptance, align both PRD companions with these clarifications, keeping the previously approved product intent.
+Phone: stacked forms, results and week blocks; filters in an accessible expandable panel. Desktop: denser result/overview layouts. Editable CSS tokens support manual tuning. Readable body type, 44px touch targets, keyboard focus, associated field errors, source disclosures and live status announcements. Respect reduced motion; no essential information depends on hover or animation.
 
 ## Components
-
-### Official Catalog and Source Collector
-
-Implements `prd.md > Official Sources`, `prd.md > Eligibility Check`.
-
-Reviewed `data/` JSON files are the app's only program-fact source. A fresh script reads a short allowlist of public official pages, with timeout/size limits and no login bypass. Raw pages and draft extractions stay in ignored generated-artifacts; reviewed short quotes and paraphrased facts can enter the catalog after validation.
-
-Start with direct public-page fetches and manual review. No live per-user crawler, paid browser agent, or mandatory TinyFish dependency. An optional build-time extraction call may use the same managed AI, but its output is untrusted and cannot publish itself. Extracted quotes must match source text (whitespace-normalized); reject invented quotations and unresolved contradictions.
-
-Each official fact references a source record: URL, short exact quote, checked-at timestamp, cycle, and relevant section. Each suggested skill/task separately records its preparation rationale and underlying official/project evidence. Estimated hours and recommended learning steps are app guidance, **not official requirements**.
 
 ### Taste Test and Direction
 
 Implements `prd.md > Taste Test`.
 
-10–12 reviewed descriptions drawn from accessible official examples, covering diverse fields within the available sources. Multiple examples may come from one program; disclose that the sample is small, not a comprehensive measure of interests.
+10–12 reviewed questions/work scenarios cover shared genres: research/company work and areas such as software, ML/data, robotics and core engineering. Each references the real official work description grounding it. These are **app-authored direction questions**, not claimed verbatim employer interview questions.
 
-Store `interested | notForMe | unclear` by card ID. Compute interest per field/track as interested cards divided by cards shown in that category, avoiding a research-heavy sample automatically implying research preference. Ties can show both; no interest means undecided, not zero ability. “Unclear” becomes an explore list, not a negative skills verdict.
+Direction responses include interested/not for me/unclear. Use per-genre proportions rather than raw totals so a research-heavy sample does not automatically imply research preference. Ties can suggest both; no interest stays undecided; unclear means explore, not low ability. Result informs editable preferences, never target selection.
 
-Direction selects the question-bank topics and suggested skill preparation; it never excludes an eligible program.
+Only this reusable question set is curated. The searchable internships are not a fixed catalog.
+
+### Scout-Like Preferences and Search Planning
+
+Implements `prd.md > Search Preferences, Discovery and Selection`.
+
+Fresh implementation of the relevant Scout behavior:
+
+| Capability | Planned behavior |
+| --- | --- |
+| Preferences | Topics/roles, locations, Research/Company, remote preference, citizenship/visa needs, funding, include/exclude keywords, preferred organizations. |
+| Query planning | Cover company careers/official ATS postings, research programs, requested organizations and geography. Keep internships as the opportunity level; Scout's experienced-job searches are outside this product. |
+| Live discovery | TinyFish Search → classify individual postings/programs versus index/careers pages → read relevant pages with Fetch → bounded browser-agent fallback where necessary and authorized. |
+| Ranking | Explainable preference fit, computed in code from evidence; never “chance of selection.” |
+| Results | Search within results; Research/Company, visa/funding/unknown-state filters; sort by fit, newest, deadline; save/hide controls. |
+| Evidence | Quote + URL + last-read date for each funding/visa/eligibility/deadline fact; unknown stays unknown. |
+| Progress | Search/run status, sources checked, partial failures, explicit limits, retry/search more. |
+| Roadmap handoff | User-selected targets only, with source/version references and constraints. |
+
+Keep search preferences in browser progress. The server receives only what discovery needs, not grades, timetable or interview answers. Topics, preferred locations and citizenship/visa constraints may reach the providers; explain this before search.
+
+Initial proposed per-run budget: 8 queries, 20 fetched URLs including followed pages, at most 20 returned evidence-backed listings, and a 180-second overall deadline. Bounds control work, not the universe of eligible programs. Show queries/source coverage and partial results; offer another bounded search/page instead of claiming exhaustive coverage. Changing preferences creates a new search, not merely a local reorder of seed data.
+
+Scheduled unattended hunts, showcase dashboards and advanced Scout administration are **recommended POC deferrals**, not already-agreed exclusions. Core search/filter/evidence functionality is not deferred. Review approval resolves this proposed boundary.
+
+### Discovery Runner, Source Reading and Evidence Extraction
+
+Implements `prd.md > Search Preferences, Discovery and Selection`, `prd.md > Official Sources`.
+
+1. Plan and deduplicate queries; reserve the run's provider budget before dispatch.
+2. Classify results into official pages/ATS leads and other leads. Search snippets/aggregators help find a page but are not authority for program facts.
+3. Validate public HTTPS URLs and redirects; reject local/private/metadata addresses, credentials in URLs and untrusted protocols. Corroborate an institution/employer's ownership or an official link to its ATS board. A plausible domain name alone is insufficient. New official sources can enter; source safety is not a fixed program list.
+4. Fetch relevant pages and limited application/eligibility links; retain short contextual excerpts and source metadata. Login walls stay inaccessible; do not attach credentials, vaults or profiles or bypass access restrictions.
+5. Extract a typed listing: organization, opportunity/track, dates/cycle, funding components/fees/caps, visa statement, eligibility rules, skills and official selection stages. Every factual field is nullable and references an exact quote/source. Reject unsupported claims, invalid enums/IDs, quotations absent from text and cross-program quote attribution.
+6. Deduplicate by canonical official posting + organization + cycle; retain source history. Do not collapse distinct roles/projects simply because they share an institution.
+7. Compute match/filter values and return results even when some sources failed. “Official page read” is provenance, **not a guarantee that automated interpretation is correct**. Show interpretations as evidence-backed preliminary checks with the original excerpts.
+
+AI supplies extracted facts/labelled judgments, not an opaque final fit score. Code computes an explainable 0–100 preference score using role/topic (35), location/remote (20), funding preference (20), visa constraint (15) and include keywords (10). Unknown is not a positive match and is visibly reflected in reasons; hard exclusions/confirmed incompatibilities cannot rank as a strong fit. Weights are app guidance, not admission odds.
+
+Compatible public source snapshots are cached by canonical URL + content hash + extractor version. Last fetched and last interpreted are separate timestamps. A personal timetable edit does not re-crawl. Results returned from cache are labelled; TinyFish `ttl:0` **prefers** live fetching but its current docs do not guarantee fresh origin content in every case.
+
+### Filtering, Saving and Target Selection
+
+Implements `prd.md > Search Preferences, Discovery and Selection`, `prd.md > States and Boundaries`.
+
+Store saved IDs, hidden IDs, selected IDs, preferences and result snapshots locally. Saved does not automatically mean selected. Hidden/selected conflicts require an explicit choice; filters never silently delete selections.
+
+Before planning, fetch additional official stage/requirement evidence for selected targets within the same safety/budget controls. Selection may be processed in batches; do not impose an unexplained “three internships only” product limit. Missing requirements/stages remain unconfirmed, with general preparation separated from confirmed program steps.
+
+Deselecting removes that program's scheduling constraints and tags; preserve completed shared work that still applies. Add/select new targets → re-evaluate eligibility, relevant questions and future allocations. Do not re-score existing answers unnecessarily.
 
 ### Profile and Eligibility Engine
 
-Implements `prd.md > Eligibility Check`, `prd.md > States and Boundaries`.
+Implements `prd.md > Eligibility Check`.
 
-Check explicit reviewed rule objects, not AI prose. Validate grade value **and scale**, study year/degree duration and conditional confirmations. Do not convert every Indian CGPA to a percentage by multiplying by ten. Use only an official/evidenced equivalence; otherwise flag the grade rule for confirmation.
+Separate eligibility (`meetsExtractedCriteria | failsCriteria | needsConfirmation`) from cycle (`open | closed | rolling | unknown | unavailable`). Check supported typed rules in code; unsupported/ambiguous rules remain needs-confirmation rather than AI-guessed eligibility.
 
-Separate two axes: eligibility (`meetsKnownCriteria | failsCriteria | needsConfirmation`) and cycle (`open | closed | rolling | unknown | unavailable`). One failed mandatory rule is enough for a reasoned negative; no failures plus unanswered mandatory rules is not enough for a positive.
+Inputs include nationality, study year, grade **value and scale**, branch, plus conditional institute/degree dates/remaining-semester/English/age-threshold confirmations when official rules require them. Do not collect identity documents or full date of birth unnecessarily. Do not turn all CGPAs into percentage by multiplying by ten.
 
-Show eligibility based on entered details, not independent document verification. Missing facts do not disappear. No automatic hard-deadline schedule for a cycle with unconfirmed dates.
+One failed mandatory criterion yields a sourced negative. No failures plus missing mandatory evidence is not a positive. The student's statements are not independently verified. Show “Based on your details and extracted official criteria—check the linked conditions before applying.”
 
-### Timetable and Browser Progress
-
-Implements `prd.md > Timetable Entry`, `prd.md > States and Boundaries`.
-
-One versioned browser record holds reactions, profile, weekly hours, exam weeks, answers, assessment, and completion IDs. Read/write through a focused storage helper; validate saved state, handle old schema/catalog versions, and show a visible warning if saving fails.
-
-No name, email, passport number, grades transcript, or document uploads are needed. Provide Clear my progress with confirmation. Clearing browser/site data loses progress; different origins/devices do not share it.
-
-POC exam weeks have **zero preparation capacity** (a conservative, simple way to meet “no heavy steps”). Partial current weeks prorate available hours. Use one budget across Research and Company, not full hours twice.
-
-### Question Bank and AI Assessment
+### Readiness Questions and AI Assessment
 
 Implements `prd.md > Readiness Interview`.
 
-Reviewed questions include skill ID, prompt, acceptable evidence, fixed rubric items, related official/project source IDs, and examples of inadequate evidence. Select 6–8 relevant questions; do not pretend every skill across all programs was tested.
+Selected targets' sourced skills map to a reviewed skill/question bank. Reuse relevant questions across similar internships. For skills outside that bank, generate a small question/rubric pack grounded in the extracted skill descriptions; label it app-generated preparation, never an employer's official interview questions. Validate source/skill IDs and topic coverage. If a skill cannot be assessed responsibly, show **Not assessed**, not a fabricated verdict.
 
-Assess the completed interview in one AI call, not a paid call per keystroke/question. The server retrieves question/rubric/catalog contents by allowed IDs; the client cannot supply system prompts, new requirements, tools, or its own score.
+6–8 questions per short interview; one at a time. A question pack has fixed rubric items before answers are submitted. One AI assessment request per completed interview, not per keystroke. Server retrieves the trusted question/rubric and evidence records; the client cannot supply new system instructions or official facts.
 
-Strict output: each question ID, per-rubric `met | partial | missing` verdict, short answer-evidence excerpt, and brief reason. Server validates IDs, enums, length, coverage, and evidence membership in the submitted answer. Code derives `ready` when all required rubric items are met, `partly` when some evidence is present, and `notYet` otherwise. Missing question coverage is not silently filled in.
+Strict response: question/rubric IDs, `met | partial | missing`, brief reason and an excerpt from the student's answer. Validate coverage and excerpt membership, not just JSON shape. Code maps rubrics to ready/partly/not yet. A short response is evidence of readiness for those questions, not certification of mastery or probability of selection.
 
-Documents and external dependencies are completion checklists, not AI-certified skills. An interview cannot know a professor has submitted a recommendation. Do not invent a numeric “chance of selection.”
+Documents/external actions are checklists, not AI-certified skills. The interview cannot confirm that a professor submitted a letter. Failures preserve answers and show an honest retry/unavailable state.
 
-### Shared Preparation and Scheduler
+### Manual Timetable and Browser Progress
+
+Implements `prd.md > Timetable Entry`, `prd.md > States and Boundaries`.
+
+Versioned localStorage stores personal details, reactions, preferences, targets/evidence snapshots, timetable, answers, assessment and completion IDs. Validate restored state and handle schema/source/rubric changes. Reset requires confirmation; blocked/full/corrupt storage gets a visible warning. Same browser and origin only; no cross-device promise.
+
+One weekly free-hour budget across **both tracks**, not duplicated per track. Conservative initial implementation gives exam weeks zero preparation capacity; prorate the remaining portion of the current week. Marking done removes remaining effort; reopening restores it. Hours and waiting times are estimates.
+
+### Shared Preparation and Deadline Scheduler
 
 Implements `prd.md > Track Timeline`, `prd.md > Deadline Handling`.
 
-Maintain reviewed task templates and dependencies. Merge only compatible reusable work: a CV core, reusable evidence project, or common skill preparation. Program-specific essays, different submission formats, official letters, and application submissions remain distinct even if their names sound alike.
+The agreed behavior remains:
 
-1. Remove closed/unavailable programs from active application scheduling, retaining completed work.
-2. Derive prerequisites backwards from sourced stages. For undated later stages, show conditional milestones without invented interview dates.
-3. Assign each preparation task its earliest relevant confirmed deadline or explicitly personal target.
-4. Schedule dependency-ready work in due-date order into future non-exam capacity. Split work into weekly chunks when needed; use stable task IDs and deterministic tie-breaks.
-5. Account for all tracks in the same capacity ledger. Tasks due mid-week must finish before the real cutoff; a week containing a deadline is not permission to work after it.
-6. Leave impossible chunks in an **Unscheduled / At risk** section with unmet dependencies, hours short, and affected programs. Do not place overflow after its deadline and claim it fits.
+1. Build preparation dependencies backwards from each selected internship's actual official selection stages.
+2. Merge only compatible reusable work—CV core, shared skill practice, reusable evidence—not distinct essays/submissions with different formats.
+3. Tag each shared task with all programs it serves and assign the **earliest deadline it serves**.
+4. Allocate dependency-ready work, earliest due first, into one future cross-track capacity ledger. Split effort into weekly chunks when needed; finishing in a deadline's week is insufficient if the chunk falls after its actual cutoff.
+5. Never overflow silently. Leave impossible work visibly unscheduled/at risk, with hours/dependency reasons and affected targets. Waiting for an external letter is a real dependency, not compressible study hours.
+6. Passed deadlines remove the program from active allocations but preserve completed history. Recompute the earliest deadline after removing a tag.
 
-Effort estimates are approximate template values, labelled as estimates. The feasibility check includes shared workload competition and waiting dependencies, not just separate per-program totals. Recommendation-letter requests may need lead time; that is explicitly estimated guidance, not a guaranteed response time.
+Known deadlines: UTC instant + original timezone and official quote. Date-only cutoff: disclose unknown time and schedule before that day conservatively. Rolling/capacity-limited programs: editable **personal application target**, explicitly not an official deadline. Unknown future cycles: no invented reopening month.
 
-Re-evaluate using a clock supplied to the rule engine for tests and the real current date for normal use. Store known deadline instants in UTC and original source timezone. Rolling slots can fill between catalog reviews: always disclose the last-check date and link to official availability.
+Actual later interviews/stages appear at published dates or as conditional “After application—date not published.” Prep can precede application; do not fabricate a date for the actual interview.
 
-### Roadmap Overview and Track Timeline
+Re-check deadlines on roadmap load, tab return and day change. This cannot warn while the app is closed; background reminders remain cut. Re-checking elapsed time is distinct from verifying the source is still current.
+
+### Overview and Track Timeline
 
 Implements `prd.md > Roadmap Overview`, `prd.md > Track Timeline`.
 
-Overview: current action, track cards, readiness summary, deadline/target labels. Timeline: weekly allocations, official stage markers, source disclosures, exam weeks, program tags, completion controls, and explicit unscheduled work.
+Retain the two levels: overview with this week's one actionable step across all targets; Research/Company cards; clicking opens the week-by-week track timeline. Show source disclosures for every program tag, hours, exams, deadlines/targets, conditional stages, risk and completion.
 
-Select this week's action from unfinished dependency-ready scheduled tasks, earliest deadline first. If none exists, show an honest empty state (“No scheduled work this week”) or the necessary confirmation, not a fabricated task. No eligible programs → reasons and real future-call information. All closed → general preparation, without promising an unannounced next cycle.
+Choose the next dependency-ready unfinished action by nearest relevant due date. If no action is possible this week, show the honest empty/confirmation state rather than invent a step. No eligible targets → sourced reasons; all closed → general skill preparation and only evidenced future-call information.
 
-Marking a task done removes its remaining effort; reopen restores it. Changing timetable/profile/direction re-evaluates the plan. Preserve completed work; invalidate an assessment only when questions/rubrics or selected skill focus actually change. Source lookup must work for every tagged program, not merely the first program in a shared task.
+### Server Safety, Cost Limits and Operations
 
-### Server Safety and Operational Controls
+Implements `prd.md > Official Sources`, `prd.md > States and Boundaries`.
 
-Implements `prd.md > Readiness Interview`, `prd.md > States and Boundaries`.
+- Same-origin JSON endpoints; reject unexpected origins, no wildcard CORS. Server-issued signed anonymous token + owner checks for run IDs. No account authentication claims.
+- Validate all requests/provider outputs; 32KB ordinary body limit, 8 readiness answers max, 1,500 chars each; bound query fields, URLs, page text, extracted-listing count and model output.
+- Trust only the configured proxy topology for IP limits; never arbitrary forwarded headers. Token/IP limits are abuse controls, not a durable identity.
+- Proposed POC limits: 2 searches per browser/hour, 6 per trusted IP/hour; 3 assessments per browser/hour; 2 concurrent searches globally, 2 model calls globally. Reserve quotas atomically to avoid parallel overspend.
+- Persistent server operational counters: proposed daily maximum 50 searches, 800 fetched URLs, 150 total model calls. If quota storage fails, paid calls fail closed rather than reset silently. TinyFish rate limiting is independent of our budget.
+- Extraction in bounded batches (e.g. up to 4 pages and 12k input tokens per model call); readiness output cap ~1,800 tokens; 30s model timeout, per-URL fetch timeout 25s, whole-search deadline 180s. No automatic retry storms; provider 429 respects Retry-After and bounded backoff.
+- Paid Agent fallback needs explicit wallet/budget authorization at setup and a verified enforcement strategy. Current step-cap/strict-mode features are beta-gated; do not assume access or use an unenforceable hard-dollar claim. Keep fallback disabled until that gate is met, while retaining genuine Search/Fetch discovery.
+- No application writes, logins, credential vaults, browsing tools in the extraction/readiness LLM, arbitrary URL proxy endpoint, or raw HTML rendering. Page text/answers are data, not instructions; never execute student code.
+- Before search/interview, disclose provider transmission. Grades/timetable/answers stay out of discovery calls; answers leave the browser only for scoring. No server logs/disk of raw academic profile or interview text; verify provider terms before claiming retention/deletion guarantees.
+- Structured logs: request ID, stage, duration, sanitized error category and usage counts; no credentials, raw IPs or personal answers. `/api/health` checks app/configuration/store readiness without paid calls.
 
-For the single-instance proof of concept:
+Private JSON files are a single-process POC implementation, with atomic writes and a bounded retention policy; not a scalable production database. A later public/multi-instance launch needs shared durable storage/quotas and a fresh privacy/security review.
 
-- Validate requests and AI output; body limit 32KB, 8 answers maximum, 1,500 characters per answer, allowlisted IDs.
-- Same-origin JSON endpoint; reject unexpected origins; no permissive wildcard CORS. Client IDs are not authentication.
-- Signed anonymous browser token, plus safely configured trusted-proxy/IP limiting; never trust arbitrary forwarded headers.
-- Proposed starting limits: 3 assessments per browser per hour, 10 per trusted IP per hour, 2 concurrent provider calls globally, 50 provider calls per day per server instance, output cap ~1,800 tokens, 30s provider timeout, no automatic retry storm.
-- Enforce a server-held daily stop counter; ignore its operational file in Git. If persistent counter storage is unavailable, fail the paid feature closed or use a provider-side limit; do not silently reset protection. Confirm provider spend controls before opening a public demo. Multi-instance/public scale needs a shared quota store and a fresh security review.
-- No source fetch endpoint for user URLs. Collector is an operator-only allowlist script, not a route that can access arbitrary/internal hosts.
-- Treat page text and answers as untrusted content. AI has no tools, browsing, file access, or application-submission powers. Display its text safely; never render raw HTML or execute student code.
-- Before interview submission, explain that answers go to the managed AI provider. Keep raw answers out of server logs and disk; do not promise zero provider retention without verifying terms.
-- Log request ID, route, status, duration, model call count, and sanitized error category; no answers, credentials, full IP addresses, or academic profile.
-- `/api/health` reports service status without calling AI. If provider access is missing, the interview clearly reports unavailable while non-AI screens still work.
+## Data Model and Persistence
 
-These are bounded POC safeguards, not a claim of production-grade abuse prevention. Rate limiting limits repeated calls; input validation blocks malformed data; prompt-injection defenses prevent submitted text from gaining authority. Introduce these by name during their build steps, as requested.
-
-## Data Model
-
-| Record | Main fields | Lives where / update behavior |
+| Record | Main fields | Where / lifecycle |
 | --- | --- | --- |
-| Source | ID, official URL, short quote, section, checkedAt, cycle | Reviewed JSON; refreshed by operator review, not student content. |
-| Program | ID, track, funding components/fees, rule IDs, stage IDs, cycle state, deadline kind/instant/timezone/source, next-call info if evidenced | Reviewed JSON; independently versioned. |
-| Rule | ID, input key, operator/value/scale or confirmation, source ID | Reviewed JSON; deterministic evaluation. |
-| Stage | ID, program ID, label, source ID, ordering, known date or conditional/undated | Reviewed JSON; no universal invented selection pipeline. |
-| Taste card | ID, real description URL, paraphrase, short source quote, field/track tags, skill/source IDs | Reviewed JSON; reactions locally saved. |
-| Question | ID, skill ID, rubric items, related source IDs, rubric version | Server-owned reviewed bank; selected prompts sent to browser. |
-| Progress | schema version, catalog/rubric versions, reactions, profile, exam weeks/hours, optional personal targets, answers/assessment, completed task IDs | localStorage; write after meaningful actions. |
-| Task template | stable ID, preparation/official distinction, dependencies, estimated hours, compatible reuse key, stage/rule evidence | Reviewed JSON; code instantiates/merges appropriately. |
-| Schedule | allocations, program tags, due-kind, capacity usage, risk reasons, this-week action | Derived from inputs; recompute rather than trust a stale saved schedule. |
-| Operational quota | UTC day, provider call reservations/count | Private server operational storage, no student answers. Single instance only. |
+| Genre question | ID, scenario, genre/track, direction options, official source excerpt/URL | Reviewed files; reusable independently of live listings. |
+| Preferences | Roles/topics, places, track, remote, funding, citizenship/visa, keywords/exclusions, organizations | Browser; sent transiently for a search. |
+| Search run | Opaque ID/owner hash, status/stage, query coverage, usage, result IDs, sanitized failures | Short-lived private server run store; proposed 24h retention. No raw profile/answers. |
+| Source snapshot | Canonical URL, title, short excerpts, content hash, fetchedAt/interpretedAt, extractor version, freshness label | Bounded private cache, proposed 7-day retention; currentness remains visible. Raw pages are not public repo files. |
+| Listing | Stable posting+cycle ID, organization, track/skills, typed rules, funding/visa facts, deadline kind/timezone, official stages, source refs, uncertainty | Public-source snapshot server-side; selected copy in browser for return/history. |
+| Selection | Saved/hidden/selected IDs, snapshot versions | Browser; stable across result filters and deduplicated search runs. |
+| Question pack | Skill/question/rubric/source IDs, versions, generated-or-reviewed marker | Trusted server record; prompts to browser. No client-authored rubrics. |
+| Progress | Schema version, academic details, timetable, answers/assessment, completion IDs, selected snapshots | Browser; resettable. Server scoring payload is transient. |
+| Schedule | Task dependencies/reuse keys, allocations, program tags, due kind, capacity use, risk reasons | Derived in code; recompute from validated inputs rather than trust a saved calendar. |
+| Quota | UTC day/window, reserved/consumed call counts | Private operational store; fail-closed handling, single instance only. |
+
+Expire source/run caches and cancelled runs safely. Browser snapshots can show old evidence but must say so. If trusted server evidence/question records are gone on return, revalidate/rebuild them before another paid assessment; do not accept browser edits as authority.
 
 ## File Structure
 
-Planned only; this task does not create these application files. The web artifact setup may nest them under its app directory; preserve these logical boundaries.
+Planned app-relative boundaries; the fresh artifact setup supplies the actual enclosing directory:
 
 ```text
 web-app/
-├── package.json / package-lock.json  # scripts and reproducible dependencies
-├── tsconfig.json / vite.config.ts    # TypeScript and single-origin dev setup
-├── index.html                       # client entry
+├── package.json / package-lock.json / tsconfig.json / vite.config.ts
+├── index.html
 ├── client/src/
-│   ├── main.tsx / App.tsx           # guided flow and return routing
+│   ├── main.tsx / App.tsx
 │   ├── pages/
 │   │   ├── TasteTest.tsx / DirectionResult.tsx
-│   │   ├── ProfileTimetable.tsx / EligiblePrograms.tsx
-│   │   ├── ReadinessInterview.tsx / AssessmentSummary.tsx
-│   │   └── RoadmapOverview.tsx / TrackTimeline.tsx
+│   │   ├── SearchPreferences.tsx / DiscoveryResults.tsx
+│   │   ├── EligibilityDetails.tsx / ReadinessInterview.tsx
+│   │   └── Timetable.tsx / RoadmapOverview.tsx / TrackTimeline.tsx
 │   ├── components/
-│   │   ├── SourceDisclosure.tsx / ProgramCard.tsx / TaskCard.tsx
-│   │   └── WeekBlock.tsx / StatusMessage.tsx
-│   ├── lib/storage.ts / api.ts      # validated saves and relative API requests
-│   └── styles/tokens.css / app.css  # editable planner visual system
-├── shared/
-│   ├── schemas.ts / types.ts        # runtime validation and shared types
-│   ├── direction.ts / eligibility.ts
-│   ├── readiness.ts / tasks.ts      # verdict mapping and compatible reuse
-│   └── scheduler.ts / dates.ts      # capacity/dependencies/timezone rules
+│   │   ├── FilterPanel.tsx / ListingCard.tsx / SearchProgress.tsx
+│   │   ├── SourceDisclosure.tsx / TaskCard.tsx / WeekBlock.tsx
+│   │   └── StatusMessage.tsx
+│   ├── lib/storage.ts / api.ts
+│   └── styles/tokens.css / app.css
 ├── server/
-│   ├── index.ts / routes.ts         # same-origin server, health, API errors
-│   ├── ai.ts / assessment.ts        # managed provider, schema, evidence checks
-│   └── safety.ts / quota.ts         # limits, privacy-safe logs, cost stop
-├── data/
-│   ├── sources.json / programs.json / cards.json
-│   └── questions.json / task-templates.json
-├── scripts/collect-sources.ts / validate-data.ts
-├── tests/                           # rules, API contracts, full journey
+│   ├── index.ts / routes.ts / health.ts
+│   ├── providers/tinyfish.ts / openai.ts
+│   ├── discovery/
+│   │   ├── plan.ts / run.ts / sources.ts / extract.ts
+│   │   └── rank.ts / deduplicate.ts / revalidate.ts
+│   ├── readiness/questions.ts / assess.ts
+│   └── lib/store.ts / quota.ts / safety.ts / logger.ts
+├── shared/
+│   ├── schemas.ts / types.ts / direction.ts / eligibility.ts
+│   └── tasks.ts / scheduler.ts / dates.ts
+├── data/genre-questions.json / question-bank.json / task-templates.json
+├── scripts/validate-data.ts
+├── tests/                           # provider mocks, rules and journey tests
 ├── README.md / LICENSE / THIRD_PARTY_NOTICES.md
-└── .env.example                     # names/placeholders only, no credentials
+└── .env.example                     # names/placeholders, never credentials
 
 devpost/                             # canonical scope/PRD/spec + HTML companions
-generated-artifacts/                 # ignored raw pages, extracts and test output
+generated-artifacts/                 # ignored raw research and test outputs
+private-runtime/                     # ignored operational stores, never served
 ```
+
+All application files are new. Do not import old Scout packages, database definitions, component files or wrappers. Feature inspection and current provider docs are references for requirements, not copied implementation.
 
 ## API and External Service Contracts
 
 ### Application API
 
-- `GET /api/catalog` → public reviewed sources/programs/cards/question prompts, catalog version. Never provider configuration or secret rubric answers.
-- `POST /api/assessment` → `{catalogVersion, rubricVersion, direction, programIds, answers:[{questionId,text}]}`. Server derives valid questions and required rubrics; client-supplied tags are validated hints, not trusted rules.
-- Successful response → `{assessmentId, rubricVersion, model, assessedAt, results:[{questionId,skillId,status,reason,evidence}]}`.
-- Errors → `{error:{code,message,requestId}}`, with appropriate 400/429/502/503 status; 429 includes Retry-After. No stack trace or provider credential details.
-- `GET /api/health` → availability of app/catalog/AI configuration, not secrets.
+- `POST /api/searches`: validated preferences and continuation → `{runId,status}`. Server creates its own bounded query plan.
+- `GET /api/searches/:id`: owner checked → `{status,stage,coverage,listings,sourceStatus,usage,errors}`; short polling until complete/partial/failed.
+- `POST /api/searches/:id/cancel`: owner checked → cancel pending work and any cancellable provider Agent runs; preserve completed results. A disconnected tab is not a reason to duplicate a run.
+- `POST /api/targets/prepare`: selected server-known listing IDs/versions → source-backed eligibility/stages and trusted question-pack ID. Expired references require revalidation.
+- `POST /api/assessment`: question-pack ID + bounded answers → `{assessedAt,results:[{questionId,skillId,status,reason,evidence}]}`.
+- `GET /api/health`: configuration/app/store readiness, no secrets or provider spend.
 
-### Managed AI
+Errors are `{error:{code,message,requestId}}`, using 400/429/502/503 appropriately and Retry-After where needed. No stack trace, raw upstream credential message or secret configuration to the browser.
 
-Server-side OpenAI SDK using the **actual Replit-provided configuration**, never guessed credentials or proxy URL. Planned provider call: chat completions with `model: gpt-4.1-mini`, fixed system instructions, rubric + bounded answers, strict `response_format` JSON schema, temperature 0, output-token limit, timeout and no uncontrolled retries.
+### TinyFish — Verified Contracts
 
-Responses must still be semantically validated; schema correctness does not prove factual correctness. Refusal, timeout, missing rubric items, bad IDs, or invalid evidence is an honest failure, not a fabricated assessment.
+Docs checked **2026-10-13**; no authenticated call has been made yet. Use `X-API-Key` server-side.
 
-Replit's [documentation](https://docs.replit.com/features/integrations/replit-ai-integrations) confirms managed credentials and billing at provider public API prices through Replit credits, with plan/admin availability conditions. This is **not free AI usage**. A live integration is not configured in this workspace yet; the connector search returned no matching row, so do not invent a connector ID or claim it already works. Confirm managed-AI activation/configuration with the platform during build before the interview step.
+| Function | Exact contract | App use |
+| --- | --- | --- |
+| Search | `GET https://api.search.tinyfish.ai` with encoded `query`, `purpose`, `language`, optional `include_domains`/`exclude_domains`, `page`. Response `results[]` contains title/snippet/URL/domain/rank, with query/page metadata. | Queries derived from student preferences; snippets are leads, not official evidence. |
+| Fetch | `POST https://api.fetch.tinyfish.ai` with `{urls:[...],format:"markdown",links:true,ttl:0,per_url_timeout_ms:25000}`; max 10 URLs/request. Response `results[]` plus per-URL `errors[]`; results include original/final URLs and extracted text. | Read evidence and relevant official links; partial failure does not erase successful pages. |
+| Agent | `POST https://agent.tinyfish.ai/v1/automation/run-async` with `{url,goal,output_schema,agent_config:{max_duration_seconds:60}}`; returns `run_id`. `GET /v1/runs/{id}` for state/results; `POST /v1/runs/{id}/cancel` to cancel. | Authorized, public read-only navigation/extraction fallback. No credentials/vault/profiles, no forms/applications. |
 
-The [model page](https://developers.openai.com/api/docs/models/gpt-4.1-mini) lists input/output prices of $0.40/$1.60 per million tokens. As an indicative calculation, 4,000 input + 1,800 output tokens is ~$0.0045 per call, excluding other services, retries, and setup costs. Actual prompt/token counts must be measured. Lower cost is not an abuse defense; enforce quotas.
+[Search reference](https://docs.tinyfish.ai/search-api/reference), [Fetch OpenAPI](https://docs.tinyfish.ai/api-reference/fetch-and-extract-content-from-urls), [Agent reference](https://docs.tinyfish.ai/agent-api/reference), [pricing](https://www.tinyfish.ai/pricing).
 
-### Source Collection
+Current pricing page: Search free, **30 requests/min and 500/hour**; Fetch free, **150 URLs/min and 1,000/day**; Agent **$0.016/step**, 2 concurrent runs; Browser **$0.002/min**. Search's reference also discusses a 12,000/day allowance and wallet-dependent errors, contradicting the marketing claim that Search never draws the wallet. Do not promise unlimited/free operation beyond verified account limits. Handle 401/402/403/429 explicitly; use lower app caps and confirm the actual account at setup.
 
-No external crawler API on the critical path. Public official HTTPS GET requests run only in the source-collection script; source URLs are allowlisted and any redirects validated. Save drafts for review, not automatic release. Pages behind login or with unclear reuse/access conditions are excluded until resolved, not bypassed.
+Agent strict mode and `max_steps` are beta-gated; omitting `max_steps` uses a documented default of 150. Do not send a gated field to a non-enabled account or claim our duration timeout is a hard dollar cap. Separate budget authorization is required before enabling paid fallback. No automatic wallet top-up.
+
+Fetch's [current OpenAPI](https://docs.tinyfish.ai/api-reference/fetch-and-extract-content-from-urls) says `ttl:0` may still return an origin-cache-valid or operator-pinned cached entry. Preserve freshness metadata; never label it “verified live today” solely because the request used zero TTL.
+
+### Managed OpenAI
+
+Actual Replit-managed server configuration, not guessed credentials. Planned SDK call: chat completions with `model:"gpt-4.1-mini"`, fixed extraction/assessment instructions, untrusted content clearly separated, strict JSON schema, temperature 0, token/time limits and bounded retries.
+
+Use separate schemas for extraction, generated question packs and assessment. Format compliance does not prove truth; verify evidence references and support for each field. No tools or delegated application actions.
+
+[Replit documentation](https://docs.replit.com/features/integrations/replit-ai-integrations) says usage is billed through Replit credits at provider public API rates, subject to plan/admin availability. This is not free. The [model page](https://developers.openai.com/api/docs/models/gpt-4.1-mini) lists $0.40 input / $1.60 output per million tokens. Illustratively, 4k input + 1.8k output is about $0.0045; discovery may involve several larger extraction calls, so do not present this as the cost of an entire search. Measure actual usage and enforce shared limits.
+
+## Official Source Research and Test Cases
+
+These are researched **examples/fixtures for verification**, not a locked discovery catalog. Official pages were checked 2026-10-13; the live pipeline must support other legitimate sources.
+
+- [KAUST VSRP](https://admissions.kaust.edu.sa/study/internships): official “fully funded” wording, all-year-round applications and [public project pages](https://admissions.kaust.edu.sa/internship/search). Useful rolling/program and genre-question tests.
+- [OIST](https://www.oist.jp/admissions/research-internship/apply-research-internship): Spring 2027 deadline Oct 15, 2026, 23:59 JST; application fee JPY 5,000 despite [funded placement benefits](https://www.oist.jp/admissions/research-internship/program-description). Official [faculty/project availability](https://www.oist.jp/admissions/research-internship/ri-faculty-project-availability) provides work examples and says not to seek faculty approval before applying.
+- [EPFL E3](https://eee.epfl.ch/): current application date Nov 1, 2026 and [living/travel support](https://eee.epfl.ch/program-at-a-glance/). Verify the actual cutoff/timezone and complete detailed eligibility before a hard-date plan.
+- [HENNGE](https://recruit.hennge.com/en/gip): coding challenge + CV/cover letter, HR and online interviews; applications close when slots fill. Rolling/capacity-limited, not a fabricated universal cutoff.
+- [Mitacs](https://www.mitacs.ca/our-programs/globalink-research-internship-students/): Summer 2027 applications closed; Indian criteria include institutional eligibility and country-specific grades. Test closed-cycle behavior and conditional profile questions.
+- [DAAD WISE official entry](https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database?daad&detail=50015295&origin=4&page=1&q&status=1&subjectGrps): “not available right now,” not evidence of permanent discontinuation.
+- [Charpak Summer Training](https://www.inde.campusfrance.org/france-excellence-charpak-summer-training-scholarship): excludes medical/travel expenses and insurance; not a fully funded target just because earlier brainstorming named it.
+
+Represent funding components and limits, not a blanket promise of zero student expenses. Include fees and uncovered costs prominently. Use short excerpts and paraphrases; do not bulk-copy catalogs or use unofficial mirrors as official sources.
 
 ## Important Failure Modes
 
-- **Dates/criteria missing, stale, or contradictory:** show Needs confirmation or call-unconfirmed. Never infer a future deadline from last year. Last-checked date always visible.
-- **AI inaccessible, slow, refusing, or malformed:** preserve answers, show honest retry/unavailable state. Non-AI features remain usable. The Oct 17 self-check fallback requires the learner's explicit choice and must be visibly labelled.
-- **No interest, no eligible programs, all closed, or no work this week:** meaningful empty state from the PRD; no fake internship or made-up next step.
-- **Work cannot fit:** visible at-risk and unscheduled work with reasons; no over-capacity week or after-deadline task disguised as success.
-- **Storage blocked/corrupt:** warn that progress cannot be saved or offer a confirmed reset; do not silently claim persistence.
+- **Search/Fetch/provider unavailable or exhausted:** truthful failed/partial state, retained successful results and retry/changed-preferences controls. No unlabelled seed-catalog fallback.
+- **Missing/stale/contradictory official facts:** show unconfirmed criteria/dates/stages. No inferred future deadline or automatic “Eligible” badge from incomplete evidence.
+- **Readiness unavailable/malformed:** keep answers, show retry; unrelated screens work. A labelled self-check fallback at Oct 17 still requires the learner's decision.
+- **Impossible workload:** explicit unscheduled/at-risk work. No double-spent hours, exam overload or hidden expired target.
+- **Browser/server storage unavailable:** visible persistence warning; expire stale server references and revalidate rather than trust browser-written facts.
 
 ## Verification and Build Order
 
-Every PRD behavior has a component above. Build in working slices:
+1. Fresh artifact/skeleton, provider configuration, safety limits; one real TinyFish search/fetch and one managed-AI structured-output smoke test.
+2. Genre taste test → Scout-like preferences → live discovery, progress, filters, save/hide and explicit selection, including an opportunity not in our researched examples.
+3. Selected-source preparation, criteria/unknown states, readiness questions/assessment and manual timetable; local restore/reset.
+4. Shared task construction, one cross-track capacity ledger, overview/timeline, completion/reopen, expired/rolling/conditional stages and at-risk work.
+5. End-to-end verification, public-demo hardening, truthful recording and approved documents.
 
-1. Reviewed catalog/schema and app skeleton; real sources and explicit uncertainty before the UI promises eligibility.
-2. Taste test, profile/timetable, eligibility reasons and source disclosures; restore/clear progress.
-3. Question bank and one real managed-AI assessment; invalid-input, injection, timeout/refusal and quota checks.
-4. Shared task construction, one cross-track capacity ledger, roadmap overview/timeline, completion/reopen, closed/rolling/at-risk behavior.
-5. Full journey and public-demo hardening; capture a truthful recording with real data and approved docs.
+Tests: query coverage and each filter; canonical dedup across cycles; official-vs-aggregator evidence; absent/misattributed quotes; malformed/excessive model output; malicious page instructions; URL/redirect restrictions; source/account limits; partial searches and cancellation; selection preserved under filters; unknown grade equivalence/institute/date constraints; restored state and lost server snapshots.
 
-Test the scheduler with a fake clock: same-step reuse, incompatible essays not merged, dependency order, exam weeks, partial weeks, exact time zones, nearest deadline, no double-spending hours across tracks, rolling target labels, passed deadlines, and overflow remaining unscheduled.
+Scheduler tests use a fake clock: shared versus incompatible work, dependencies, exams, partial weeks, exact timezone/boundary, earliest deadline, no cross-track double spending, rolling target labels, expired tags, mid-week cutoff and unscheduled overflow. Readiness uses reviewed good/partial/empty answers and invalid-output mocks.
 
-Test eligibility with missing institution, unsupported grade conversion, conditional evidence, changed study year, failed criteria, and closed cycles. Validate every referenced quote/source/task ID and every real card link. Test readiness against reviewed good/partial/empty answers; judge explanations as well as JSON validity. Test save/restore/reset, unavailable provider, malformed outputs, and limits without paying for each failure test.
+Run type/data checks, tests and build, then a **real** live search → selection → assessment → both roadmap levels. Verify phone (~390px), tablet (~768px), desktop (~1280px), keyboard, field errors, readable contrast and reduced motion. Screenshots cannot prove clicks; exercise interactive behavior separately.
 
-Run type check, catalog validation, tests and build, then exercise one real end-to-end interview and the full no-eligible/all-closed paths. Verify phone (~390px), tablet (~768px), desktop (~1280px), keyboard operation, focus/errors, readable contrast, and reduced motion.
-
-**Schedule:** target build Oct 15–20; Oct 17 checkpoint decides whether the readiness interview must become a labelled self-check. Photo timetable parsing remains stretch, never part of the kernel. Early share Oct 21–22, final target Oct 25, hard deadline Oct 27 at 02:30 IST.
+Schedule: Oct 17 checkpoint for the readiness fallback/photo-timetable stretch; early share Oct 21–22; final target Oct 25; hard deadline Oct 27, 02:30 IST. Do not cut discovery to static examples as a shortcut.
 
 ## What Was Simplified and Why
 
-- Reviewed files instead of a live per-user crawler: reliable demo, fewer services, bounded cost. Never fake the source facts.
-- Browser progress instead of accounts/database: enough for a single-student proof of concept, no cross-device sync.
-- Question bank + one assessment call instead of open-ended AI chat: testable evidence, predictable cost, less injection exposure.
-- Deterministic scheduling instead of an AI-generated calendar: dates, capacity and dependencies must be checkable.
-- A small evidence-backed program set instead of an arbitrary eight-program target: exclude unsupported/inactive/partially funded examples.
-- No application automation, professor finder, mock selection interview, notifications, or review-site scraping.
+- One web/server app, not Scout plus a second integrated application.
+- No account/database service; same-browser personal progress and bounded single-instance operational storage.
+- Reusable genre questions and skill-question reuse, not a bespoke taste test for every listing.
+- Bounded live discovery with visible coverage, not a claim to search every internship in the world.
+- Code owns fit scoring, eligibility checks, deadlines and capacity; AI provides grounded extraction/readiness evidence, not an unchecked calendar.
+- Already cut: application/SOP automation, professor finder, visa odds, notifications, review-site scraping. No change to these or to the agreed visual/roadmap behavior.
+- Proposed deferral only: unattended scheduled Scout hunts/showcase/admin surfaces. This does not remove live discovery, filters, evidence, ranking or student choice.
 
 ## Decisions and Open Issues
 
-- **Learner decision:** TypeScript throughout with React and a small server; accepted the recommendation rather than preferring a Python server.
-- **Earlier agreed product decisions:** general direction test, grouped Research/Company tracks, earliest-deadline shared preparation, official-only selection stages, manual timetable, paper planner with bold accents. Do not reopen them.
-- **Proposed implementation details:** Express/Vite/Zod, question-bank rubric, one bounded managed-AI call, reviewed JSON data, shared capacity ledger and the safety limits. Spec approval accepts these details.
-- **Genuine uncertainty resolved:** the learner wanted unnamed “basic securities,” including rate limiting. Here the unfamiliar concepts map to concrete risks: repeated paid calls → limits/quotas; malformed input → validation; hostile answer instructions → no-tools assessment with schema/evidence checks. Teach these at their real build moments, not through an extra exercise.
-- **Evidence-based product clarifications:** the five items in that section need approval and matching PRD updates before coding.
-- **Early build gates:** finish each included program's detailed rules, source excerpts, timezone/funding limits; verify managed-AI activation and an actual strict-output call; audit actual dependency versions/licenses. No invented values to pass a gate.
-- **Can wait:** project name, optional publishing, more programs, optional animation choice, photo parsing. The learner chooses the name; “Untitled” is not a product-name decision.
-- **Related prior work:** Scout was the learner's separate internship-discovery entry. Ideas only, rebuilt fresh; no copied Scout code or visual identity. Disclose it as related inspiration. This spec is not submission text.
+- **Explicit learner decisions:** TypeScript stack; TinyFish as in Scout; rebuild relevant Scout functionality fresh because existing code/integration is excluded by the agreed competition boundary; taste test first, Scout-like questions second, existing planning product afterwards.
+- **Preserved:** official-only evidence, grouped Research/Company timelines, shared steps before earliest served deadline, capacity-aware exam scheduling, manual timetable, paper planner/bold accents.
+- **Proposed technical details for review:** Express/Vite/Zod, private single-instance source/run/quota stores, explainable scoring weights, initial limits and deferred unattended hunts. Spec approval accepts these implementation choices, not a public launch.
+- **Genuine learner uncertainty:** “basic securities” including rate limiting. Concrete mapping: repeated provider calls → quotas/rate limits; malformed input → validation; malicious answer/page instructions → isolated no-tools prompts plus schema/evidence checks. Explain at their build moments.
+- **Early build gates:** TinyFish Secrets setup + actual account limits; managed-AI activation/smoke test; provider freshness metadata; supported source/ATS interpretation; dependency/version/license audit. Paid Agent fallback additionally needs authorized spending and a verified bound/cancellation strategy. No claimed test success before these run.
+- **Not reopenable as an agent shortcut:** fixed catalog instead of discovery, omitting target selection, generating a card per internship, or replacing the downstream roadmap product.
+- **Can wait:** project name (learner's choice), optional publishing, photo timetable parsing and production-scale persistence. These do not block this proof of concept.
+- **Prior work disclosure:** Scout was built for a separate entry. No reused code; feature inspiration and fresh implementation must be disclosed. This document does not draft the learner's submission text.

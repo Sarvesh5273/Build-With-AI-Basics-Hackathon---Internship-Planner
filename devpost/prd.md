@@ -57,10 +57,12 @@ Acceptance criteria:
 
 ### Search Preferences, Discovery and Selection
 Develops `scope.md > The Core Loop` steps 2–3. Scout is a functional reference, not a code dependency.
+- The learner explicitly chose **TinyFish**, as in Scout, and wants the relevant discovery functionality replicated fresh. Do not replace it with a fixed dataset or a different discovery provider.
 - After the taste test, ask for roles/topics, locations, Research/Company preference, funding, remote preference, citizenship/visa needs, include/exclude keywords and preferred organizations.
 - The taste-test direction can prefill suggestions, but the student can change them.
 - Discover internships using those preferences. A few familiar programs or taste-test sources do not define the searchable pool.
 - Show filters, result evidence and eligibility/cycle status; let the student explicitly select and deselect targets.
+- Preserve Scout-style explainable ranking, search within results, Research/Company and visa/funding/unknown filters, fit/newest/deadline sorting, save/hide controls and visible search/source progress. Bookmarking is separate from choosing a roadmap target.
 - Only selected targets feed readiness and grouped roadmap generation. Filtering results must not silently remove a saved target or change its roadmap.
 - Treat visa support as a quoted posting fact, never a visa-approval probability. Keep this product focused on internships.
 
@@ -70,6 +72,8 @@ Acceptance criteria:
 - [ ] A discovered internship outside the taste-test examples can be selected and used for planning when the official evidence supports it.
 - [ ] Selecting/deselecting a target changes the programs included in readiness and roadmaps.
 - [ ] Empty or failed searches show an honest state and allow editing preferences/retrying, rather than pretending a static catalog is a live result.
+- [ ] Save/hide, result filtering and explicit target selection are distinct; a display filter cannot silently change a roadmap's targets.
+- [ ] Fit rankings explain preference match, not a fabricated likelihood of selection.
 
 ### Eligibility Check
 Develops `scope.md > The POC Boundary`.
@@ -154,6 +158,7 @@ Acceptance criteria:
 - **First taste test, then Scout-like questions, then the already-planned readiness/timetable/roadmap experience.** The learner clarified this order; do not redesign the downstream product.
 - **A reusable genre-based taste test grounded in real work**, not one test or project card per internship.
 - **Preference-driven discovery and student-selected targets**, rebuilt fresh without Scout integration or copied code. A fixed program catalog is not an agreed substitute.
+- **TinyFish is the chosen discovery engine.** Scout's search/filter/ranking/evidence functionality is central, not an optional external integration.
 - **Roadmaps grouped by track (Research / Company)** rather than one per program. Same-type programs need much of the same prep, so grouping avoids planning the same work several times.
 - **Two-level roadmap:** overview with this week's step, then a timeline per track.
 - **Shared steps scheduled before the earliest deadline they serve.** Simple and safe, even if some steps land earlier than strictly needed.

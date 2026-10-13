@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Technical blueprint — TinyFish discovery + internship roadmaps</title>
+<style>
+:root{--paper:#faf7ee;--ink:#191a17;--muted:#50554b;--line:#e3e1d6;--yellow:#ffe35b;--green:#e6efdf;--pink:#fce4db}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{font-family:"Arial Black",system-ui,sans-serif;font-size:clamp(30px,5vw,57px);line-height:1.12;letter-spacing:-.045em;margin:15px 0}h2{font-size:27px;line-height:1.25;margin:46px 0 18px;letter-spacing:-.025em}h3{font-size:18px;margin-bottom:8px}p+p{margin-top:12px}.eyebrow{font:750 12px/1.5 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.status{display:inline-block;background:var(--yellow);border:2px solid var(--ink);padding:5px 10px;border-radius:5px;font-size:12px;letter-spacing:.04em}.intro{max-width:78ch;font-size:18px}.box{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:22px;box-shadow:4px 4px 0 var(--ink)}.note{background:var(--green);border-left:5px solid var(--ink);padding:15px 18px;margin-top:22px}.warning{background:var(--pink);border-left:5px solid var(--ink);padding:16px 18px;margin-top:18px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.small{font-size:14px;color:var(--muted)}.tag{display:inline-block;font-size:12px;font-weight:800;background:var(--yellow);padding:3px 7px;border-radius:4px;margin-bottom:12px}.live{background:var(--green)}a{color:#234b29;text-underline-offset:3px;overflow-wrap:anywhere}a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #234bce;outline-offset:5px}ul,ol{margin:10px 0 0;padding-left:22px}li+li{margin-top:7px}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.88em}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;margin:10px 0 0}.skip{position:absolute;left:10px;top:-100px;background:white;padding:12px;border:2px solid var(--ink)}.skip:focus{top:10px;z-index:10}.stepper{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.stepper a{display:flex;align-items:center;min-height:44px;padding:9px 12px;border:2px solid var(--ink);border-radius:7px;background:#fff;color:var(--ink);font-size:14px;font-weight:750;text-decoration:none}.stepper a:hover{background:var(--yellow)}section,details{scroll-margin-top:22px}figure{margin:0}svg{width:100%;height:auto;display:block}figcaption{margin-top:12px;color:var(--muted);font-size:14px}details{background:white;border:2px solid var(--ink);border-radius:10px;margin-top:12px}summary{cursor:pointer;min-height:54px;padding:16px 20px;font-weight:800}summary::marker{color:var(--ink)}details .inside{padding:0 20px 20px}.ref{color:var(--muted);font-size:12px;margin:3px 0 10px}.label{font-weight:750}table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}th,td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--green);font-weight:800}td:first-child{font-weight:750}button{font:700 14px/1.4 system-ui;min-height:44px;padding:10px 14px;cursor:pointer;background:var(--yellow);border:2px solid var(--ink);border-radius:6px}footer{border-top:2px solid var(--ink);padding-top:20px;margin-top:40px;color:var(--muted);font-size:13px}.timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.timeline>div{border-left:4px solid var(--ink);padding:8px 12px;background:#fff}.timeline b{display:block}
+@media(max-width:800px){.three,.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.diagram-grid{grid-template-columns:1fr}}
+@media(max-width:600px){main{padding:28px 18px 50px}.grid,.three,.timeline{grid-template-columns:1fr}.box{padding:18px;box-shadow:3px 3px 0 var(--ink)}h2{font-size:24px}table,thead,tbody,tr,th,td{display:block}thead{display:none}tr{padding:8px 0;border-bottom:1px solid var(--line)}td{border:0;padding:6px}td:first-child{font-size:16px}svg text{font-family:system-ui,sans-serif}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white}.stepper,button{display:none}.box{box-shadow:none}details{break-inside:avoid}main{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#journey">Skip to the product flow</a>
+<main>
+<header>
+  <p class="eyebrow">Build With AI: Basics · 4-spec · <span class="status">Draft for review</span></p>
+  <h1>Discovery like Scout.<br>Roadmaps for your choices.</h1>
+  <p class="intro">TinyFish is central. Rebuild the relevant discovery functionality fresh, then use the student's selected internships for our agreed readiness check and timetable-fitted Research/Company roadmaps.</p>
+  <div class="note"><strong>This is a technical planning document.</strong> No application code has started. The fixed-catalog proposal is replaced. The canonical full blueprint is <code>devpost/spec.md</code>.</div>
+  <nav class="stepper" aria-label="Explore the blueprint">
+    <a href="#journey">01 · Product flow</a><a href="#architecture">02 · Architecture</a><a href="#scout">03 · Scout functionality</a><a href="#pieces">04 · Components</a><a href="#contracts">05 · APIs &amp; costs</a><a href="#build">06 · Build &amp; review</a>
+  </nav>
+</header>
+
+<section id="journey">
+<h2>One flow. Two different kinds of questions.</h2>
+<div class="grid three">
+  <article class="box"><span class="tag">1 · Taste test</span><h3>Understand work genres</h3><p>10–12 real, source-grounded direction questions. Many internships share work genres; this is not a card or test for every opportunity.</p><p class="small">Reviewed question set → direction. Not a skills exam and not claimed verbatim employer interview questions.</p></article>
+  <article class="box"><span class="tag">2 · Scout-like questions</span><h3>Set your preferences</h3><p>Topics, locations, Research/Company, funding, remote preference, visa needs, keywords and organizations.</p><p class="small">Taste-test suggestions stay editable. They never choose targets for the student.</p></article>
+  <article class="box"><span class="tag live">3 · Live discovery</span><h3>Filter and choose</h3><p>TinyFish searches and reads sources. Ranked, evidence-backed results with filters, save/hide and explicit target selection.</p><p class="small">No fixed program list. The student chooses the internships to plan for.</p></article>
+  <article class="box"><span class="tag">4 · Readiness + timetable</span><h3>Check preparation</h3><p>Academic eligibility, the short readiness interview, manual exam weeks and free hours—for the student's choices.</p><p class="small">This later interview checks preparation. The first taste test checks direction.</p></article>
+  <article class="box"><span class="tag">5 · Overview</span><h3>One action this week</h3><p>Research/Company cards plus one actionable next step across selected targets. No invented task when there is nothing actionable.</p><p class="small">The agreed two-level roadmap remains unchanged.</p></article>
+  <article class="box"><span class="tag">6 · Track timeline</span><h3>Shared work, real deadlines</h3><p>Shared preparation appears once, before its earliest deadline. Program-specific steps retain tags and evidence.</p><p class="small">One capacity budget across both tracks. Closed, at-risk and unscheduled work are explicit.</p></article>
+</div>
+</section>
+
+<section id="architecture">
+<h2>What talks to what</h2>
+<div class="grid diagram-grid">
+<figure class="box">
+<svg viewBox="0 0 560 540" role="img" aria-labelledby="arch-title arch-desc">
+<title id="arch-title">Browser, fresh TypeScript server, TinyFish and managed AI architecture</title>
+<desc id="arch-desc">The browser sends preferences and selections to the server. The server uses TinyFish Search and Fetch for official pages, optionally an authorized paid Agent fallback. Managed AI extracts evidence and assesses readiness. Code validates facts, calculates fit and schedules work. Personal progress stays in the browser; public-source snapshots and quotas live in a private server store. No Scout application connection.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#191a17"/></marker></defs>
+<g font-family="system-ui,sans-serif" fill="#191a17">
+<rect x="20" y="15" width="520" height="95" rx="10" fill="#ffe35b" stroke="#191a17" stroke-width="2"/>
+<text x="40" y="49" font-size="20" font-weight="800">React browser</text>
+<text x="40" y="76" font-size="16">Taste test → preferences → choose → roadmap</text>
+<text x="40" y="97" font-size="14">Personal progress: localStorage</text>
+<line x1="280" y1="110" x2="280" y2="148" stroke="#191a17" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="153" width="520" height="102" rx="10" fill="#fff" stroke="#191a17" stroke-width="2"/>
+<text x="40" y="187" font-size="20" font-weight="800">Fresh TypeScript + Express server</text>
+<text x="40" y="214" font-size="16">Search plan · validate evidence · trusted question packs</text>
+<text x="40" y="238" font-size="14">Quota reservation · safe URLs · anonymous run ownership</text>
+<path d="M150 255 L150 288" fill="none" stroke="#191a17" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M410 255 L410 288" fill="none" stroke="#191a17" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="295" width="250" height="120" rx="10" fill="#e6efdf" stroke="#191a17" stroke-width="2"/>
+<text x="40" y="329" font-size="20" font-weight="800">TinyFish</text>
+<text x="40" y="354" font-size="16">Search → Fetch</text>
+<text x="40" y="378" font-size="14">Official pages / ATS leads</text>
+<text x="40" y="401" font-size="14">Paid Agent: authorization gate</text>
+<rect x="290" y="295" width="250" height="120" rx="10" fill="#fce4db" stroke="#191a17" stroke-width="2"/>
+<text x="310" y="329" font-size="20" font-weight="800">Managed OpenAI</text>
+<text x="310" y="354" font-size="16">Evidence extraction</text>
+<text x="310" y="378" font-size="14">Questions + readiness rubric</text>
+<text x="310" y="401" font-size="14">No tools or application actions</text>
+<path d="M150 415 L150 437 L280 437 L280 456 M410 415 L410 437 L280 437" fill="none" stroke="#191a17" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="463" width="520" height="64" rx="10" fill="#fff" stroke="#191a17" stroke-width="2"/>
+<text x="40" y="490" font-size="18" font-weight="800">Code owns the final rules</text>
+<text x="40" y="515" font-size="15">Fit · criteria · shared tasks · deadlines · one hours ledger</text>
+</g>
+</svg>
+<figcaption>Only provider adapters hold credentials. Scout is a reference for functionality, not a connected service or copied codebase.</figcaption>
+</figure>
+<div>
+<article class="box"><h3>AI and code have different jobs</h3><ul><li><strong>TinyFish:</strong> discover and read the web.</li><li><strong>AI:</strong> extract quoted facts and assess answers against rubrics.</li><li><strong>Code:</strong> validate outputs, calculate explainable fit, evaluate supported criteria and allocate preparation.</li><li><strong>The student:</strong> choose targets and change preferences/timetable.</li></ul></article>
+<div class="warning"><strong>Official evidence is not automatic certainty.</strong> Missing or ambiguous conditions remain unconfirmed. A quote validates provenance, not every interpretation. Never invent a deadline, funding guarantee or interview stage.</div>
+<div class="note"><strong>Finite versus live:</strong> the genre-question bank is curated; the internship search pool is live. The named programs in our research are verification examples, not the whole product.</div>
+</div>
+</div>
+</section>
+
+<section id="scout">
+<h2>The Scout functionality we are rebuilding</h2>
+<div class="box">
+<table>
+<thead><tr><th>Capability</th><th>Fresh implementation</th></tr></thead>
+<tbody>
+<tr><td>Preference questions</td><td>Topics/roles, geography, remote, Research/Company, funding, citizenship/visa, include/exclude keywords and preferred organizations.</td></tr>
+<tr><td>Discovery pipeline</td><td>Plan queries → Search → classify official/ATS leads → Fetch → structured extraction → deduplicate → rank. Controlled Agent fallback when authorized.</td></tr>
+<tr><td>Result controls</td><td>Search within results; type/visa/funding/unknown filters; fit/newest/deadline sorting; save and hide. Explicit selection feeds roadmaps.</td></tr>
+<tr><td>Evidence</td><td>Quoted source, URL and last-read/freshness labels. No inferred visa approval, hidden funding gaps or fake “live verified” labels.</td></tr>
+<tr><td>Run transparency</td><td>Stage/progress, sources checked, failed reads, limits, partial results and search-more/retry. No silent static fallback.</td></tr>
+<tr><td>New handoff</td><td>Selected internships → evidence-backed eligibility → readiness → timetable → grouped roadmap. Filters never silently deselect targets.</td></tr>
+</tbody>
+</table>
+<p class="small" style="margin-top:16px"><strong>Proposed POC deferral:</strong> unattended scheduled hunts, showcase dashboards and advanced Scout administration. This is for review—not a previously agreed cut. Experienced-job searches do not belong to this internship product.</p>
+</div>
+</section>
+
+<section id="pieces">
+<h2>Open each component to trace the build</h2>
+<button id="expand" type="button" hidden>Expand all components</button>
+<details open><summary>01 · Genre questions and editable preferences</summary><div class="inside">
+<p class="ref">PRD: Taste Test; Search Preferences, Discovery and Selection</p><p>One reusable test, then the Scout-like questions screen. Direction informs suggestions, not eligibility or selection.</p><pre>data/genre-questions.json
+shared/direction.ts
+client/src/pages/TasteTest.tsx
+client/src/pages/SearchPreferences.tsx</pre>
+</div></details>
+<details><summary>02 · TinyFish runner, source extraction and ranking</summary><div class="inside">
+<p class="ref">PRD: Search Preferences, Discovery and Selection; Official Sources</p><p>Bounded live queries/pages, partial failures and safe official-source corroboration. Strict extraction schema; quote matching; no cross-program attribution. Deterministic fit score with visible reasons, not admission probability.</p><p class="small">Proposed per-run start: 8 queries, 20 fetched URLs including follow-ups, up to 20 results, 180 seconds. Search more continues discovery; these are not a fixed program limit.</p><pre>server/providers/tinyfish.ts / openai.ts
+server/discovery/plan.ts / run.ts / sources.ts
+server/discovery/extract.ts / rank.ts / deduplicate.ts
+client/src/components/SearchProgress.tsx / FilterPanel.tsx</pre>
+</div></details>
+<details><summary>03 · Selection and sourced eligibility</summary><div class="inside">
+<p class="ref">PRD: Search Preferences, Discovery and Selection; Eligibility Check</p><p>Save, hide and select are separate. Academic details are checked only against supported extracted criteria. Grade scales, institution and study dates may need follow-up; missing facts never become automatic eligibility.</p><p class="small">Prepare additional official selection-stage evidence for chosen targets. Not a “three internships only” restriction. Unsupported facts stay unconfirmed.</p><pre>client/src/pages/DiscoveryResults.tsx / EligibilityDetails.tsx
+server/discovery/revalidate.ts
+shared/eligibility.ts / schemas.ts</pre>
+</div></details>
+<details><summary>04 · Readiness assessment and manual timetable</summary><div class="inside">
+<p class="ref">PRD: Readiness Interview; Timetable Entry</p><p>Reuse reviewed skill questions where possible. Generate a source-grounded preparation pack for uncovered skills, clearly labelled app-generated. Fixed rubric before answers; one scoring request for 6–8 questions. Invalid evidence/refusals are errors, not fabricated scores.</p><p>Manual exam weeks and free hours. Same-browser storage; clear/reset confirmation and visible save failures. One capacity budget for both tracks.</p><pre>data/question-bank.json
+server/readiness/questions.ts / assess.ts
+client/src/pages/ReadinessInterview.tsx / Timetable.tsx
+client/src/lib/storage.ts</pre>
+</div></details>
+<details><summary>05 · Shared tasks, deadline scheduler and two roadmap levels</summary><div class="inside">
+<p class="ref">PRD: Track Timeline; Deadline Handling; Roadmap Overview</p><p>Preserve our agreed behavior: compatible shared prep appears once, assigned the earliest deadline it serves. Distinct essays/applications stay separate. Fit dependency-ready work into one global hours ledger; exam weeks have no preparation in the conservative first implementation.</p><p>Known dates use original timezones. Rolling programs have personal targets, not invented deadlines. Later interviews can be conditional/undated. Impossible work remains unscheduled/at risk; expired targets leave active allocations.</p><pre>shared/tasks.ts / scheduler.ts / dates.ts
+client/src/pages/RoadmapOverview.tsx / TrackTimeline.tsx
+client/src/components/TaskCard.tsx / WeekBlock.tsx / SourceDisclosure.tsx</pre>
+</div></details>
+<details><summary>06 · Privacy, storage, quotas and safe failures</summary><div class="inside">
+<p class="ref">PRD: Official Sources; States and Boundaries</p><p>Personal progress lives in browser localStorage. Bounded private server files hold public-source snapshots, short-lived owned search runs and operational quotas, not raw academic profiles or interview answers. Provider transmissions are disclosed.</p><p>Validate URL/redirect safety and all input/model output. Signed anonymous ownership; rate/concurrency limits; atomic quota reservations; no secrets or answers in logs. Model extraction/readiness has no tools or application powers.</p><p class="small">Single-process POC only. Later public/multi-instance launch requires shared durable quotas/storage and security/privacy review. No background deadline-warning promise while the app is closed.</p><pre>server/lib/store.ts / quota.ts / safety.ts / logger.ts
+server/health.ts
+private-runtime/    # ignored, private, never served</pre>
+</div></details>
+</section>
+
+<section id="contracts">
+<h2>External services, exact calls and honest costs</h2>
+<div class="grid">
+<article class="box"><h3>TinyFish</h3><p><code>GET api.search.tinyfish.ai</code><br>Query/preferences → title/snippet/URL leads.</p><p><code>POST api.fetch.tinyfish.ai</code><br>Up to 10 URLs/request → text/links + per-URL errors.</p><p><code>POST agent.tinyfish.ai/v1/automation/run-async</code><br>Authorized fallback → run ID; poll/cancel using <code>/v1/runs/:id</code>.</p><p class="small">All use server-side X-API-Key. The full payload/response contracts are in the canonical spec.</p><ul><li><a href="https://docs.tinyfish.ai/search-api/reference">Search reference</a></li><li><a href="https://docs.tinyfish.ai/api-reference/fetch-and-extract-content-from-urls">Fetch OpenAPI</a></li><li><a href="https://docs.tinyfish.ai/agent-api/reference">Agent reference</a></li><li><a href="https://www.tinyfish.ai/pricing">Pricing and limits</a></li></ul></article>
+<article class="box"><h3>Managed OpenAI</h3><p>Proposed <code>gpt-4.1-mini</code>, strict structured outputs, fixed instructions and bounded untrusted input.</p><ul><li>Separate extraction, question-pack and assessment schemas.</li><li>Validate evidence and IDs; correct JSON does not prove truth.</li><li>Input/output listed at $0.40/$1.60 per million tokens. Discovery may need several extraction calls.</li><li>Billed through Replit credits—not free AI.</li></ul><ul><li><a href="https://docs.replit.com/features/integrations/replit-ai-integrations">Replit managed-AI documentation</a></li><li><a href="https://developers.openai.com/api/docs/models/gpt-4.1-mini">Model and prices</a></li><li><a href="https://developers.openai.com/api/docs/guides/structured-outputs">Structured outputs</a></li></ul></article>
+</div>
+<div class="warning"><strong>Verified, but not smoke-tested:</strong> TinyFish's pricing page lists free Search/Fetch within limits; Search's reference gives conflicting allowance/wallet statements. Agent is $0.016 per step; its hard step cap is beta-gated. Use conservative limits, verify the account and obtain paid-fallback budget authorization before enabling it. No silent wallet top-ups.</div>
+<div class="note"><strong>Freshness is not guaranteed by a parameter.</strong> Current Fetch docs say <code>ttl:0</code> can still return cache-valid content. Keep retrieved/interpreted timestamps and cache labels; elapsed-deadline checks are separate from live page verification.</div>
+</section>
+
+<section>
+<h2>Real source findings—not a locked catalog</h2>
+<div class="box"><p>These pages ground taste-test content and test the discovery pipeline. Other legitimate programs must work too.</p><ul>
+<li><a href="https://admissions.kaust.edu.sa/study/internships">KAUST VSRP:</a> fully funded wording, rolling applications and public project descriptions.</li>
+<li><a href="https://www.oist.jp/admissions/research-internship/apply-research-internship">OIST:</a> Oct 15, 2026, 23:59 JST deadline; JPY 5,000 application fee despite funded placement.</li>
+<li><a href="https://eee.epfl.ch/">EPFL E3:</a> Nov 1, 2026 application date; verify exact cutoff/timezone before a hard-date plan.</li>
+<li><a href="https://recruit.hennge.com/en/gip">HENNGE:</a> coding challenge, documents, interviews; slots can close without a universal fixed deadline.</li>
+<li><a href="https://www.mitacs.ca/our-programs/globalink-research-internship-students/">Mitacs:</a> Summer 2027 call closed; institute/country-specific eligibility matters.</li>
+<li>DAAD WISE currently says unavailable; Charpak excludes travel/medical costs. Do not schedule them as currently open, fully funded targets merely because they were earlier examples.</li>
+</ul><p class="small" style="margin-top:14px">Checked October 13, 2026. Full source links and funding caveats are in the canonical spec. No invented next-cycle dates.</p></div>
+</section>
+
+<section id="build">
+<h2>Where it runs and how we prove it</h2>
+<div class="grid">
+<article class="box"><h3>One fresh web app</h3><p>React/Vite screens, Node 24/Express server, Zod validation and Vitest rules. One same-origin Replit workflow on port 5000.</p><pre>npm ci
+npm run dev
+# open / in Replit Preview
+
+npm run check
+npm run validate:data
+npm test
+npm run build
+npm start</pre><p class="small">Planned commands; no scaffolding or dependencies installed yet. TinyFish key through Secrets, never chat/code; managed-AI setup required.</p></article>
+<article class="box"><h3>Verification follows the full journey</h3><ul><li>A live search finds an opportunity outside the named examples.</li><li>Filters/save/hide/selection operate independently and persist.</li><li>Every claimed fact has source evidence or is visibly unknown.</li><li>Readiness refuses malformed/unsupported output honestly.</li><li>Shared work, timezone boundaries, exams and both tracks respect one capacity ledger.</li><li>Closed/rolling/at-risk and impossible work are explicit.</li><li>Phone/tablet/desktop and keyboard checks; real interaction tests, not screenshots alone.</li></ul></article>
+</div>
+<h2>Build slices and dates</h2>
+<ol><li>Fresh skeleton and provider smoke tests, quotas and safe configuration.</li><li>Taste test → preferences → live TinyFish discovery and student selection.</li><li>Selected-source eligibility, readiness and manual timetable; restore/reset.</li><li>Grouped roadmaps, shared tasks, deadlines, completion and at-risk behavior.</li><li>Full-journey checks and truthful recording.</li></ol>
+<div class="timeline" style="margin-top:22px"><div><b>Oct 17</b>Checkpoint: readiness self-check fallback only by learner choice. Photo timetable stays stretch.</div><div><b>Oct 21–22</b>Early share and feedback.</div><div><b>Oct 25</b>Final target.</div><div><b>Oct 27 · 02:30 IST</b>Hard deadline. Video + public repo required; publishing optional.</div></div>
+<h2>What review accepts—and what still needs setup</h2>
+<div class="box"><ul>
+<li><strong>Already chosen:</strong> TinyFish, TypeScript, fresh Scout-inspired discovery, exact product order, official evidence and our grouped roadmap behavior.</li>
+<li><strong>Proposed technical details:</strong> same-origin Express/Vite app; single-instance operational stores; scoring weights and limits; deferred unattended hunts/showcase/admin surfaces.</li>
+<li><strong>Build gates:</strong> provider configuration, actual account limits, a real Search/Fetch + strict-output smoke test, source safety/freshness metadata and dependency licenses.</li>
+<li><strong>Paid Agent gate:</strong> explicit spending authorization and verified bound/cancellation strategy; no guessed beta access.</li>
+<li><strong>Preserved cuts:</strong> no accounts, application/SOP automation, professor finder, visa odds, review-site scraping or notifications.</li>
+<li><strong>Before code:</strong> explicit notice to the learner. Project name remains theirs to choose.</li>
+</ul></div>
+</section>
+<footer>This offline companion uses inline CSS/SVG and native disclosures; all essential content is available without JavaScript. <code>devpost/spec.md</code> is canonical. Status: draft. No Scout source was imported and no application code was written during this planning work.</footer>
+</main>
+<script>
+const expand=document.getElementById('expand');
+const pieces=[...document.querySelectorAll('#pieces details')];
+expand.hidden=false;
+expand.addEventListener('click',()=>{const open=pieces.some(d=>!d.open);pieces.forEach(d=>d.open=open);expand.textContent=open?'Collapse all components':'Expand all components';});
+</script>
+</body>
+</html>

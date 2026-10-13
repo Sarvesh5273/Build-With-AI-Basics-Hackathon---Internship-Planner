@@ -13,6 +13,12 @@ Do not replace this with a small fixed program catalog. Rebuild preference-drive
 
 **How to apply:** Keep the no-copied-Scout-code boundary, but distinguish it from excluding Scout-inspired functionality. Inspect the reference's current behavior rather than guessing filters. Reconcile canonical planning docs before approval or building.
 
+The user further clarified: “as we are using tiny fish same as we were doing in scout” and “scout is very very imp here so i want you to replicate it.”
+
+**Why:** The no-reused-code competition boundary must not be misread as permission to remove or replace discovery.
+
+**How to apply:** TinyFish is explicitly chosen. Replicate relevant Scout search/filter/ranking/evidence behavior fresh; never silently substitute a static catalog, another provider or a reduced feature set. Any proposed POC deferrals remain proposals until accepted.
+
 ## Preserve the intended order and downstream decisions
 
 The user repeated the flow: “taste test based on real qs” covering shared internship genres, “then after screen asking q like scout then our as planned.”

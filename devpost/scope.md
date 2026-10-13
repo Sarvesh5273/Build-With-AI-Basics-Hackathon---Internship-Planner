@@ -41,6 +41,7 @@ The demo moment: a student takes the general taste test, answers search-preferen
 ## The POC Boundary
 - A small reusable taste test of real, source-grounded questions spanning common work genres. It is independent of the number of internships discovered.
 - Scout-like preference questions and fresh, preference-driven internship discovery with filters and student selection. Rebuild the functionality; do not call Scout or copy its code. Search is not restricted to a fixed list of programs.
+- TinyFish powers this discovery, as in Scout. Replicate the relevant search/filter/ranking/source-evidence functionality with new code; excluding existing code does not exclude those features.
 - Official-source evidence for the selected internships: each requirement has its official source and a quoted line. Missing information is visibly unconfirmed, not invented.
 - An eligibility check on nationality, year, CGPA and branch.
 - A short AI readiness interview that checks your level against what the programs need.
