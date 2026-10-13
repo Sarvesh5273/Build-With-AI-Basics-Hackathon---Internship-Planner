@@ -1,0 +1,1 @@
+- [Hackathon context](hackathon-context.md) — Devpost Build With AI rules (no old code, required planning docs, video-judged) + locked funded-internship concept and cuts.
