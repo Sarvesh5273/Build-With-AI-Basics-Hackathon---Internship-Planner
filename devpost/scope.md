@@ -10,7 +10,7 @@ A roadmap tool for Indian undergrads chasing fully funded internships abroad. It
 ## The Unique Kernel
 Your roadmap is built from three real things, not generic advice:
 1. **The programs' actual requirements**, quoted from their official pages.
-2. **Your verified level**, from a short interview, not a self-rating.
+2. **Evidence of your readiness**, from a short interview, not a self-rating. It checks the skills covered by its questions; it does not certify mastery of every requirement.
 3. **Your university timetable**, meaning exam weeks and free hours.
 
 Study planners don't know the programs, program lists don't know your level, and neither knows your semester. Funded programs also ask for very different things: skills, documents like an SOP or recommendation letters, and in some cases a professor's acceptance. The roadmap puts all of that into one plan.
@@ -50,8 +50,8 @@ The demo moment: a student takes the general taste test, answers search-preferen
 
 ## Later
 - Reading a timetable from a photo. This is a stretch goal, decided at the Oct 17 build checkpoint.
-- A "re-check this program" button that reads the official page live and shows "verified today".
-- Broader source coverage and other Indian universities' calendars.
+- A dedicated "re-check this program" button with honest retrieval/cache metadata. A fresh request alone cannot guarantee the provider read the origin live.
+- Additional specialized source adapters and other Indian universities' calendars. Broad, preference-driven discovery is already part of the POC.
 
 ## Explicitly Cut
 - **Visa-approval odds:** there's no reliable public data, and a made-up probability wouldn't hold up. Official visa notes are shown instead.
@@ -61,7 +61,7 @@ The demo moment: a student takes the general taste test, answers search-preferen
 - **Accounts and login:** not needed for a proof of concept.
 
 ## If We Fall Behind (decided at the Oct 17 checkpoint)
-The readiness interview becomes a simple self-check first. The taste test, eligibility check, and timetable-fitted roadmap stay.
+If the learner chooses this fallback at the checkpoint, the readiness interview becomes a clearly labelled self-check first. The taste test, live discovery/selection, eligibility check, and timetable-fitted roadmap stay.
 
 ## Prior Related Work (disclosure)
 The learner built Scout, a live internship-discovery tool for a separate bounty, the week of Oct 6, 2026, without this skill pack. No Scout code is used here. Only ideas carry over, such as quoting the source for every fact.

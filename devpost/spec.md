@@ -1,11 +1,11 @@
 ---
 doc: spec
-status: draft
+status: approved
 ---
 
 # Untitled — Technical Spec
 
-Revised for the learner's explicit direction: **replicate Scout's relevant discovery functionality with TinyFish, implemented fresh**, then connect the student's choices to the agreed readiness and roadmap product. This replaces the rejected fixed-catalog proposal. It is planning, not application code.
+Approved by the learner with a requested final ambiguity check, completed below. **Replicate Scout's relevant discovery functionality with TinyFish, implemented fresh**, then connect the student's choices to the agreed readiness and roadmap product. This replaces the rejected fixed-catalog proposal. It is planning, not application code.
 
 ## How This Works, In Plain Language
 
@@ -114,7 +114,11 @@ Keep search preferences in browser progress. The server receives only what disco
 
 Initial proposed per-run budget: 8 queries, 20 fetched URLs including followed pages, at most 20 returned evidence-backed listings, and a 180-second overall deadline. Bounds control work, not the universe of eligible programs. Show queries/source coverage and partial results; offer another bounded search/page instead of claiming exhaustive coverage. Changing preferences creates a new search, not merely a local reorder of seed data.
 
-Scheduled unattended hunts, showcase dashboards and advanced Scout administration are **recommended POC deferrals**, not already-agreed exclusions. Core search/filter/evidence functionality is not deferred. Review approval resolves this proposed boundary.
+“Search more” uses a server-issued continuation bound to the validated preferences and prior query/page coverage: advance provider pages (within its documented range), then unqueried topic/location combinations or unprocessed leads. Retain and deduplicate earlier results. Do not restart page zero and call identical results “more.” Each continuation consumes a disclosed bounded-run quota.
+
+Funding preference defaults to the fully funded focus; the student may explicitly broaden it. Display source-backed funding components, exclusions, caps and fees. A provider/employer calling a placement “fully funded” does not establish zero costs; show that wording and the actual benefits separately. Unknown coverage never becomes a confirmed funding match.
+
+Scheduled unattended hunts, showcase dashboards and advanced Scout administration are deferred from the approved POC. Core search/filter/evidence functionality is not deferred.
 
 ### Discovery Runner, Source Reading and Evidence Extraction
 
@@ -129,6 +133,8 @@ Implements `prd.md > Search Preferences, Discovery and Selection`, `prd.md > Off
 7. Compute match/filter values and return results even when some sources failed. “Official page read” is provenance, **not a guarantee that automated interpretation is correct**. Show interpretations as evidence-backed preliminary checks with the original excerpts.
 
 AI supplies extracted facts/labelled judgments, not an opaque final fit score. Code computes an explainable 0–100 preference score using role/topic (35), location/remote (20), funding preference (20), visa constraint (15) and include keywords (10). Unknown is not a positive match and is visibly reflected in reasons; hard exclusions/confirmed incompatibilities cannot rank as a strong fit. Weights are app guidance, not admission odds.
+
+Normalize weights over preferences actually supplied; an unused keyword/location preference is not a failed match. Keep unknown values for active constraints in the denominator so missing evidence cannot inflate fit. Preferred organizations influence query priority and tie-breaks; they are not automatically a hard exclusion of other organizations.
 
 Compatible public source snapshots are cached by canonical URL + content hash + extractor version. Last fetched and last interpreted are separate timestamps. A personal timetable edit does not re-crawl. Results returned from cache are labelled; TinyFish `ttl:0` **prefers** live fetching but its current docs do not guarantee fresh origin content in every case.
 
@@ -152,11 +158,15 @@ Inputs include nationality, study year, grade **value and scale**, branch, plus 
 
 One failed mandatory criterion yields a sourced negative. No failures plus missing mandatory evidence is not a positive. The student's statements are not independently verified. Show “Based on your details and extracted official criteria—check the linked conditions before applying.”
 
+Keep selected confirmed-ineligible targets visible with sourced reasons, but exclude their application tasks from active scheduling. Needs-confirmation targets can have clearly labelled tentative/general preparation; unresolved mandatory conditions must not become a confirmed application-ready state.
+
 ### Readiness Questions and AI Assessment
 
 Implements `prd.md > Readiness Interview`.
 
 Selected targets' sourced skills map to a reviewed skill/question bank. Reuse relevant questions across similar internships. For skills outside that bank, generate a small question/rubric pack grounded in the extracted skill descriptions; label it app-generated preparation, never an employer's official interview questions. Validate source/skill IDs and topic coverage. If a skill cannot be assessed responsibly, show **Not assessed**, not a fabricated verdict.
+
+The 6–8-question pack has an explicit coverage map across selected targets. Assess shared skills once; show uncovered skills per target and an optional further assessment/general-preparation action. Adding a different target may request another bounded pack; it never makes untested requirements “ready.” Reuse prior answers/results only when the skill/rubric versions remain compatible.
 
 6–8 questions per short interview; one at a time. A question pack has fixed rubric items before answers are submitted. One AI assessment request per completed interview, not per keystroke. Server retrieves the trusted question/rubric and evidence records; the client cannot supply new system instructions or official facts.
 
@@ -170,6 +180,8 @@ Implements `prd.md > Timetable Entry`, `prd.md > States and Boundaries`.
 
 Versioned localStorage stores personal details, reactions, preferences, targets/evidence snapshots, timetable, answers, assessment and completion IDs. Validate restored state and handle schema/source/rubric changes. Reset requires confirmation; blocked/full/corrupt storage gets a visible warning. Same browser and origin only; no cross-device promise.
 
+Restore the last in-progress screen when the flow is incomplete; return to the roadmap overview only after a roadmap exists. Interrupted runs are reconciled with the server, not blindly restarted. Preserved browser answers/history remain usable even if a server cache has expired; revalidate evidence/trusted rubric records before a new assessment.
+
 One weekly free-hour budget across **both tracks**, not duplicated per track. Conservative initial implementation gives exam weeks zero preparation capacity; prorate the remaining portion of the current week. Marking done removes remaining effort; reopening restores it. Hours and waiting times are estimates.
 
 ### Shared Preparation and Deadline Scheduler
@@ -178,16 +190,20 @@ Implements `prd.md > Track Timeline`, `prd.md > Deadline Handling`.
 
 The agreed behavior remains:
 
-1. Build preparation dependencies backwards from each selected internship's actual official selection stages.
+1. Map typed, evidenced requirements to reusable preparation templates, then build dependencies backwards from confirmed official stages. Documents use checklists; skill gaps use practice/evidence tasks; external actions use confirmation/waiting dependencies. The finite templates are task patterns, not a program catalog. Template effort ranges are app estimates, not official facts.
 2. Merge only compatible reusable work—CV core, shared skill practice, reusable evidence—not distinct essays/submissions with different formats.
 3. Tag each shared task with all programs it serves and assign the **earliest deadline it serves**.
 4. Allocate dependency-ready work, earliest due first, into one future cross-track capacity ledger. Split effort into weekly chunks when needed; finishing in a deadline's week is insufficient if the chunk falls after its actual cutoff.
 5. Never overflow silently. Leave impossible work visibly unscheduled/at risk, with hours/dependency reasons and affected targets. Waiting for an external letter is a real dependency, not compressible study hours.
-6. Passed deadlines remove the program from active allocations but preserve completed history. Recompute the earliest deadline after removing a tag.
+6. Passed official deadlines remove that cycle from active application allocations but preserve completed history. Recompute the earliest deadline after removing a tag. A missed personal target instead remains overdue/needs rescheduling; do not falsely close a rolling program.
 
 Known deadlines: UTC instant + original timezone and official quote. Date-only cutoff: disclose unknown time and schedule before that day conservatively. Rolling/capacity-limited programs: editable **personal application target**, explicitly not an official deadline. Unknown future cycles: no invented reopening month.
 
 Actual later interviews/stages appear at published dates or as conditional “After application—date not published.” Prep can precede application; do not fabricate a date for the actual interview.
+
+Do not invent mandatory tasks for an unsupported requirement type: retain the quote as “Needs review” and offer a clearly labelled source-review/confirmation action. Preparation instructions and estimates are app guidance tied to a sourced need, not claimed official wording. A professor's acceptance is a milestone only if that program requires it.
+
+Weekly hours are an availability estimate, not exact daily slots. Prorate both the remaining current week and any pre-cutoff portion of a deadline week, using one ledger; no credit for hours after the cutoff. Show these assumptions, conservative effort estimates and an editable personal buffer/target before the official deadline. This improves planning safety but cannot guarantee the student completes work or applies on time.
 
 Re-check deadlines on roadmap load, tab return and day change. This cannot warn while the app is closed; background reminders remain cut. Re-checking elapsed time is distinct from verifying the source is still current.
 
@@ -291,6 +307,8 @@ All application files are new. Do not import old Scout packages, database defini
 
 Errors are `{error:{code,message,requestId}}`, using 400/429/502/503 appropriately and Retry-After where needed. No stack trace, raw upstream credential message or secret configuration to the browser.
 
+`targets/prepare` is also a metered service, not a rate-limit bypass: validate ownership/selection versions, cap each processing batch and run duration, reserve shared Fetch/model quotas, and reuse trusted evidence/packs where compatible. Preparation and generation calls have their own token/IP request limits. Apply the same cost controls to continuation, retries and additional question packs.
+
 ### TinyFish — Verified Contracts
 
 Docs checked **2026-10-13**; no authenticated call has been made yet. Use `X-API-Key` server-side.
@@ -349,7 +367,7 @@ Represent funding components and limits, not a blanket promise of zero student e
 
 Tests: query coverage and each filter; canonical dedup across cycles; official-vs-aggregator evidence; absent/misattributed quotes; malformed/excessive model output; malicious page instructions; URL/redirect restrictions; source/account limits; partial searches and cancellation; selection preserved under filters; unknown grade equivalence/institute/date constraints; restored state and lost server snapshots.
 
-Scheduler tests use a fake clock: shared versus incompatible work, dependencies, exams, partial weeks, exact timezone/boundary, earliest deadline, no cross-track double spending, rolling target labels, expired tags, mid-week cutoff and unscheduled overflow. Readiness uses reviewed good/partial/empty answers and invalid-output mocks.
+Scheduler tests use a fake clock: shared versus incompatible work, requirement-to-template mapping, unsupported requirement review, dependencies, exams, partial weeks, exact timezone/boundary, earliest deadline, no cross-track double spending, missed personal targets versus official expiry, expired tags, mid-week cutoff and unscheduled overflow. Readiness tests coverage gaps, compatible reuse, reviewed good/partial/empty answers and invalid-output mocks. Discovery tests continuation progression, no duplicate “more” results, funding exclusions and metered target preparation.
 
 Run type/data checks, tests and build, then a **real** live search → selection → assessment → both roadmap levels. Verify phone (~390px), tablet (~768px), desktop (~1280px), keyboard, field errors, readable contrast and reduced motion. Screenshots cannot prove clicks; exercise interactive behavior separately.
 
@@ -363,15 +381,28 @@ Schedule: Oct 17 checkpoint for the readiness fallback/photo-timetable stretch; 
 - Bounded live discovery with visible coverage, not a claim to search every internship in the world.
 - Code owns fit scoring, eligibility checks, deadlines and capacity; AI provides grounded extraction/readiness evidence, not an unchecked calendar.
 - Already cut: application/SOP automation, professor finder, visa odds, notifications, review-site scraping. No change to these or to the agreed visual/roadmap behavior.
-- Proposed deferral only: unattended scheduled Scout hunts/showcase/admin surfaces. This does not remove live discovery, filters, evidence, ranking or student choice.
+- Approved POC deferral: unattended scheduled Scout hunts/showcase/admin surfaces. This does not remove live discovery, filters, evidence, ranking or student choice.
 
 ## Decisions and Open Issues
 
 - **Explicit learner decisions:** TypeScript stack; TinyFish as in Scout; rebuild relevant Scout functionality fresh because existing code/integration is excluded by the agreed competition boundary; taste test first, Scout-like questions second, existing planning product afterwards.
 - **Preserved:** official-only evidence, grouped Research/Company timelines, shared steps before earliest served deadline, capacity-aware exam scheduling, manual timetable, paper planner/bold accents.
-- **Proposed technical details for review:** Express/Vite/Zod, private single-instance source/run/quota stores, explainable scoring weights, initial limits and deferred unattended hunts. Spec approval accepts these implementation choices, not a public launch.
+- **Accepted technical blueprint:** Express/Vite/Zod, private single-instance source/run/quota stores, explainable scoring, initial limits and deferred unattended hunts. Limits/weights are documented initial tuning parameters, not guarantees of search completeness. Approval is not authorization for paid fallback or a public launch.
 - **Genuine learner uncertainty:** “basic securities” including rate limiting. Concrete mapping: repeated provider calls → quotas/rate limits; malformed input → validation; malicious answer/page instructions → isolated no-tools prompts plus schema/evidence checks. Explain at their build moments.
 - **Early build gates:** TinyFish Secrets setup + actual account limits; managed-AI activation/smoke test; provider freshness metadata; supported source/ATS interpretation; dependency/version/license audit. Paid Agent fallback additionally needs authorized spending and a verified bound/cancellation strategy. No claimed test success before these run.
 - **Not reopenable as an agent shortcut:** fixed catalog instead of discovery, omitting target selection, generating a card per internship, or replacing the downstream roadmap product.
 - **Can wait:** project name (learner's choice), optional publishing, photo timetable parsing and production-scale persistence. These do not block this proof of concept.
 - **Prior work disclosure:** Scout was built for a separate entry. No reused code; feature inspiration and fresh implementation must be disclosed. This document does not draft the learner's submission text.
+
+### Final Ambiguity Review
+
+The learner said the draft was good and requested one last check. The audit found documentation inconsistencies and missing implementation policies, not a reason to redesign the product:
+
+- Reconciled the PRD's “every requirement ready/partly/not yet” with honest short-interview coverage: uncovered skills are Not assessed; documents and external actions are checklists.
+- Removed unsupported reopening months and “verified today” promises. Unknown dates stay unknown; a missed personal target is not an expired official cycle.
+- Reconciled “exactly one action” with empty/exam/waiting weeks and zero exam-week capacity; return resumes an incomplete flow rather than a nonexistent roadmap.
+- Defined evidence-to-task-template mapping and unsupported-requirement review, search continuation, active-preference score normalization and rate limits for selected-target preparation.
+- Clarified funding labels, fees/exclusions and the fully funded default. No invented zero-cost guarantee.
+- Provider/account configuration, cache metadata and paid Agent enforcement remain explicit build gates. They cannot be verified through document review alone.
+
+No additional ceremonial sign-off is required. Application coding has not started and still requires its explicit start notice.

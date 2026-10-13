@@ -19,6 +19,14 @@ The user further clarified: “as we are using tiny fish same as we were doing i
 
 **How to apply:** TinyFish is explicitly chosen. Replicate relevant Scout search/filter/ranking/evidence behavior fresh; never silently substitute a static catalog, another provider or a reduced feature set. Any proposed POC deferrals remain proposals until accepted.
 
+## Approved POC boundary and paid access
+
+The learner approved the blueprint with a final ambiguity check. On-demand discovery remains central; unattended scheduled hunts/showcase/admin surfaces can wait.
+
+**Why:** This keeps the hackathon focused on the taste-test → discovery/selection → readiness/roadmap kernel, without excluding Scout's relevant search functionality.
+
+**How to apply:** Planning approval is not spending authorization for paid TinyFish Agent fallback. Verify provider-account limits and obtain explicit budget authorization before enabling it; no automatic wallet top-ups or guessed beta step-cap access. Genuine Search/Fetch discovery remains required.
+
 ## Preserve the intended order and downstream decisions
 
 The user repeated the flow: “taste test based on real qs” covering shared internship genres, “then after screen asking q like scout then our as planned.”

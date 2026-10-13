@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:,">
-<title>Technical blueprint — TinyFish discovery + internship roadmaps</title>
+<title>Approved technical blueprint — TinyFish discovery + internship roadmaps</title>
 <style>
 :root{--paper:#faf7ee;--ink:#191a17;--muted:#50554b;--line:#e3e1d6;--yellow:#ffe35b;--green:#e6efdf;--pink:#fce4db}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -20,10 +20,10 @@ main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{
 <a class="skip" href="#journey">Skip to the product flow</a>
 <main>
 <header>
-  <p class="eyebrow">Build With AI: Basics · 4-spec · <span class="status">Draft for review</span></p>
+  <p class="eyebrow">Build With AI: Basics · 4-spec · <span class="status">Approved · final audit complete</span></p>
   <h1>Discovery like Scout.<br>Roadmaps for your choices.</h1>
   <p class="intro">TinyFish is central. Rebuild the relevant discovery functionality fresh, then use the student's selected internships for our agreed readiness check and timetable-fitted Research/Company roadmaps.</p>
-  <div class="note"><strong>This is a technical planning document.</strong> No application code has started. The fixed-catalog proposal is replaced. The canonical full blueprint is <code>devpost/spec.md</code>.</div>
+  <div class="note"><strong>Planning approved; final consistency audit complete.</strong> No application code has started. The fixed-catalog proposal is replaced. The canonical full blueprint is <code>devpost/spec.md</code>.</div>
   <nav class="stepper" aria-label="Explore the blueprint">
     <a href="#journey">01 · Product flow</a><a href="#architecture">02 · Architecture</a><a href="#scout">03 · Scout functionality</a><a href="#pieces">04 · Components</a><a href="#contracts">05 · APIs &amp; costs</a><a href="#build">06 · Build &amp; review</a>
   </nav>
@@ -101,12 +101,13 @@ main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{
 <tr><td>New handoff</td><td>Selected internships → evidence-backed eligibility → readiness → timetable → grouped roadmap. Filters never silently deselect targets.</td></tr>
 </tbody>
 </table>
-<p class="small" style="margin-top:16px"><strong>Proposed POC deferral:</strong> unattended scheduled hunts, showcase dashboards and advanced Scout administration. This is for review—not a previously agreed cut. Experienced-job searches do not belong to this internship product.</p>
+<p class="small" style="margin-top:16px"><strong>Approved POC deferral:</strong> unattended scheduled hunts, showcase dashboards and advanced Scout administration. Live discovery and its core controls remain included. Experienced-job searches do not belong to this internship product.</p>
 </div>
 </section>
 
 <section id="pieces">
 <h2>Open each component to trace the build</h2>
+<div class="note"><strong>Final audit clarifications:</strong> a short interview leaves uncovered skills Not assessed; documents have checklists. No fabricated reopening months or live-cache claims. A missed personal target does not close a rolling program. Empty/exam/waiting weeks have no fake action. Fees and funding exclusions stay visible. Search-more advances coverage; requirements map to reusable preparation patterns, not a fixed internship list.</div>
 <button id="expand" type="button" hidden>Expand all components</button>
 <details open><summary>01 · Genre questions and editable preferences</summary><div class="inside">
 <p class="ref">PRD: Taste Test; Search Preferences, Discovery and Selection</p><p>One reusable test, then the Scout-like questions screen. Direction informs suggestions, not eligibility or selection.</p><pre>data/genre-questions.json
@@ -126,13 +127,13 @@ server/discovery/revalidate.ts
 shared/eligibility.ts / schemas.ts</pre>
 </div></details>
 <details><summary>04 · Readiness assessment and manual timetable</summary><div class="inside">
-<p class="ref">PRD: Readiness Interview; Timetable Entry</p><p>Reuse reviewed skill questions where possible. Generate a source-grounded preparation pack for uncovered skills, clearly labelled app-generated. Fixed rubric before answers; one scoring request for 6–8 questions. Invalid evidence/refusals are errors, not fabricated scores.</p><p>Manual exam weeks and free hours. Same-browser storage; clear/reset confirmation and visible save failures. One capacity budget for both tracks.</p><pre>data/question-bank.json
+<p class="ref">PRD: Readiness Interview; Timetable Entry</p><p>Reuse reviewed skill questions where possible. Generate a source-grounded preparation pack, clearly labelled app-generated. Fixed rubric before answers; one scoring request for 6–8 questions with an explicit coverage map. Uncovered skills stay Not assessed; documents/external actions have checklists, not fabricated skill scores.</p><p>Manual exam weeks and free hours. Same-browser storage; resume the incomplete flow or an existing roadmap. Clear/reset confirmation and visible save failures. One capacity budget for both tracks.</p><pre>data/question-bank.json
 server/readiness/questions.ts / assess.ts
 client/src/pages/ReadinessInterview.tsx / Timetable.tsx
 client/src/lib/storage.ts</pre>
 </div></details>
 <details><summary>05 · Shared tasks, deadline scheduler and two roadmap levels</summary><div class="inside">
-<p class="ref">PRD: Track Timeline; Deadline Handling; Roadmap Overview</p><p>Preserve our agreed behavior: compatible shared prep appears once, assigned the earliest deadline it serves. Distinct essays/applications stay separate. Fit dependency-ready work into one global hours ledger; exam weeks have no preparation in the conservative first implementation.</p><p>Known dates use original timezones. Rolling programs have personal targets, not invented deadlines. Later interviews can be conditional/undated. Impossible work remains unscheduled/at risk; expired targets leave active allocations.</p><pre>shared/tasks.ts / scheduler.ts / dates.ts
+<p class="ref">PRD: Track Timeline; Deadline Handling; Roadmap Overview</p><p>Compatible shared prep appears once, assigned the earliest deadline it serves. Map sourced needs to reusable document/skill/external-action task patterns; unsupported needs stay Needs review. App estimates are not official wording. Fit dependency-ready work into one global hours ledger; exam weeks have zero preparation capacity.</p><p>Known dates use original timezones. Rolling programs have personal targets; a missed target is overdue, not proof of closure. Later interviews can be conditional/undated. Impossible work is unscheduled/at risk; closed or confirmed-ineligible application tasks leave active allocations. Weekly hours are an estimate, not a guarantee of actual daily availability or on-time application.</p><pre>shared/tasks.ts / scheduler.ts / dates.ts
 client/src/pages/RoadmapOverview.tsx / TrackTimeline.tsx
 client/src/components/TaskCard.tsx / WeekBlock.tsx / SourceDisclosure.tsx</pre>
 </div></details>
@@ -182,17 +183,17 @@ npm start</pre><p class="small">Planned commands; no scaffolding or dependencies
 <h2>Build slices and dates</h2>
 <ol><li>Fresh skeleton and provider smoke tests, quotas and safe configuration.</li><li>Taste test → preferences → live TinyFish discovery and student selection.</li><li>Selected-source eligibility, readiness and manual timetable; restore/reset.</li><li>Grouped roadmaps, shared tasks, deadlines, completion and at-risk behavior.</li><li>Full-journey checks and truthful recording.</li></ol>
 <div class="timeline" style="margin-top:22px"><div><b>Oct 17</b>Checkpoint: readiness self-check fallback only by learner choice. Photo timetable stays stretch.</div><div><b>Oct 21–22</b>Early share and feedback.</div><div><b>Oct 25</b>Final target.</div><div><b>Oct 27 · 02:30 IST</b>Hard deadline. Video + public repo required; publishing optional.</div></div>
-<h2>What review accepts—and what still needs setup</h2>
+<h2>What is approved—and what still needs setup</h2>
 <div class="box"><ul>
 <li><strong>Already chosen:</strong> TinyFish, TypeScript, fresh Scout-inspired discovery, exact product order, official evidence and our grouped roadmap behavior.</li>
-<li><strong>Proposed technical details:</strong> same-origin Express/Vite app; single-instance operational stores; scoring weights and limits; deferred unattended hunts/showcase/admin surfaces.</li>
+<li><strong>Accepted technical blueprint:</strong> same-origin Express/Vite app; single-instance operational stores; explainable scoring and initial limits; deferred unattended hunts/showcase/admin surfaces. Approval does not authorize paid Agent use.</li>
 <li><strong>Build gates:</strong> provider configuration, actual account limits, a real Search/Fetch + strict-output smoke test, source safety/freshness metadata and dependency licenses.</li>
 <li><strong>Paid Agent gate:</strong> explicit spending authorization and verified bound/cancellation strategy; no guessed beta access.</li>
 <li><strong>Preserved cuts:</strong> no accounts, application/SOP automation, professor finder, visa odds, review-site scraping or notifications.</li>
 <li><strong>Before code:</strong> explicit notice to the learner. Project name remains theirs to choose.</li>
 </ul></div>
 </section>
-<footer>This offline companion uses inline CSS/SVG and native disclosures; all essential content is available without JavaScript. <code>devpost/spec.md</code> is canonical. Status: draft. No Scout source was imported and no application code was written during this planning work.</footer>
+<footer>This offline companion uses inline CSS/SVG and native disclosures; all essential content is available without JavaScript. <code>devpost/spec.md</code> is canonical. Status: approved after the requested ambiguity audit. No Scout source was imported and no application code was written during this planning work.</footer>
 </main>
 <script>
 const expand=document.getElementById('expand');

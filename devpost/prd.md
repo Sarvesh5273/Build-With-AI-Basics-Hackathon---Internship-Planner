@@ -77,9 +77,9 @@ Acceptance criteria:
 
 ### Eligibility Check
 Develops `scope.md > The POC Boundary`.
-- Inputs: nationality, year of study, CGPA, branch.
-- Each discovered internship is checked against its official criteria. Results: **Eligible based on entered details**, **Not eligible** (failed criterion and quoted source), or **Needs confirmation** when required facts are missing. Cycle status separately shows **Closed this cycle** for a passed deadline.
-- Eligible programs are grouped into **Research** and **Company** tracks.
+- Inputs: nationality, year of study, grade value and scale, branch, plus conditional follow-ups when sourced rules require institute/degree dates/remaining semesters/English or other facts.
+- Each discovered internship is checked against its extracted official criteria. Results: **Meets extracted criteria based on your details**, **Not eligible** (failed criterion and quoted source), or **Needs confirmation** when required facts are missing or unsupported. This is a preliminary check, not certification that every official condition has been independently verified.
+- Selected programs are grouped into **Research** and **Company** tracks; unconfirmed conditions stay visible. Confirmed ineligible programs have no active application schedule, though general skill preparation can remain available.
 
 Acceptance criteria:
 - [ ] Changing CGPA or year visibly changes which programs are eligible.
@@ -88,7 +88,7 @@ Acceptance criteria:
 ### Timetable Entry
 Develops `scope.md > The Unique Kernel` (input 3). Entered by hand.
 - Mark exam weeks; set free hours per week.
-- Exam weeks get no heavy steps.
+- The conservative first implementation gives exam weeks zero preparation capacity: no heavy or light preparation is allocated there. This preserves the no-heavy-steps rule without guessing how much study time is left.
 
 Acceptance criteria:
 - [ ] Marking a week as an exam week moves heavy steps out of that week on the timeline.
@@ -97,29 +97,30 @@ Acceptance criteria:
 ### Readiness Interview
 Develops `scope.md > The Core Loop` step 4. A **level check**, not a mock interview.
 - A short set of questions, focused on the skills required by the student's direction and their selected internships.
-- Output: each requirement gets a status (**ready**, **partly**, **not yet**) with a one-line reason drawn from their answers.
-- Statuses feed the roadmap: "not yet" and "partly" become steps; "ready" skills are not re-taught.
+- Output: each tested skill gets a status (**ready**, **partly**, **not yet**) with a one-line reason drawn from the answers. Required skills not covered responsibly by the short interview show **Not assessed**, never an invented verdict.
+- Document and external-action requirements have checklists/confirmation states, not AI-certified skill scores. A student's answer cannot prove a recommendation letter was submitted.
+- Statuses feed the roadmap: "not yet" and "partly" become preparation; "ready" skills are not re-taught. "Not assessed" remains an explicit coverage gap, with an appropriate assessment/general-preparation next action rather than an inferred lack of ability.
 
 Acceptance criteria:
 - [ ] The questions visibly differ for a student leaning ML/data versus one leaning company/software.
-- [ ] Every requirement in the summary has a status and a reason, and none is a self-rating.
+- [ ] Every tested skill has a sourced question/rubric, status and reason; uncovered skills and document/external-action requirements show their distinct honest states.
 
 ### Roadmap Overview
 Develops `scope.md > What "Working" Looks Like`.
-- **This week's one step** at the top, chosen across all tracks by the nearest deadline it serves.
-- One card per track: the programs in it, the nearest deadline, and a one-line readiness summary.
+- **This week's one step** at the top when a feasible, dependency-ready action exists, chosen across all tracks by its nearest due date. Otherwise explain the empty/exam/waiting/confirmation state.
+- One card per track: selected programs, nearest known official deadline or explicitly labelled personal target, and readiness/uncertainty summary.
 
 Acceptance criteria:
-- [ ] Exactly one step is highlighted as this week's step.
-- [ ] Each track card lists its programs and nearest deadline.
+- [ ] Exactly one feasible step is highlighted when one exists; no fake step in an exam, waiting or empty week.
+- [ ] Each track card lists its programs and distinguishes official deadlines, personal targets and unknown dates.
 
 ### Track Timeline
 Develops `scope.md > The Core Loop` step 5.
-- **Built backwards from each program's official selection stages.** Each stage (e.g. securing a professor's acceptance, documents, coding test, interview) is a milestone quoted from the official source. Prep steps land in free weeks before it.
-- Weeks from now until the last deadline. Exam weeks hatched out; each program's deadline marked.
+- **Built backwards from evidenced official selection stages.** A professor's acceptance is included only when that program explicitly requires it; it is not a generic research-internship step. App-authored preparation is labelled separately from actual official stages.
+- Weeks from now until the latest relevant known deadline or personal target. Undated later stages remain conditional; unknown official dates are never invented. Exam weeks are hatched out.
 - **Shared steps appear once**, tagged with every program they serve (e.g. "SOP core story → MITACS, DAAD WISE, Charpak"). Program-specific steps are tagged with one program.
 - A shared step is scheduled **before the earliest deadline it serves.**
-- Each step shows: what to do, why (quoted requirement + official link), which programs it counts toward, estimated hours vs free hours that week, and done / not done.
+- Each step shows: what to do, why (linked quoted requirement and separately labelled preparation guidance), program tags, estimated hours vs free hours, and done / not done. Waiting for another person is a dependency, not compressible study hours.
 
 Acceptance criteria:
 - [ ] A shared research step appears once with all its program tags, not once per program.
@@ -129,28 +130,30 @@ Acceptance criteria:
 
 ### Deadline Handling
 Raised by the learner: a deadline in a grouped track must never expire unnoticed.
-- **Deadline passed:** the program leaves the timeline and moves to "Closed this cycle" with its usual opening month and source link. It no longer affects scheduling.
+- **Official deadline passed:** the cycle leaves active allocations and moves to "Closed this cycle", preserving history and the source. Show a next opening only if official evidence supports it; otherwise say "Next call not announced."
+- **Personal target passed:** show an overdue target and request an updated target. Do not label a rolling program closed without official evidence. Early closure when slots fill is possible and cannot be predicted.
 - **Not enough time left:** if the hours its steps need exceed the student's free hours before the deadline (excluding exam weeks), the program stays visible but is marked **At risk** with a plain reason (e.g. "needs ~30 hrs, you have ~12 free hrs before Nov 10"). The student decides whether to push for it.
-- Deadlines are re-checked against today's date every time the roadmap opens.
+- Deadlines are re-checked against the clock on roadmap load, tab return and day change. This is distinct from re-fetching official pages and cannot notify someone while the app is closed.
 
 Acceptance criteria:
-- [ ] A program with a past deadline never appears on a timeline and shows in "Closed this cycle".
+- [ ] A passed official cycle has no active application allocations, shows "Closed this cycle" and retains history. A missed personal target does not falsely close the program.
 - [ ] Reducing free hours until a program can't fit shows "At risk" with the hours comparison.
 
 ### Official Sources
 Develops `scope.md > Inspiration & Identity` ("every requirement shows where it came from").
-- Every requirement, eligibility criterion, deadline and selection stage shows a quoted line from the official page, a link, and a "last checked" date.
+- Every claimed official requirement, eligibility criterion, deadline and selection stage shows a quote, link and retrieval/freshness label. Unsupported information stays unknown. Cached content is not claimed to be live-verified; preparation advice and estimated hours are app guidance, not official quotations.
+- Funding filters default to the fully funded focus but may be broadened explicitly. “Fully funded” does not promise zero out-of-pocket costs: show sourced support, exclusions, caps and application fees; uncertain coverage remains unknown.
 - Only official sources drive eligibility, scheduling and status. No student-report sites.
 
 Acceptance criteria:
-- [ ] Clicking any requirement's source tag shows the quote, link and last-checked date.
+- [ ] Clicking an official requirement's source tag shows the quote, link and honest retrieval/cache metadata.
 
 ## States and Boundaries
 - **First use:** starts at the taste test.
-- **Coming back:** lands on the roadmap overview with their previous answers kept; deadlines re-checked. *(Assumption: progress is kept on the same device/browser, since there are no accounts. Confirm in `4-spec`.)*
-- **No eligible programs:** a clear message naming the criteria that ruled each program out, and listing programs that are closed but reopen next cycle. *(Assumption: not raised by the learner; flagged for review.)*
-- **Every eligible program closed:** the roadmap shows only "Closed this cycle" with opening months, plus skill steps from the readiness interview so the student can prepare for next cycle. *(Assumption, flagged for review.)*
-- **Taste test with nothing marked interested:** the result says so and suggests continuing with all fields open. *(Assumption, flagged for review.)*
+- **Coming back:** restore the last completed/in-progress screen and browser-held progress. A generated roadmap returns to its overview; an interrupted search/interview does not jump to a nonexistent roadmap. Re-check dates; revalidate expired server records when necessary. No cross-device/sync promise.
+- **No eligible programs:** name sourced failure/confirmation reasons; allow revising preferences and discovering other opportunities. No invented future call.
+- **Every eligible program closed:** show closed-cycle history, any officially evidenced future call, and clearly labelled general preparation. No fabricated opening month.
+- **Taste test with nothing marked interested:** say so and allow continuing with editable open preferences.
 - **Interview can't be scored** (e.g. service failure): the student sees an honest error and can retry. The app never shows a made-up status.
 - **At risk program:** stays on the timeline with the reason visible.
 
@@ -189,8 +192,8 @@ Acceptance criteria:
 - **Timetable from a photo:** stretch goal, decided at the Oct 17 checkpoint (`scope.md > Later`).
 
 ## Possible Later Enhancements
-- A "re-check this program" button that reads the official page live and shows "verified today".
-- Broader source coverage and universities' calendars; a broader reusable genre-question set.
+- A dedicated per-program re-check control with honest provider retrieval/cache labels.
+- Additional specialized source adapters and universities' calendars; a broader reusable genre-question set. Preference-driven discovery is not deferred.
 - A public launch beyond the hackathon (learner's interest).
 
 ## Non-Goals
@@ -202,6 +205,6 @@ Acceptance criteria:
 
 ## Open Questions
 - **Project name:** the learner's choice. Can wait until before submission; doesn't block `4-spec`.
-- **Discovery provider, bounded search behavior and verification of selected internships' official selection stages:** define in `4-spec`; do not revert to a fixed program list.
-- **React Bits licence:** check in `4-spec` before relying on it.
-- **Assumptions under States and Boundaries:** confirm during review.
+- **Provider/account setup:** TinyFish is chosen; actual account limits, paid Agent authorization and managed-AI access are build-time gates in the approved spec, not missing provider choices.
+- **React Bits licence:** reviewed in the spec; vet the exact chosen components/versions before installation.
+- Final consistency review reconciled readiness coverage, empty weeks, unknown/reopening dates, rolling targets, funding labels and return behavior with the spec.
