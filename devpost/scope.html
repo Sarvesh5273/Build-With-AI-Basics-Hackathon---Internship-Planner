@@ -27,6 +27,10 @@
   .gap{margin-top:12px;color:var(--muted);font-size:15px}
   figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
   figure svg{width:100%;height:auto;display:block}
+  .flow{list-style:none;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0}
+  .flow li{padding:12px;border:1px solid var(--line);border-top:4px solid var(--a);border-radius:10px;font:14px/1.5 ui-sans-serif,system-ui,sans-serif}
+  .flow b{display:block;margin-bottom:6px}
+  button{min-height:44px} :focus-visible{outline:3px solid var(--c);outline-offset:3px}
   figcaption{font:13px/1.4 ui-sans-serif,system-ui,sans-serif;color:var(--muted);margin-top:8px}
   .steps{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
   .steps button{font:600 13px/1 ui-sans-serif,system-ui,sans-serif;border:1px solid var(--line);background:var(--card);padding:9px 12px;border-radius:999px;cursor:pointer;color:var(--ink)}
@@ -44,7 +48,7 @@
   .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
   footer{margin-top:50px;font:13px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--muted)}
-  @media (max-width:720px){.kernel,.two{grid-template-columns:1fr}}
+  @media (max-width:720px){.kernel,.two,.flow{grid-template-columns:1fr}}
   @media (prefers-reduced-motion:no-preference){.stepdesc{transition:background .2s}}
 </style>
 </head>
@@ -67,63 +71,44 @@
 
   <h2>Core loop</h2>
   <figure>
-    <svg viewBox="0 0 860 250" role="img" aria-labelledby="loopTitle">
-      <title id="loopTitle">Core loop: taste test, eligibility, readiness interview, timetable-fitted roadmap, then return when the timetable changes or a step is done</title>
-      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b665b"/></marker></defs>
-      <g font-family="ui-sans-serif,system-ui,sans-serif">
-        <rect x="10" y="40" width="180" height="96" rx="14" fill="#dcebe6" stroke="#0f5c4d"/>
-        <text x="100" y="78" text-anchor="middle" font-weight="700" font-size="16" fill="#0f5c4d">1 · Taste test</text>
-        <text x="100" y="102" text-anchor="middle" font-size="12.5" fill="#1d1b16">real project descriptions</text>
-        <text x="100" y="120" text-anchor="middle" font-size="12.5" fill="#1d1b16">→ find a direction</text>
-        <rect x="230" y="40" width="180" height="96" rx="14" fill="#fffdf8" stroke="#1d1b16"/>
-        <text x="320" y="78" text-anchor="middle" font-weight="700" font-size="16">2 · Eligible programs</text>
-        <text x="320" y="102" text-anchor="middle" font-size="12.5">nationality · year</text>
-        <text x="320" y="120" text-anchor="middle" font-size="12.5">CGPA · branch</text>
-        <rect x="450" y="40" width="180" height="96" rx="14" fill="#e1e4f3" stroke="#3b4a8f"/>
-        <text x="540" y="78" text-anchor="middle" font-weight="700" font-size="16" fill="#3b4a8f">3 · Readiness</text>
-        <text x="540" y="102" text-anchor="middle" font-size="12.5">short interview</text>
-        <text x="540" y="120" text-anchor="middle" font-size="12.5">verifies your level</text>
-        <rect x="670" y="28" width="180" height="120" rx="14" fill="#f4e1d6" stroke="#b4532a" stroke-width="2"/>
-        <text x="760" y="66" text-anchor="middle" font-weight="700" font-size="16" fill="#b4532a">4 · Roadmap</text>
-        <text x="760" y="90" text-anchor="middle" font-size="12.5">per program, fitted to</text>
-        <text x="760" y="108" text-anchor="middle" font-size="12.5">exams + deadlines</text>
-        <text x="760" y="130" text-anchor="middle" font-size="12.5" font-weight="700">★ this week's step</text>
-        <line x1="190" y1="88" x2="228" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
-        <line x1="410" y1="88" x2="448" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
-        <line x1="630" y1="88" x2="668" y2="88" stroke="#6b665b" stroke-width="2" marker-end="url(#ar)"/>
-        <path d="M760 150 C760 225, 540 230, 545 140" fill="none" stroke="#6b665b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar)"/>
-        <text x="650" y="222" text-anchor="middle" font-size="12.5" fill="#6b665b">come back: exams change, new semester, step done → roadmap updates</text>
-      </g>
-    </svg>
+    <ol class="flow">
+      <li><b>1 · Taste test</b>Real, source-grounded questions about common work genres. Find a direction.</li>
+      <li><b>2 · Preferences</b>Scout-like questions about topics, locations, funding and other filters.</li>
+      <li><b>3 · Discover &amp; choose</b>Search, filter, check eligibility and select internships. No fixed program list.</li>
+      <li><b>4 · Readiness</b>The agreed short level check and manual exam weeks/free hours.</li>
+      <li><b>5 · Roadmaps</b>Research/Company tracks. Shared prep before the earliest deadline, plus this week's step.</li>
+    </ol>
     <figcaption>Click through the steps below for what happens at each one.</figcaption>
   </figure>
   <div class="steps" role="group" aria-label="Core loop steps">
     <button aria-pressed="true" data-i="0">1 · Taste test</button>
-    <button aria-pressed="false" data-i="1">2 · Eligible programs</button>
-    <button aria-pressed="false" data-i="2">3 · Readiness</button>
-    <button aria-pressed="false" data-i="3">4 · Roadmap</button>
+    <button aria-pressed="false" data-i="1">2 · Preferences</button>
+    <button aria-pressed="false" data-i="2">3 · Discover &amp; choose</button>
+    <button aria-pressed="false" data-i="3">4 · Readiness</button>
+    <button aria-pressed="false" data-i="4">5 · Roadmaps</button>
   </div>
   <div class="stepdesc" id="stepdesc" aria-live="polite"></div>
 
   <h2>Who it's for</h2>
   <div class="two">
-    <div class="card"><b>The person</b><p>A 3rd-year B.Tech student at an Indian university (starting with VIT Pune), applying this cycle to MITACS Globalink, DAAD WISE, Charpak, or HENNGE. Has finished Python; doesn't know what to learn next or what research involves.</p></div>
+    <div class="card"><b>The person</b><p>A 3rd-year B.Tech student at an Indian university applying to funded research or company internships abroad. Has finished Python; doesn't know what to learn next or what research involves. Discovers and chooses targets through their preferences, not a fixed list.</p></div>
     <div class="card"><b>What they do today</b><p>Piece it together from scattered official pages, seniors' advice, and YouTube, then guess what to do in which week around exams.</p></div>
   </div>
 
   <h2>Proof-of-concept boundary</h2>
   <details open><summary><span><span class="tag now">Now</span>Built in the proof of concept</span></summary><ul>
-    <li>A small curated set of fully funded programs open to Indian students. Every requirement has its official source and a quoted line.</li>
-    <li>A taste test using real project descriptions from programs that publish them.</li>
+    <li>A reusable taste test of real, source-grounded questions covering common work genres, independent of the number of discovered internships.</li>
+    <li>Scout-like preference questions, fresh discovery, filters and explicit student selection. No copied Scout code, integration or fixed program list.</li>
+    <li>Every selected internship's requirements have official-source evidence; missing facts stay visibly unconfirmed.</li>
     <li>An eligibility check: nationality, year, CGPA, branch.</li>
     <li>A short AI readiness interview against what the programs need.</li>
     <li>Timetable entered by hand: exam weeks and free hours per week.</li>
-    <li>A roadmap per program, scheduled around timetable and deadlines, with one highlighted next step.</li>
+    <li>Research/Company roadmaps with shared steps before their earliest deadline, exam-aware scheduling, closed/at-risk handling and one highlighted next step.</li>
   </ul></details>
   <details><summary><span><span class="tag later">Later</span>Worth doing, not now</span></summary><ul>
     <li>Reading a timetable from a photo (stretch goal, decided at the Oct 17 checkpoint).</li>
     <li>A “re-check this program” button that reads the official page live and shows “verified today”.</li>
-    <li>More programs and countries; other universities' calendars.</li>
+    <li>Broader source coverage and other universities' calendars.</li>
   </ul></details>
   <details><summary><span><span class="tag cut">Cut</span>Explicitly out, with reasons</span></summary><ul>
     <li><b>Visa-approval odds</b>: no reliable public data, and a made-up probability wouldn't hold up. Official visa notes are shown instead.</li>
@@ -146,10 +131,11 @@
 </main>
 <script>
   const steps=[
-    "Browse real project descriptions from programs that publish them, and react to what interests you. This helps a student who doesn't yet know what “research” means find a direction.",
-    "Enter nationality, year, CGPA and branch. Only programs you can actually apply to stay on the list, each with its official source.",
-    "Answer a short interview that checks your level against what those programs need, instead of rating yourself.",
-    "See a roadmap per program, with steps placed around your exam weeks and real application deadlines. One step is highlighted for this week."
+    "Answer source-grounded direction questions covering common kinds of real internship work. Similar internships share genres; there is not a test for every internship.",
+    "The next screen asks Scout-like search-preference questions. Taste-test suggestions are editable, not forced filters.",
+    "Discover and filter internships, check their official eligibility criteria, then explicitly select targets. The search pool is not a fixed program catalog.",
+    "Keep the agreed readiness level check and manual timetable input: exam weeks and free hours.",
+    "See the agreed Research/Company roadmaps. Shared work appears once before the earliest deadline it serves, with program-specific steps, closed/at-risk handling and this week's action."
   ];
   const btns=[...document.querySelectorAll('.steps button')], d=document.getElementById('stepdesc');
   function show(i){btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));d.textContent=steps[i];}

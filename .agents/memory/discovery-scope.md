@@ -13,6 +13,14 @@ Do not replace this with a small fixed program catalog. Rebuild preference-drive
 
 **How to apply:** Keep the no-copied-Scout-code boundary, but distinguish it from excluding Scout-inspired functionality. Inspect the reference's current behavior rather than guessing filters. Reconcile canonical planning docs before approval or building.
 
+## Preserve the intended order and downstream decisions
+
+The user repeated the flow: “taste test based on real qs” covering shared internship genres, “then after screen asking q like scout then our as planned.”
+
+**Why:** The agent's attempted correction still made the user feel the settled product was being changed. A finite reusable genre-based taste test and a broad discovery pool are separate concepts; neither requires a question/card for every opportunity.
+
+**How to apply:** General source-grounded direction questions first, Scout-like preference questions second, discovery/selection next, then the already-agreed readiness, manual timetable and grouped roadmaps. Preserve shared steps, earliest-deadline scheduling and the visual direction; do not reopen them or invent a larger redesign.
+
 ## Explicit notice before application coding
 
 The user asked: “before building let me know like when you start to code.”

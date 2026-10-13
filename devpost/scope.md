@@ -16,13 +16,14 @@ Your roadmap is built from three real things, not generic advice:
 Study planners don't know the programs, program lists don't know your level, and neither knows your semester. Funded programs also ask for very different things: skills, documents like an SOP or recommendation letters, and in some cases a professor's acceptance. The roadmap puts all of that into one plan.
 
 ## Who It's For
-A 3rd-year B.Tech student at an Indian university (the learner: VIT Pune) applying this cycle to fully funded programs like MITACS Globalink, DAAD WISE, Charpak, or company programs like HENNGE. They've finished a language like Python and don't know what to learn next or which programs to target. They don't really know what "research" work involves. Today they piece it together from scattered official pages, seniors' advice, and YouTube, then guess at what to do in which week around exams.
+A 3rd-year B.Tech student at an Indian university applying this cycle to funded research or company internships abroad. The programs are discovered from the student's preferences, not restricted to a fixed list of familiar names. They've finished a language like Python and don't know what to learn next or which programs to target. They don't really know what "research" work involves. Today they piece it together from scattered official pages, seniors' advice, and YouTube, then guess at what to do in which week around exams.
 
 ## The Core Loop
-1. Open it and get a feel for real funded project descriptions to find a direction.
-2. See which programs you're eligible for (nationality, year, CGPA, branch).
-3. Answer a short readiness interview.
-4. Get a roadmap per program, fitted to your timetable, with the one next step to do this week.
+1. Start with a general taste test: real, source-grounded questions covering common kinds of internship work. Similar internships share genres; the test is not generated separately for every opportunity.
+2. On the next screen, answer Scout-like search-preference questions: topics/roles, locations, Research/Company interests, funding and other relevant filters. The taste-test result helps but does not dictate these preferences.
+3. Discover internships from those preferences, check eligibility (nationality, year, CGPA, branch and any required follow-ups), and choose the internships to target. The student chooses; a fixed program catalog does not.
+4. Answer the short readiness interview for those choices and enter the university timetable: exam weeks and free hours.
+5. Get the agreed Research/Company roadmaps, with shared preparation appearing once, program-specific steps tagged, and the one next step to do this week.
 
 You come back when the timetable changes (exams, new semester) or after finishing a step, and the roadmap updates.
 
@@ -35,20 +36,21 @@ They're applying to these internships this cycle and hit this exact problem them
 ## What "Working" Looks Like
 In the learner's words: "see that roadmap and plan according to my internships and my university timetable."
 
-The demo moment: a student enters their details and timetable, answers the interview, and sees a roadmap for their eligible programs. Each step is placed around their exam weeks and real application deadlines, each requirement links to its official source, and one next step is highlighted for this week.
+The demo moment: a student takes the general taste test, answers search-preference questions, discovers and chooses internships, and sees the agreed roadmap after the readiness interview and timetable entry. Each step is placed around their exam weeks and real application deadlines, shared work appears once before the earliest deadline it serves, each requirement links to its official source, and one next step is highlighted for this week.
 
 ## The POC Boundary
-- A small curated set of fully funded programs open to Indian students. Each requirement has its official source and a quoted line.
-- A taste test using real project descriptions from programs that publish them.
+- A small reusable taste test of real, source-grounded questions spanning common work genres. It is independent of the number of internships discovered.
+- Scout-like preference questions and fresh, preference-driven internship discovery with filters and student selection. Rebuild the functionality; do not call Scout or copy its code. Search is not restricted to a fixed list of programs.
+- Official-source evidence for the selected internships: each requirement has its official source and a quoted line. Missing information is visibly unconfirmed, not invented.
 - An eligibility check on nationality, year, CGPA and branch.
 - A short AI readiness interview that checks your level against what the programs need.
 - Timetable entered by hand: exam weeks and free hours per week.
-- A roadmap per program, scheduled around the timetable and deadlines, plus one highlighted next step.
+- Grouped Research/Company roadmaps for the student's choices, scheduled around the timetable and deadlines, with shared steps placed before the earliest deadline they serve, closed/at-risk handling, and one highlighted next step.
 
 ## Later
 - Reading a timetable from a photo. This is a stretch goal, decided at the Oct 17 build checkpoint.
 - A "re-check this program" button that reads the official page live and shows "verified today".
-- More programs and countries; other Indian universities' calendars.
+- Broader source coverage and other Indian universities' calendars.
 
 ## Explicitly Cut
 - **Visa-approval odds:** there's no reliable public data, and a made-up probability wouldn't hold up. Official visa notes are shown instead.

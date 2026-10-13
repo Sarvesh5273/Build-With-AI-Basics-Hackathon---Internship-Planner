@@ -7,6 +7,8 @@ status: draft
 
 **Requires revision before review or implementation.** The learner clarified that discovery must not be restricted to a fixed catalog: rebuild Scout-inspired, preference-driven discovery from scratch, let students filter and select internships, then assess readiness and generate roadmaps for those choices. The fixed-catalog architecture below is an unapproved proposal and no longer reflects that requirement. Retain its verified source findings and the accepted TypeScript stack; revise discovery, selection, source verification, cost controls, storage and the corresponding scope/PRD before approval. No application coding has begun.
 
+**Flow clarification:** reusable real questions about shared internship work genres → Scout-like preference questions → discovery/filtering/student selection → the already-agreed readiness, manual timetable and grouped Research/Company roadmaps. Preserve the downstream decisions; revise the technical discovery mechanism, not the product's roadmap behavior. The scope and PRD now reflect this correction.
+
 This is a blueprint, not application code. The learner accepted the recommended TypeScript stack; that approval does not approve the fixed-catalog proposal.
 
 ## How This Works, In Plain Language
