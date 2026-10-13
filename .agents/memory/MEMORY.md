@@ -1,1 +1,2 @@
 - [Hackathon context](hackathon-context.md) — Devpost Build With AI rules (no old code, required planning docs, video-judged) + locked funded-internship concept and cuts.
+- [Discovery scope and coding notice](discovery-scope.md) — Scout-inspired discovery rebuilt fresh; students filter and select targets; announce before application coding.
