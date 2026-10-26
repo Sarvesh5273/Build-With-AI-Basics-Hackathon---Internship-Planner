@@ -32,3 +32,9 @@ Distinguish a documented interface from one actually available in a restricted t
 **Why:** A deployment callback described in a skill was not registered, and generated artifact metadata rejected direct edits. Neither observation proves the platform feature is unsupported.
 
 **How to apply:** Follow the authorized metadata replacement flow when available; do not guess callback names or bypass protected files with shell writes. Preserve a clearly labelled candidate and disclose unresolved configuration rather than claiming a production repair.
+
+Playwright video recording needs its own ffmpeg build; on Nix, symlink the system ffmpeg (has libvpx) into the ms-playwright ffmpeg-<rev>/ffmpeg-linux path instead of downloading.
+
+**Why:** recordVideo failed with "Executable doesn't exist"; the downloaded binaries hit missing shared libraries before.
+
+**How to apply:** Demo footage is recorded by the repo's record/edit demo scripts into ignored generated-artifacts/. The taste test's track lean turns Company off in preferences — re-enable both tracks before a search meant to show grouped roadmaps.

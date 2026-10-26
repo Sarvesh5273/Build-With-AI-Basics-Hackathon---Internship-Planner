@@ -4,7 +4,7 @@ import { defaultPreferences, ListingSchema, PreferencesSchema, type Preferences,
 import { direction, type Reaction } from '../../shared/direction';
 import { api, ApiError } from './api';
 import { PlanningStateSchema,initialPlanning,type PlanningState } from './planning-state';
-import { PreparedGoalSchema,QuestionPackSchema,AssessmentSchema,AvailabilitySchema,ProfileSchema,type Profile,type PreparedGoal,type PreparationRun,type AssessmentRun,type Availability } from '../../shared/planning';
+import { PreparedGoalSchema,QuestionPackSchema,AssessmentSchema,AvailabilitySchema,ProfileSchema,ProfileDraftSchema,type Profile,type PreparedGoal,type PreparationRun,type AssessmentRun,type Availability } from '../../shared/planning';
 import { buildPlan,localDay,plusDays } from '../../shared/scheduler';
 import { rank } from '../../shared/rank';
 export { api } from './api';
@@ -158,9 +158,10 @@ export function usePlanner(){
     catch(e){setError((e as Error).message);}
   }
   function updateProfile(profile:Profile){
+    // Save every keystroke (drafts may be temporarily inconsistent); report impossible grades.
+    if(!ProfileDraftSchema.safeParse(profile).success){setError('Check the profile values; one did not match the accepted form.');return;}
     const checked=ProfileSchema.safeParse(profile);
-    if(!checked.success){setError(checked.error.issues.map(i=>i.message).join(' '));return;}
-    setError('');
+    setError(checked.success?'':checked.error.issues.map(i=>i.message).join(' '));
     const {confirmations:oldConfirm,...old}=progress.planning.profile,{confirmations,...next}=profile;
     updatePlanning({profile:{...profile,confirmations:JSON.stringify(old)===JSON.stringify(next)?confirmations:{}}});
   }

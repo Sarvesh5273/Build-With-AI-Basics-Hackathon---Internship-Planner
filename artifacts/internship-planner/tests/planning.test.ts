@@ -1,6 +1,6 @@
 import { describe,it,expect } from 'vitest';
 import type { Fact } from '../shared/schemas';
-import { emptyProfile,ProfileSchema,type PreparedGoal,type Availability } from '../shared/planning';
+import { emptyProfile,ProfileSchema,ProfileDraftSchema,type PreparedGoal,type Availability } from '../shared/planning';
 import { eligibility,criterionKey } from '../shared/eligibility';
 import { buildQuestions,readiness } from '../shared/question-bank';
 import { buildPlan,deadline,localMidnight,weekOf } from '../shared/scheduler';
@@ -51,6 +51,15 @@ describe('local sourced preliminary eligibility',()=>{
   });
   it('rejects impossible grade values above their declared numeric scale',()=>{
     expect(ProfileSchema.safeParse({...profile,gradeValue:5,gradeScale:'4'}).success).toBe(false);
+  });
+  it('keeps in-progress grade-scale typing but never uses an impossible grade',()=>{
+    // Typing "10" after a grade of 8.4 passes through the intermediate scale "1".
+    expect(ProfileDraftSchema.safeParse({...profile,gradeValue:8.4,gradeScale:'1'}).success).toBe(true);
+    const minimum={...fact('eligibility','Minimum CGPA 7 out of 10','A minimum CGPA of 7 out of 10 is required.'),rule:{field:'grade' as const,operator:'min' as const,number:7,scale:'10',values:[]}};
+    const g=goal('a','Research',[minimum]);
+    // goal() also carries a percentage-grade and a year rule; check the 10-point rule itself.
+    expect(eligibility(g,{...profile,gradeValue:8.4,gradeScale:'1'}).criteria[2].status).toBe('unknown');
+    expect(eligibility(g,{...profile,gradeValue:8.4,gradeScale:'10'}).criteria[2].status).toBe('met');
   });
 });
 describe('question coverage and honest foundations',()=>{

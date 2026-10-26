@@ -42,3 +42,41 @@ mtime_ms = 1791914783702
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/2a1d62ab-f1cb-4128-a311-f73bc399e411/e11e8a73-b546-4385-ab0d-5b4962a2325e"
 storage_version_token = "1791914919508336"
 content_type = "text/html"
+
+[[outputs]]
+id = "2ftOtO5PP5jAPIOuDIa9Y"
+uri = "file://generated-artifacts/demo-audio/line1.mp3"
+type = "audio"
+title = "speech"
+description = "Text-to-speech audio: I didn't know where to look or what to search for, and on YouTube the information was scattered."
+logical_id = "5ef6d720-0e4e-4241-8182-dd8225e8364b"
+
+[[outputs]]
+id = "aSXdxqDrZvQzjVwGCDhEP"
+uri = "file://generated-artifacts/demo-audio/line2.mp3"
+type = "audio"
+title = "speech"
+description = "Text-to-speech audio: I didn't know about any website for abroad internships."
+logical_id = "436b687d-26e2-4bd3-97f8-6da89e6504a9"
+
+[[outputs]]
+id = "-nAIN23KxLh4dpgin0suT"
+uri = "file://generated-artifacts/demo-audio/music.mp3"
+type = "audio"
+title = "generated_music"
+description = "Generated music: Modern lo-fi electronic background bed for a student product demo, warm keys, light steady beat, optimistic, unobtrusive under voice, no vocals"
+logical_id = "9e224b8e-5488-479b-bcc0-b712b67a0552"
+
+[[outputs]]
+id = "Pzq99yTdae1e3OpWcNHpG"
+uri = "file://generated-artifacts/demo/internship-planner-demo.mp4"
+type = "video"
+title = "Internship Planner — demo video (2:43)"
+description = "Real live run with no browser errors: taste test, live search, one Research and one Company target, eligibility, readiness, timetable with exam week and both roadmaps. Opening narration is your words in the Raj voice. Shortened waits are labeled."
+logical_id = "2ddfd4fa-5042-49eb-9ee8-da78612e33c4"
+content_hash = "sha256:ea3a72586fbcfc09b73be7d1cb6194ef144e9f38319479b9da8fc1f505542955"
+size = 19558045
+mtime_ms = 1793013339636
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/2ddfd4fa-5042-49eb-9ee8-da78612e33c4/38bbece9-9375-46e9-aef5-aa73370ddbb5"
+storage_version_token = "1793013456654346"
+content_type = "video/mp4"

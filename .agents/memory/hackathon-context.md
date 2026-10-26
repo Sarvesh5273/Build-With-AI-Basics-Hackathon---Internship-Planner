@@ -21,3 +21,7 @@ Journey: taste test on real project descriptions → eligible programs (national
 - Timetable photo parsing = stretch, decided at Oct 17 checkpoint.
 - Cut order if behind: readiness interview becomes self-check first.
 **Why this angle:** generic study planners, gamified streak apps, viva coaches, PYQ analyzers and single-JD skill-gap tools all already exist (checked Oct 13); differentiation is heterogeneous requirements (skills + docs + professor outreach), nationality eligibility, and verified levels.
+
+## Demo video authorship (decided Oct 26 2026)
+Narration words must be the learner's (6-ship skill); the agent may voice them with TTS ("Raj – Indian English" voice, user's choice) and do all recording/editing. The learner declined to write more than two hook lines, so the rest of the video uses the app's own screen titles and labelled shortened waits — no agent-written pitch.
+**Why:** skill pack forbids agent-authored narration/submission copy even on request; repeated user pressure did not change this.

@@ -74,6 +74,6 @@ Generated reports/screenshots are in ignored `generated-artifacts/`, not app dem
 
 ## Attribution and licensing
 
-Frontend package notices and CC-BY official work-scenario attribution are shipped in the public directory. Server dependency notices are in `THIRD-PARTY-SERVER-NOTICES.md`. Dependencies are pinned; no dependency licence grants a licence to the app's own source. An application-source licence has not been granted/chosen here; decide before public redistribution.
+Frontend package notices and CC-BY official work-scenario attribution are shipped in the public directory. Server dependency notices are in `THIRD-PARTY-SERVER-NOTICES.md`. Dependencies are pinned; no dependency licence grants a licence to the app's own source. The application's own source is released under the MIT License (see `LICENSE`).
 
 Approved product documents and unfinished learner review/wrap-up are tracked in `devpost/`. Do not treat passing tests or this README as learner approval or completion of the hackathon submission.

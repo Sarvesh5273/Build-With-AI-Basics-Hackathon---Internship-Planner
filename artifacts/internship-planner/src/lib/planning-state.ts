@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { ProfileSchema,emptyProfile,PreparedGoalSchema,QuestionPackSchema,AssessmentSchema,AvailabilitySchema,CompletionSchema } from '../../shared/planning';
+import { ProfileDraftSchema,emptyProfile,PreparedGoalSchema,QuestionPackSchema,AssessmentSchema,AvailabilitySchema,CompletionSchema } from '../../shared/planning';
 export const PlanningStateSchema=z.object({
-  profile:ProfileSchema.default(emptyProfile),
+  profile:ProfileDraftSchema.default(emptyProfile),
   goals:z.array(PreparedGoalSchema).max(200).default([]),
   preparationId:z.string().uuid().nullable().default(null),
   pack:QuestionPackSchema.nullable().default(null),

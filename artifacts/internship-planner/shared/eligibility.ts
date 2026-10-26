@@ -1,5 +1,6 @@
 import type { Fact } from './schemas';
 import type { Profile,PreparedGoal,EligibilityResult,CriterionResult } from './planning';
+import { gradeExceedsScale } from './planning';
 export const normalized=(s:string)=>s.toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 export const criterionKey=(goalId:string,index:number,version='')=>`${goalId}:${index}:${version.slice(0,16)}`;
 function scale(s:string){
@@ -40,6 +41,8 @@ function inspect(f:Fact,p:Profile,key:string):Omit<CriterionResult,'key'|'factIn
   const field={year:p.studyYear,grade:p.gradeValue,remainingSemesters:p.remainingSemesters,
     nationality:p.nationality,branch:p.branch,institute:p.institute,degree:p.degree,degreeDate:p.degreeDate}[r.field];
   if(field==null||field==='')return unknown('The academic detail needed for this condition is missing.',false);
+  if(r.field==='grade'&&gradeExceedsScale(p))
+    return unknown('Your grade is above its stated scale; correct it before this condition is checked.',false);
   if(r.field==='grade'&&(!r.scale||!p.gradeScale||!scale(r.scale)||!scale(p.gradeScale)||scale(r.scale)!==scale(p.gradeScale)))
     return unknown('The source and your grade use different or unstated scales. No CGPA-to-percentage conversion was made.',false);
   let met:boolean|undefined;

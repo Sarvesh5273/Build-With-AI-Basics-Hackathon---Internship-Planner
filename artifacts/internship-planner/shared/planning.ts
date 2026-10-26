@@ -4,16 +4,22 @@ const short=(n=160)=>z.string().trim().max(n);
 export const dateKey=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(s=>{
   const d=new Date(s+'T00:00:00Z');return Number.isFinite(+d)&&d.toISOString().slice(0,10)===s;
 },'Enter a valid calendar date');
-export const ProfileSchema=z.strictObject({
+// Stored/edited profile: accepts in-progress combinations so typing "10" after a
+// grade of 8.4 is not swallowed at the intermediate "1".
+export const ProfileDraftSchema=z.strictObject({
   nationality:short(60),studyYear:z.number().int().min(1).max(12).nullable(),
   gradeValue:z.number().min(0).max(1000).nullable(),gradeScale:short(40),
   branch:short(),institute:short(),degree:short(80),degreeDate:dateKey.nullable(),
   remainingSemesters:z.number().int().min(0).max(30).nullable(),english:z.boolean().nullable(),
   confirmations:z.record(short(80),z.boolean().nullable()),
-}).superRefine((p,ctx)=>{
+});
+/** A grade above its own numeric scale is impossible; such a grade is never used for eligibility. */
+export const gradeExceedsScale=(p:{gradeValue:number|null;gradeScale:string})=>{
   const numeric=p.gradeScale.trim()==='%'?100:Number(p.gradeScale.trim());
-  if(p.gradeValue!==null&&p.gradeScale.trim()&&Number.isFinite(numeric)&&numeric>0&&p.gradeValue>numeric)
-    ctx.addIssue({code:'custom',path:['gradeValue'],message:'The grade cannot exceed its stated numeric scale.'});
+  return p.gradeValue!==null&&!!p.gradeScale.trim()&&Number.isFinite(numeric)&&numeric>0&&p.gradeValue>numeric;
+};
+export const ProfileSchema=ProfileDraftSchema.superRefine((p,ctx)=>{
+  if(gradeExceedsScale(p))ctx.addIssue({code:'custom',path:['gradeValue'],message:'The grade cannot exceed its stated numeric scale.'});
 });
 export type Profile=z.infer<typeof ProfileSchema>;
 export const emptyProfile:Profile={nationality:'',studyYear:null,gradeValue:null,gradeScale:'',branch:'',institute:'',degree:'',degreeDate:null,remainingSemesters:null,english:null,confirmations:{}};
