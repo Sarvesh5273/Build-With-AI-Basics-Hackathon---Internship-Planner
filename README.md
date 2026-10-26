@@ -4,6 +4,8 @@ A fresh proof of concept: taste test → editable Scout-like preferences → liv
 
 Scout's public repository was inspected as a behavioral reference. Its code, credentials, database and APIs are not imported.
 
+Source repository: [Build With AI: Basics Hackathon — Internship Planner](https://github.com/Sarvesh5273/Build-With-AI-Basics-Hackathon---Internship-Planner).
+
 ## Run locally or in this workspace
 
 Use Node 24 and pnpm 10. Install the pinned workspace dependencies with `pnpm install --frozen-lockfile`. The managed workspace service runs:
@@ -29,7 +31,7 @@ pnpm build
 pnpm --filter @workspace/internship-planner start
 ```
 
-The last command starts the built React client **and Express API**. Static-only hosting cannot run discovery or assessment. This repository has not been published. Its generated artifact production manifest still requires the managed replacement step; the proposed command-based manifest is beside it as `production-command.pending.toml`.
+The last command starts the built React client **and Express API**. Static-only hosting cannot run discovery or assessment. Publishing this source repository does not deploy the running app; production service configuration needs separate review before deployment.
 
 ## Provider and cost boundaries
 
@@ -64,16 +66,16 @@ Exam weeks have zero preparation capacity. Overflow or dependency failure is At 
 
 ## Verification evidence
 
-Unit tests exercise source integrity, provider bounds, ownership, rubric validation and fixed-clock scheduling. Native browser scripts use installed Chromium:
+Unit tests exercise source integrity, provider bounds, ownership, rubric validation and fixed-clock scheduling. Browser verification during development included:
 
-- `scripts/browser-discovery.mjs`: real public-provider taste/preferences/discovery, save/select/filter/hide/ownership/restoration.
-- `scripts/browser-planning.ts`: explicitly labelled **API fixtures** for interactive planning, privacy boundaries, failures/retry, exam weeks, both tracks, completion/reopening and phone/tablet/desktop layouts.
-- `scripts/browser-live-planning.mjs`: real discovery → source preparation → Groq rubric assessment → timetable/roadmap/restoration. `FOCUSED_ONE_ANSWER=1` tests one answered question with other questions honestly skipped. Real completion is **not yet verified**; the daily provider allowance currently blocks it.
+- Real public-provider discovery, save/select/filter/hide, ownership and restoration checks.
+- Explicitly labelled **API-fixture** checks for interactive planning, privacy boundaries, failures/retry, exam weeks, both tracks, completion/reopening and phone/tablet/desktop layouts.
+- A successful recorded real-provider demo covering taste test → preferences → discovery → explicit Research and Company targets → eligibility → source preparation → Groq readiness assessment → timetable with an exam week → both roadmap timelines and task completion. The recording uses an illustrative demo profile and answers.
 
-Generated reports/screenshots are in ignored `generated-artifacts/`, not app demo data. The app has no fixture-discovery mode or fixed opportunity catalogue.
+The development browser harnesses are not part of this repository. Generated reports, recordings and screenshots are in ignored `generated-artifacts/`, not app demo data. Run the checked-in verification commands above to validate a clone; a past live run does not guarantee current provider availability or quota. The app has no fixture-discovery mode or fixed opportunity catalogue.
 
 ## Attribution and licensing
 
 Frontend package notices and CC-BY official work-scenario attribution are shipped in the public directory. Server dependency notices are in `THIRD-PARTY-SERVER-NOTICES.md`. Dependencies are pinned; no dependency licence grants a licence to the app's own source. The application's own source is released under the MIT License (see `LICENSE`).
 
-Approved product documents and unfinished learner review/wrap-up are tracked in `devpost/`. Do not treat passing tests or this README as learner approval or completion of the hackathon submission.
+Approved product documents, the build checklist and the app map are tracked in `devpost/`. The private learner profile is excluded from Git. Do not treat passing tests or this README as confirmation that the Devpost submission has been completed.

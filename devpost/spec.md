@@ -71,6 +71,8 @@ Groq configuration is also an early build gate. The learner explicitly replaced 
 
 Required submission: short demo video + public GitHub repository containing approved planning docs. Publishing is optional, not a substitute for either. A clone needs documented provider setup; it will not magically inherit this workspace's integrations or secrets. Publishing is not authorized by this spec.
 
+Public source repository: [Build With AI: Basics Hackathon — Internship Planner](https://github.com/Sarvesh5273/Build-With-AI-Basics-Hackathon---Internship-Planner). Source-code publication is separate from runtime deployment and hosted demo-video access.
+
 **Before application coding:** explicitly tell the learner it is starting. Scope/PRD/spec edits are planning, not that notice. This planning task does not create scaffolding or install app packages.
 
 ## Look and Feel
