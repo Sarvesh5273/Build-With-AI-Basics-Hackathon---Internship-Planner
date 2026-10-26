@@ -7,3 +7,7 @@
 !.env.example
 
 node_modules/
+/generated-artifacts/
+/private-runtime/
+dist/
+*.tsbuildinfo
