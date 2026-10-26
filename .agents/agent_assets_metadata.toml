@@ -188,3 +188,59 @@ mtime_ms = 1793017685195
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/5f4f75c4-d7f5-4892-8993-23c2f5a97bc8/d29bd410-9717-4b1c-80d1-e5fb66ad1104"
 storage_version_token = "1793017718825271"
 content_type = "image/png"
+
+[[outputs]]
+id = "Xo6RFtcWN_vY3KmbAFhLZ"
+uri = "file://generated-artifacts/internship-planner-project-media.zip"
+type = "unspecified"
+title = "Project media pack — 9 images"
+description = "Download and extract this ZIP. Includes the 3:2 cover and real screenshots of taste test, discovery, eligibility, readiness, timetable, overview, Research timeline and Company timeline. Every individual image is below 5 MB."
+logical_id = "0160bf6e-d967-419a-b93f-ab7b708a5266"
+content_hash = "sha256:4d85331919e5bafd6abf028ab765a2bf5dcfdf639f8d653c436544bd5934cf59"
+size = 5617973
+mtime_ms = 1793019588144
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/0160bf6e-d967-419a-b93f-ab7b708a5266/cfbac032-6c16-4732-b9f2-082372ec78e7"
+storage_version_token = "1793019664202162"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "ujrIs4ILTCK2JsaRZOCTz"
+uri = "file://generated-artifacts/project-media/02-discovery.png"
+type = "image"
+title = "Project image — live discovery"
+description = "Actual live-run results with a Company opportunity and the selected Research target. Source trust and funding are shown as recorded."
+logical_id = "bda3d428-bcba-4778-b7a9-c4870a4cb778"
+content_hash = "sha256:92072a6b1b6f9647ea2d336267ebf9cc27befcfe301b5e2b11f3ec54e2522552"
+size = 474875
+mtime_ms = 1793019587476
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/bda3d428-bcba-4778-b7a9-c4870a4cb778/4ac40245-54c9-43bf-b37d-74aecd768464"
+storage_version_token = "1793019665630578"
+content_type = "image/png"
+
+[[outputs]]
+id = "0KnCWrtfDgTKdUVxfxI3M"
+uri = "file://generated-artifacts/project-media/05-timetable.png"
+type = "image"
+title = "Project image — timetable"
+description = "Weekly free hours, exam-week controls and personal target dates from the demo persona."
+logical_id = "414de277-9e8e-42bb-86d3-c52fe193a542"
+content_hash = "sha256:8a781246df70bfdcfc8b9f3f4e123ad58b5ad6dfcb8a5817e4494618e8abeeac"
+size = 597125
+mtime_ms = 1793019428664
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/414de277-9e8e-42bb-86d3-c52fe193a542/f88f18cd-4f63-4d9d-96ab-9203db5dec97"
+storage_version_token = "1793019666884714"
+content_type = "image/png"
+
+[[outputs]]
+id = "HZeMEZa4yXicKkGAiGLR7"
+uri = "file://generated-artifacts/project-media/06-roadmap-overview.png"
+type = "image"
+title = "Project image — roadmap overview"
+description = "This week's step and the Research and Company track cards from the real demo run."
+logical_id = "7dfee227-fa92-4959-8b40-5720d3df01c2"
+content_hash = "sha256:f211caf048ec82e5348f19dc29b763a4fe0cb87f36e743c67a45c4fba09d2375"
+size = 587116
+mtime_ms = 1793019429740
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/7dfee227-fa92-4959-8b40-5720d3df01c2/91c9ebea-9c19-436f-b895-e29b18a3699a"
+storage_version_token = "1793019668172138"
+content_type = "image/png"
