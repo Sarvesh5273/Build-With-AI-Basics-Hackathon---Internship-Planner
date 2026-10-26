@@ -1,0 +1,11 @@
+{
+  "name": "internship-planner-workspace",
+  "private": true,
+  "packageManager": "pnpm@10.26.1",
+  "scripts": {
+    "check": "pnpm --filter @workspace/internship-planner check",
+    "test": "pnpm --filter @workspace/internship-planner test",
+    "build": "pnpm --filter @workspace/internship-planner build",
+    "validate:data": "pnpm --filter @workspace/internship-planner validate:data"
+  }
+}

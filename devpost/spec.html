@@ -23,7 +23,7 @@ main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{
   <p class="eyebrow">Build With AI: Basics · 4-spec · <span class="status">Approved · final audit complete</span></p>
   <h1>Discovery like Scout.<br>Roadmaps for your choices.</h1>
   <p class="intro">TinyFish is central. Rebuild the relevant discovery functionality fresh, then use the student's selected internships for our agreed readiness check and timetable-fitted Research/Company roadmaps.</p>
-  <div class="note"><strong>Planning approved; final consistency audit complete.</strong> No application code has started. The fixed-catalog proposal is replaced. The canonical full blueprint is <code>devpost/spec.md</code>.</div>
+  <div class="note"><strong>Planning approved; discovery slice built.</strong> Taste test, preferences and live discovery are running; eligibility, readiness and roadmaps remain to be built. Discovery is not a fixed catalog. The canonical blueprint is <code>devpost/spec.md</code>; build evidence is in <code>devpost/checklist.md</code>.</div>
   <nav class="stepper" aria-label="Explore the blueprint">
     <a href="#journey">01 · Product flow</a><a href="#architecture">02 · Architecture</a><a href="#scout">03 · Scout functionality</a><a href="#pieces">04 · Components</a><a href="#contracts">05 · APIs &amp; costs</a><a href="#build">06 · Build &amp; review</a>
   </nav>
@@ -46,8 +46,8 @@ main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{
 <div class="grid diagram-grid">
 <figure class="box">
 <svg viewBox="0 0 560 540" role="img" aria-labelledby="arch-title arch-desc">
-<title id="arch-title">Browser, fresh TypeScript server, TinyFish and managed AI architecture</title>
-<desc id="arch-desc">The browser sends preferences and selections to the server. The server uses TinyFish Search and Fetch for official pages, optionally an authorized paid Agent fallback. Managed AI extracts evidence and assesses readiness. Code validates facts, calculates fit and schedules work. Personal progress stays in the browser; public-source snapshots and quotas live in a private server store. No Scout application connection.</desc>
+<title id="arch-title">Browser, fresh TypeScript server, TinyFish and Groq architecture</title>
+<desc id="arch-desc">The browser sends preferences and selections to the server. The server uses TinyFish Search and Fetch for official pages. Groq with the learner's own API key extracts evidence and assesses readiness. Code validates facts, calculates fit and schedules work. Personal progress stays in the browser; public-source snapshots and quotas live in a private server store. No Scout application connection.</desc>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#191a17"/></marker></defs>
 <g font-family="system-ui,sans-serif" fill="#191a17">
 <rect x="20" y="15" width="520" height="95" rx="10" fill="#ffe35b" stroke="#191a17" stroke-width="2"/>
@@ -67,7 +67,7 @@ main{max-width:1120px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0}h1{
 <text x="40" y="378" font-size="14">Official pages / ATS leads</text>
 <text x="40" y="401" font-size="14">Paid Agent: authorization gate</text>
 <rect x="290" y="295" width="250" height="120" rx="10" fill="#fce4db" stroke="#191a17" stroke-width="2"/>
-<text x="310" y="329" font-size="20" font-weight="800">Managed OpenAI</text>
+<text x="310" y="329" font-size="20" font-weight="800">Groq API</text>
 <text x="310" y="354" font-size="16">Evidence extraction</text>
 <text x="310" y="378" font-size="14">Questions + readiness rubric</text>
 <text x="310" y="401" font-size="14">No tools or application actions</text>
@@ -148,9 +148,9 @@ private-runtime/    # ignored, private, never served</pre>
 <h2>External services, exact calls and honest costs</h2>
 <div class="grid">
 <article class="box"><h3>TinyFish</h3><p><code>GET api.search.tinyfish.ai</code><br>Query/preferences → title/snippet/URL leads.</p><p><code>POST api.fetch.tinyfish.ai</code><br>Up to 10 URLs/request → text/links + per-URL errors.</p><p><code>POST agent.tinyfish.ai/v1/automation/run-async</code><br>Authorized fallback → run ID; poll/cancel using <code>/v1/runs/:id</code>.</p><p class="small">All use server-side X-API-Key. The full payload/response contracts are in the canonical spec.</p><ul><li><a href="https://docs.tinyfish.ai/search-api/reference">Search reference</a></li><li><a href="https://docs.tinyfish.ai/api-reference/fetch-and-extract-content-from-urls">Fetch OpenAPI</a></li><li><a href="https://docs.tinyfish.ai/agent-api/reference">Agent reference</a></li><li><a href="https://www.tinyfish.ai/pricing">Pricing and limits</a></li></ul></article>
-<article class="box"><h3>Managed OpenAI</h3><p>Proposed <code>gpt-4.1-mini</code>, strict structured outputs, fixed instructions and bounded untrusted input.</p><ul><li>Separate extraction, question-pack and assessment schemas.</li><li>Validate evidence and IDs; correct JSON does not prove truth.</li><li>Input/output listed at $0.40/$1.60 per million tokens. Discovery may need several extraction calls.</li><li>Billed through Replit credits—not free AI.</li></ul><ul><li><a href="https://docs.replit.com/features/integrations/replit-ai-integrations">Replit managed-AI documentation</a></li><li><a href="https://developers.openai.com/api/docs/models/gpt-4.1-mini">Model and prices</a></li><li><a href="https://developers.openai.com/api/docs/guides/structured-outputs">Structured outputs</a></li></ul></article>
+<article class="box"><h3>Groq — learner-owned API access</h3><p>The learner explicitly chose Groq during build. Use <code>GROQ_API_KEY</code> only on the server. Proposed Groq-hosted <code>openai/gpt-oss-120b</code> with strict structured outputs; no Replit-managed OpenAI inference.</p><ul><li>Separate extraction, question-pack and assessment schemas.</li><li>Validate evidence and IDs; correct JSON does not prove truth.</li><li>Usage follows the learner's Groq account. No claim of free or unlimited calls.</li><li>Enforce conservative shared caps and respect request/token limits.</li></ul><ul><li><a href="https://console.groq.com/docs/openai">Documented endpoint</a></li><li><a href="https://console.groq.com/docs/rate-limits">Account limits</a></li><li><a href="https://console.groq.com/docs/structured-outputs">Strict structured outputs</a></li></ul></article>
 </div>
-<div class="warning"><strong>Verified, but not smoke-tested:</strong> TinyFish's pricing page lists free Search/Fetch within limits; Search's reference gives conflicting allowance/wallet statements. Agent is $0.016 per step; its hard step cap is beta-gated. Use conservative limits, verify the account and obtain paid-fallback budget authorization before enabling it. No silent wallet top-ups.</div>
+<div class="warning"><strong>Search/Fetch and Groq smoke-tested:</strong> Real calls passed with secured keys, and a live app search returned a CERN opportunity. Failures and timeout can leave partial results. TinyFish's allowance/wallet descriptions conflict, so no free/unlimited claim is made. Paid Agent fallback stays disabled until separately authorized with verified enforcement; no wallet top-ups.</div>
 <div class="note"><strong>Freshness is not guaranteed by a parameter.</strong> Current Fetch docs say <code>ttl:0</code> can still return cache-valid content. Keep retrieved/interpreted timestamps and cache labels; elapsed-deadline checks are separate from live page verification.</div>
 </section>
 
@@ -169,15 +169,15 @@ private-runtime/    # ignored, private, never served</pre>
 <section id="build">
 <h2>Where it runs and how we prove it</h2>
 <div class="grid">
-<article class="box"><h3>One fresh web app</h3><p>React/Vite screens, Node 24/Express server, Zod validation and Vitest rules. One same-origin Replit workflow on port 5000.</p><pre>npm ci
-npm run dev
+<article class="box"><h3>One fresh web app</h3><p>React/Vite screens, Node 24/Express server, Zod validation and Vitest rules. One same-origin managed artifact workflow on port 22950.</p><pre>pnpm install --frozen-lockfile
+pnpm --filter @workspace/internship-planner dev
 # open / in Replit Preview
 
-npm run check
-npm run validate:data
-npm test
-npm run build
-npm start</pre><p class="small">Planned commands; no scaffolding or dependencies installed yet. TinyFish key through Secrets, never chat/code; managed-AI setup required.</p></article>
+pnpm check
+pnpm validate:data
+pnpm test
+pnpm build
+pnpm --filter @workspace/internship-planner start</pre><p class="small">Pinned dependencies are installed and verified. TinyFish, Groq and session keys stay in Secrets. No Replit-managed OpenAI inference. Production configuration remains part of final hardening, not a deployment claim.</p></article>
 <article class="box"><h3>Verification follows the full journey</h3><ul><li>A live search finds an opportunity outside the named examples.</li><li>Filters/save/hide/selection operate independently and persist.</li><li>Every claimed fact has source evidence or is visibly unknown.</li><li>Readiness refuses malformed/unsupported output honestly.</li><li>Shared work, timezone boundaries, exams and both tracks respect one capacity ledger.</li><li>Closed/rolling/at-risk and impossible work are explicit.</li><li>Phone/tablet/desktop and keyboard checks; real interaction tests, not screenshots alone.</li></ul></article>
 </div>
 <h2>Build slices and dates</h2>

@@ -1,0 +1,6 @@
+/generated-artifacts/
+/private-runtime/
+/devpost/learner-profile.md
+.env
+.env.*
+!.env.example

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Internship Planner — app map</title>
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}body{font:17px/1.55 system-ui,sans-serif;background:#faf6eb;color:#18202c;margin:0}
+main{max-width:1000px;margin:auto;padding:32px 20px}h1{font-size:clamp(2rem,6vw,3.5rem);line-height:1.1}h2{margin-top:32px}
+.note,.box{border:2px solid #18202c;border-radius:14px;background:#fffdf7;padding:18px;margin:16px 0}.note{background:#e7f5ad}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;list-style:none;padding:0}
+.flow li{border:2px solid #18202c;padding:16px;border-radius:12px;background:#fffdf7}.flow b{display:block}
+code{overflow-wrap:anywhere;font-size:.88em;background:#ece7d9;padding:2px 4px}pre{white-space:pre-wrap;overflow-wrap:anywhere}
+a{color:#1744b4}a:focus-visible,summary:focus-visible{outline:3px solid #1744b4;outline-offset:4px}summary{cursor:pointer;font-weight:700;padding:8px 0}
+nav{display:flex;gap:18px;flex-wrap:wrap}footer{margin-top:36px;border-top:2px solid;padding-top:18px}small{font-size:.85rem}
+</style></head><body><main>
+<nav aria-label="Sections"><a href="#journey">Journey</a><a href="#route">Code route</a><a href="#trust">Trust boundaries</a><a href="#tests">Verification</a><a href="#practice">Practice</a></nav>
+<h1>Internship Planner<br>App map</h1>
+<p>A source-backed student workbook. This is a snapshot of the implementation, not a submission essay or a claim of learning.</p>
+<div class="note"><strong>Build status:</strong> all slices built and mechanically tested (173 tests). Real discovery found official opportunities outside the example programmes (CERN Short-Term Internship; Google Research Intern; Cohere Research Internship; Point72 and Formlabs internships read from their public job boards). The native journey discovery → preparation → scoring → roadmap → restore passed on 2026-10-16. Final-review fixes (2026-10-24/25): Groq whole-page rejections repaired locally, a capped paid TinyFish Agent fallback, public job boards read directly without AI, and a planned four-minute wind-down so searches finish cleanly. The app has not been published.</div>
+<h2 id="journey">Journey and files</h2>
+<ol class="flow">
+<li><b>1. Taste</b>Reviewed work genres; interest, not ability.<br><code>data/genre-questions.ts</code><br><code>shared/direction.ts</code></li>
+<li><b>2. Preferences</b>Editable taste-derived topics and student constraints.<br><code>src/pages/SearchPreferences.tsx</code></li>
+<li><b>3. Live discovery</b>Queries, public feeds, quotes and ownership. Official pages are labelled official; other readable pages are shown as unverified, and pages about the same internship are merged.<br><code>server/discovery.ts</code><br><code>server/source-boards.ts</code> <code>server/board-listings.ts</code><br><code>server/evidence.ts</code></li>
+<li><b>4. Select</b>Selection is separate from save/hide and display filters (source, minimum fit, deadline status; preference-excluded results hidden by default).<br><code>src/pages/DiscoveryResults.tsx</code></li>
+<li><b>5. Eligibility</b>Supported sourced rules checked locally.<br><code>server/preparation.ts</code><br><code>shared/eligibility.ts</code></li>
+<li><b>6. Readiness</b>Fixed rubrics, explicit consent, untested gaps.<br><code>shared/question-bank.ts</code><br><code>server/assessment.ts</code></li>
+<li><b>7. Timetable</b>Manual hours, timezone, exam weeks and personal targets.<br><code>src/pages/Timetable.tsx</code></li>
+<li><b>8. Roadmaps</b>One ledger, earliest deadline, dependencies, completion/reopen.<br><code>shared/scheduler.ts</code><br><code>src/pages/Timeline.tsx</code></li>
+</ol>
+<p>Paths above are relative to <code>artifacts/internship-planner/</code>. Shared code is used by the browser and tests; server code alone can call providers.</p>
+<h2 id="route">One useful code route: a search request meets the security boundary</h2>
+<p>Follow one “Search” click from the network edge to the paid provider. Each stop answers: <em>what may this request do, and how much may it cost?</em></p>
+<section class="box"><h3>Stop 1 — reject bad input before anything else</h3>
+<p>Open <code>server/index.ts</code>, find <code>app.use('/api',express.json({limit:'32kb'</code> and then <code>app.post('/api/searches'</code>. The body is capped at 32 KB, a cross-site <code>Origin</code> is refused, and <code>z.strictObject({preferences:PreferencesSchema,…}).parse(req.body)</code> rejects unknown or oversized fields. Only after that does <code>requireOwnerCookie</code> check the anonymous browser identity.</p></section>
+<section class="box"><h3>Stop 2 — rate limits and spending caps before any provider call</h3>
+<p>Open <code>server/store.ts</code>, find <code>reserveRun</code> (no practical per-user cap for private demo use; only a runaway-loop stop) and <code>reserveModel</code> (per-model Groq free-tier allowance, falling over from gpt-oss-120b to gpt-oss-20b) and <code>reserveAgent</code> ($1.50 and 8 Agent runs per UTC day). These run inside one serialized <code>transaction</code>, so two simultaneous clicks cannot both squeeze under a limit. <code>server/agent.ts</code> → <code>walletAllowsAgent</code> adds a third gate: no run if wallet auto-reload is on or the balance is low, so a top-up can never be triggered.</p></section>
+<section class="box"><h3>Stop 3 — untrusted output is validated too, and the tests prove the “no” paths</h3>
+<p>Model and Agent output are also input. <code>server/model-contract.ts</code> → <code>salvage</code> removes only the smallest invalid item (one fact, lead or opportunity) instead of trusting or losing the whole page. Then open <code>tests/usage-store.test.ts</code> (“caps daily spend”) and <code>tests/agent.test.ts</code> (“refuses when wallet auto-reload is on …”). Both assert that the forbidden action did <em>not</em> happen: no reservation, no run created.</p></section>
+<h2 id="trust">Trust and data boundaries</h2>
+<ul>
+<li><strong>Browser:</strong> reactions, selections, academic details, answers, availability and completion history. Reset requires confirmation. Browser storage is not a private server account or an encrypted vault.</li>
+<li><strong>Server:</strong> anonymous ownership, bounded public quotes/cache and operational quotas. Private local files support one process, not scaled replicas. Expired question ownership does not erase browser answers.</li>
+<li><strong>TinyFish:</strong> public search and page requests. No personal profile or answer text. The paid Agent is opt-in (<code>TINYFISH_AGENT_FALLBACK=on</code>) and is used only after Fetch fails, only on likely-official hosts, capped per run and per day, with a wallet check and no top-ups. It is told never to sign in, apply or submit forms. Its text goes through the same quote/ownership checks and is labelled “Read by TinyFish Agent”.</li>
+<li><strong>Groq:</strong> public interpretation and consented answer/rubric scoring using the learner’s native configuration. It receives only the schema structure (value rules are described in text) because its strict mode rejects a whole page for one bad value; the strict local schema still decides what is accepted, dropping only the smallest invalid item. No code execution or provider/tool action is granted to model output.</li>
+<li><strong>Secrets:</strong> runtime server environment only. Neither API keys nor session secret belong in source or this guide.</li>
+<li><strong>Output:</strong> quoted evidence is preliminary. Unknown funding, grades, requirements and selection stages stay unknown. A short foundation score is not proof of practical competence.</li>
+</ul>
+<h2 id="tests">How the behavior is checked</h2>
+<p><code>tests/planning.test.ts</code> uses fixed clocks for grade/year changes, shared hours, cutoff timing, exams, external waiting, closed/ineligible goals, date-only conservatism, DST and completion/reopen. Shared tasks are allocated once, and weeks cannot exceed capacity.</p>
+<p><code>scripts/browser-planning.ts</code> uses declared API fixtures to exercise the actual UI, failures/retry, consent, both tracks and restoration at phone/tablet/desktop widths. Fixtures are tests, not live evidence or app demo data.</p>
+<p><code>scripts/browser-live-planning.mjs</code> exercises native TinyFish/Groq through the public app. Its complete end-to-end result is still pending the remaining provider allowance. Mechanical checks do not substitute for this check or for the learner’s final hands-on review.</p>
+<h2 id="practice">A practice to reuse</h2>
+<div class="note"><strong>Put the gate before the cost, then test the “no”.</strong> “Don’t overspend” is vague. Here it is concrete: validate input, reserve against a limit in one atomic step, and only then call the paid service. Tests prove the provider was <em>not</em> called when a gate said no. Reuse it anywhere an endpoint triggers an AI, email or payment call: write down the unacceptable action, put validation and a quota before it, and assert it did not happen.</div>
+<h2>Run and return</h2>
+<pre><code>pnpm install --frozen-lockfile
+pnpm --filter @workspace/internship-planner run dev
+pnpm check
+pnpm test
+pnpm build</code></pre>
+<p>Use the managed preview at port 22950. Configure provider/session credentials through Secrets, never source files. For the built client and API, use <code>pnpm --filter @workspace/internship-planner start</code>, not static-only hosting.</p>
+<details class="box"><summary>Where future changes belong</summary><ul>
+<li>Genre copy: reviewed scenario data and attribution.</li><li>Search behavior: query planning/source-board classification and their tests.</li>
+<li>Supported academic comparisons: eligibility code plus fixed-clock fixtures, not a model-created probability.</li>
+<li>Task estimates/dependencies: scheduler and capacity tests; preserve app-estimate labels.</li>
+<li>Consent or restoration: planner hook and native browser tests.</li><li>Paid-provider limits: <code>server/store.ts</code> ledgers and <code>server/agent.ts</code>; ask before raising any cap.</li><li>Multi-instance launch: replace single-process ownership/quota/job storage before changing deployment scale.</li>
+</ul></details>
+<footer><small>Implementation snapshot updated on 2026-10-25 UTC from the finished code. No learning activity or reflection is claimed merely because this map exists. Essential content works offline without JavaScript, fonts, analytics or external services.</small></footer>
+</main></body></html>

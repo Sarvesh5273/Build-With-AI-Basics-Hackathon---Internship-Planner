@@ -13,7 +13,7 @@ First, the student answers real, source-grounded questions about common internsh
 
 The next screen asks Scout-like questions about topics, locations, Research/Company interests, funding, visa needs and other preferences. A small TypeScript server uses TinyFish to search the web and read relevant official pages. It extracts evidence, labels unknown information honestly, and returns ranked results with filters and save/hide controls. The student chooses their targets; neither the taste test nor a hardcoded list chooses for them.
 
-For those targets, the server checks the student's details against sourced criteria and assesses a short readiness interview with AI. Ordinary code groups compatible preparation, counts shared work once, and fits it into the student's free hours around exams. Shared steps serve the earliest deadline in their group. Closed or impossible-to-fit targets remain explicitly visible as closed or at risk.
+For those targets, the server prepares sourced criteria; the browser checks the student's local details against supported rules. The learner's own Groq assesses a consented short readiness interview. Ordinary code groups compatible preparation, counts shared work once, and fits it into the student's free hours around exams. Shared steps serve the earliest deadline in their group. Closed or impossible-to-fit targets remain explicitly visible as closed or at risk.
 
 React provides the screens. Personal progress stays in the browser; short-lived server records support search, evidence and cost limits. No Scout import, Scout API call, existing Scout database, accounts, application submission or copied Scout code.
 
@@ -38,7 +38,7 @@ Implements `prd.md > The Core Journey`.
 | UI | React + Vite; focused components and ordinary CSS tokens. | [React](https://react.dev/learn), [Vite](https://vite.dev/guide/) |
 | Server | Node.js 24 + Express, one same-origin service. Node 24 is already available here. | [Node](https://nodejs.org/docs/latest-v24.x/api/), [Express](https://expressjs.com/) |
 | Discovery | **TinyFish Search + Fetch, with controlled Agent fallback.** Explicitly chosen by the learner. | [Search](https://docs.tinyfish.ai/search-api/reference), [Fetch](https://docs.tinyfish.ai/fetch-api/reference), [Agent](https://docs.tinyfish.ai/agent-api/reference) |
-| AI | OpenAI through Replit AI Integrations; proposed `gpt-4.1-mini` for evidence extraction and readiness. | [Managed AI](https://docs.replit.com/features/integrations/replit-ai-integrations), [model](https://developers.openai.com/api/docs/models/gpt-4.1-mini), [structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs) |
+| AI | Groq with the learner's own server-side API key, explicitly requested during build. Proposed Groq-hosted `openai/gpt-oss-120b` with strict structured outputs; verify access by a real call. No Replit-managed OpenAI inference. | [Groq compatibility](https://console.groq.com/docs/openai), [structured outputs](https://console.groq.com/docs/structured-outputs), [limits](https://console.groq.com/docs/rate-limits) |
 | Validation/tests | Zod at external-data boundaries; Vitest for rules, contracts and fixed-clock tests. Browser tests for the journey. | [Zod](https://zod.dev/), [Vitest](https://vitest.dev/guide/) |
 | Storage | Browser localStorage for personal progress; bounded, private server files for public-source snapshots, run ownership and quotas. No database/auth service for the single-instance POC. | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) |
 
@@ -54,20 +54,20 @@ Use ready-made interactions where helpful, but React Bits is not mandatory. Choo
 
 ## Where It Runs and How Someone Tries It
 
-Create a fresh web artifact in this Replit project during the build phase, with one managed workflow and one server on `0.0.0.0:5000`. The artifact's generated location determines the app directory; the structure below describes the files inside it.
+The fresh web artifact is `artifacts/internship-planner`, with one managed Express/Vite workflow and one server on `0.0.0.0:22950` (the managed artifact port). The structure below describes files inside it.
 
-Planned commands, **not implemented yet**:
+Implemented build commands:
 
-- Initial setup installs vetted packages and creates the lockfile; thereafter `npm ci`.
-- `npm run dev` — Express with Vite middleware; open `/` in Replit Preview.
-- `npm run check`, `npm test`, `npm run validate:data` — types, tests and curated-question/source validation.
-- `npm run build` followed by `npm start` — built client + same-origin API.
+- Initial setup installs vetted packages and creates the lockfile; thereafter `pnpm install --frozen-lockfile`.
+- `pnpm --filter @workspace/internship-planner dev` — Express with Vite middleware; open `/` in Replit Preview.
+- `pnpm check`, `pnpm test`, `pnpm validate:data` — types, tests and curated-question/source validation.
+- `pnpm build` followed by `pnpm --filter @workspace/internship-planner start` — built client + same-origin API. Production service configuration is still part of final hardening; this does not authorize deployment.
 
 App requests use relative `/api/...` paths. Vite must accept Replit's proxied development host. No hardcoded localhost in app code.
 
 TinyFish needs server-side `TINYFISH_API_KEY`. No matching TinyFish connector was returned by the integration lookup; **do not substitute Parallel/Tavily or claim TinyFish is already connected**. Request the key through the workspace Secrets flow during setup, never chat, source files or the browser. Do not read or copy Scout's credentials.
 
-Managed AI activation/configuration is also an early build gate. Obtain the actual platform-provided settings, not guessed proxy URLs or environment-variable names. Without configuration, show explicit unavailability; do not replace live discovery with unlabelled fixtures.
+Groq configuration is also an early build gate. The learner explicitly replaced managed OpenAI with their own Groq API during build. Request `GROQ_API_KEY` through Secrets; use the documented `https://api.groq.com/openai/v1` endpoint and verify structured outputs and account limits. Without configuration, show explicit unavailability; do not replace live discovery with unlabelled fixtures.
 
 Required submission: short demo video + public GitHub repository containing approved planning docs. Publishing is optional, not a substitute for either. A clone needs documented provider setup; it will not magically inherit this workspace's integrations or secrets. Publishing is not authorized by this spec.
 
@@ -120,16 +120,26 @@ Funding preference defaults to the fully funded focus; the student may explicitl
 
 Scheduled unattended hunts, showcase dashboards and advanced Scout administration are deferred from the approved POC. Core search/filter/evidence functionality is not deferred.
 
+#### Scout reference and discovery-parity correction
+
+The learner supplied [Scout's public repository](https://github.com/Sarvesh5273/Scout) on 2026-10-14 and reiterated that discovery should retain Scout's advanced behavior, with taste-derived editable preferences added. Reference inspection confirmed query intents for requested employers, ATS postings, open-web careers and research programmes; classification of postings versus boards/index pages; public ATS-feed reading; relevance-ranked linked-posting expansion; AI interpretation between collection waves; deduplication; and optional Agent fallback. These are behavioral references, not code to incorporate. Correct the initial simple search/read loop with fresh differentiated query planning, bounded batch reads, public-feed expansion, linked-page waves and compatible public-text extraction caching.
+
+Scout's reference AI helper uses Replit-managed OpenAI; this product retains the learner's own Groq API. After this distinction was explained, the learner explicitly approved Groq for the equivalent source-extraction step during discovery. Taste responses inform editable preferences, not ability judgments or automatic target selection; they do not become inference inputs.
+
+Documented public job-board adapters cover Greenhouse, Lever, Ashby and Workday (career-site search). A board found through search is read directly as structured public data and its most relevant internship postings become listings without an AI call; facts are verbatim posting lines and pass the same quote validation (deviation recorded 2026-10-25: large boards exceed the page reader's response limit and Workday search needs a POST). SmartRecruiters and Workable surfaces use safe Fetch and linked-page exploration where readable. Do not imply identical coverage on every ATS. Missing feeds, login walls and unreadable JavaScript portals remain explicit gaps. Additional specialized adapters and paid browser fallback are not fabricated when a surface cannot be read.
+
+Scout implements paid Agent fallback, but its source alone does not establish which live runs used it. Its duration-based budget estimate is not a verified hard spend limit. Keep fallback disabled unless separately authorized with verified limits. Scout's higher per-run work caps and 270-second hard cutoff also do not authorize changing this product's disclosed limits.
+
 ### Discovery Runner, Source Reading and Evidence Extraction
 
 Implements `prd.md > Search Preferences, Discovery and Selection`, `prd.md > Official Sources`.
 
 1. Plan and deduplicate queries; reserve the run's provider budget before dispatch.
-2. Classify results into official pages/ATS leads and other leads. Search snippets/aggregators help find a page but are not authority for program facts.
+2. Classify results into official pages/ATS leads and other leads. Search snippets never count as evidence. A readable third-party page whose quotes validate becomes an **unverified other source** (source flag `official:false`), not a discarded lead; known announcement sites skip the ownership check so they spend no URL budget. Pages about the same organization + title (compatible cycle) are merged into one listing: an official page becomes primary/canonical, first occurrence of a duplicate quote wins, and every fact keeps its own source ID.
 3. Validate public HTTPS URLs and redirects; reject local/private/metadata addresses, credentials in URLs and untrusted protocols. Corroborate an institution/employer's ownership or an official link to its ATS board. A plausible domain name alone is insufficient. New official sources can enter; source safety is not a fixed program list.
-4. Fetch relevant pages and limited application/eligibility links; retain short contextual excerpts and source metadata. Login walls stay inaccessible; do not attach credentials, vaults or profiles or bypass access restrictions.
+4. Fetch relevant pages in bounded batches through TinyFish Fetch; read documented public job-board data directly (fixed platform hosts, size/time caps). Posting text from the board is the evidence; board metadata alone never creates a fact. Follow relevant career/programme/posting/application/eligibility links within the same URL budget. Give the model only supplied link indices, never permission to invent URLs. Login walls stay inaccessible; do not attach credentials, vaults or profiles or bypass access restrictions.
 5. Extract a typed listing: organization, opportunity/track, dates/cycle, funding components/fees/caps, visa statement, eligibility rules, skills and official selection stages. Every factual field is nullable and references an exact quote/source. Reject unsupported claims, invalid enums/IDs, quotations absent from text and cross-program quote attribution.
-6. Deduplicate by canonical official posting + organization + cycle; retain source history. Do not collapse distinct roles/projects simply because they share an institution.
+6. Deduplicate by canonical official posting + organization + cycle, and merge same organization + title pages within a run as above; retain source history. Do not collapse distinct roles/projects simply because they share an institution.
 7. Compute match/filter values and return results even when some sources failed. “Official page read” is provenance, **not a guarantee that automated interpretation is correct**. Show interpretations as evidence-backed preliminary checks with the original excerpts.
 
 AI supplies extracted facts/labelled judgments, not an opaque final fit score. Code computes an explainable 0–100 preference score using role/topic (35), location/remote (20), funding preference (20), visa constraint (15) and include keywords (10). Unknown is not a positive match and is visibly reflected in reasons; hard exclusions/confirmed incompatibilities cannot rank as a strong fit. Weights are app guidance, not admission odds.
@@ -219,12 +229,15 @@ Choose the next dependency-ready unfinished action by nearest relevant due date.
 
 Implements `prd.md > Official Sources`, `prd.md > States and Boundaries`.
 
-- Same-origin JSON endpoints; reject unexpected origins, no wildcard CORS. Server-issued signed anonymous token + owner checks for run IDs. No account authentication claims.
+- Same-origin JSON endpoints; reject unexpected origins, no wildcard CORS. Server-issued signed anonymous HttpOnly cookie + owner checks for run IDs. Use Secure/SameSite=None/Partitioned in the HTTPS embedded preview; verify the browser retained it before metered search work. This marker is not an account login or a JavaScript token. A browser that cannot retain it gets an explicit new-tab recovery message, not a paid search followed by an inaccessible run.
+- Treat blocked browser storage separately from session-cookie availability. If progress storage is denied, warn that answers cannot survive reload/close or transfer automatically; offer opening the app separately. Lost run references must not wipe preferences, saved listings or targets, and must never automatically start another metered search.
 - Validate all requests/provider outputs; 32KB ordinary body limit, 8 readiness answers max, 1,500 chars each; bound query fields, URLs, page text, extracted-listing count and model output.
 - Trust only the configured proxy topology for IP limits; never arbitrary forwarded headers. Token/IP limits are abuse controls, not a durable identity.
-- Proposed POC limits: 2 searches per browser/hour, 6 per trusted IP/hour; 3 assessments per browser/hour; 2 concurrent searches globally, 2 model calls globally. Reserve quotas atomically to avoid parallel overspend.
-- Persistent server operational counters: proposed daily maximum 50 searches, 800 fetched URLs, 150 total model calls. If quota storage fails, paid calls fail closed rather than reset silently. TinyFish rate limiting is independent of our budget.
-- Extraction in bounded batches (e.g. up to 4 pages and 12k input tokens per model call); readiness output cap ~1,800 tokens; 30s model timeout, per-URL fetch timeout 25s, whole-search deadline 180s. No automatic retry storms; provider 429 respects Retry-After and bounded backoff.
+- POC limits (removed in final review for private demo use at the learner's request; only runaway-loop stops remain): 1,000 runs per browser/hour; 2 concurrent searches globally, 2 model calls globally. Reserve quotas atomically to avoid parallel overspend.
+- Persistent server operational counters: daily maximum 950 fetched URLs and, per Groq model, 950 calls / 195,000 tokens (just under the free tiers); discovery uses gpt-oss-120b then gpt-oss-20b, two pages concurrently. Per run: 20 searches, 80 URLs, 50 results, 5 minutes. Topic relevance also reads title and identity quote; off-topic results hidden by default. If quota storage fails, paid calls fail closed rather than reset silently. TinyFish rate limiting is independent of our budget.
+- Fetch batches contain at most 4 candidate URLs; the initial AI pass interprets one bounded public page at a time with a 1,800-token completion allowance. Size source text with server-only ordinary-text o200k BPE plus a conservative 512-token framing/schema margin; GPT-OSS's harmony encoding shares those ordinary-text ranks. Enforce a 7,000-token rolling window below the observed 8,000 TPM allowance, and settle successful reservations from actual reported usage; absent usage retains the full reservation. Bound private public-text interpretation cache by content/extractor version, 120 entries and seven days, and revalidate quotes on reuse. No student answers enter that cache.
+- Discovery extracts one opportunity and up to six preliminary quoted facts per page. Bind the already-known single-page source identifier in code; do not ask the model to regenerate it. Keep eligibility quotations without machine eligibility rules in this pass. Prepare supported rules and fuller requirements after explicit target selection; omitted criteria are not evidence of eligibility.
+- Search/model request timeout 30s; Fetch request timeout 45s to accommodate bounded batches, with 25s per-URL reading limits; whole-search deadline remains 180s including shared-quota waiting. Show Groq waiting and an approximate overall countdown. Distinguish provider connectivity/request failures from the overall cutoff, and label usage as query/URL attempts rather than successful reads. No automatic retry storms or wallet top-ups. Global Search/Fetch windows are separately bounded below documented provider rates.
 - Paid Agent fallback needs explicit wallet/budget authorization at setup and a verified enforcement strategy. Current step-cap/strict-mode features are beta-gated; do not assume access or use an unenforceable hard-dollar claim. Keep fallback disabled until that gate is met, while retaining genuine Search/Fetch discovery.
 - No application writes, logins, credential vaults, browsing tools in the extraction/readiness LLM, arbitrary URL proxy endpoint, or raw HTML rendering. Page text/answers are data, not instructions; never execute student code.
 - Before search/interview, disclose provider transmission. Grades/timetable/answers stay out of discovery calls; answers leave the browser only for scoring. No server logs/disk of raw academic profile or interview text; verify provider terms before claiming retention/deletion guarantees.
@@ -311,7 +324,7 @@ Errors are `{error:{code,message,requestId}}`, using 400/429/502/503 appropriate
 
 ### TinyFish — Verified Contracts
 
-Docs checked **2026-10-13**; no authenticated call has been made yet. Use `X-API-Key` server-side.
+Docs checked **2026-10-13**, and Search/Fetch/Agent reference behavior rechecked **2026-10-14**. Authenticated bounded Search and Fetch smoke tests returned HTTP 200, including a fresh independent check during timeout investigation. This establishes that those endpoints worked for the tested request, not that every page or user run succeeds. Use `X-API-Key` server-side.
 
 | Function | Exact contract | App use |
 | --- | --- | --- |
@@ -327,13 +340,15 @@ Agent strict mode and `max_steps` are beta-gated; omitting `max_steps` uses a do
 
 Fetch's [current OpenAPI](https://docs.tinyfish.ai/api-reference/fetch-and-extract-content-from-urls) says `ttl:0` may still return an origin-cache-valid or operator-pinned cached entry. Preserve freshness metadata; never label it “verified live today” solely because the request used zero TTL.
 
-### Managed OpenAI
+### Groq — Learner-Owned API Access
 
-Actual Replit-managed server configuration, not guessed credentials. Planned SDK call: chat completions with `model:"gpt-4.1-mini"`, fixed extraction/assessment instructions, untrusted content clearly separated, strict JSON schema, temperature 0, token/time limits and bounded retries.
+Server-side native fetch to `https://api.groq.com/openai/v1/chat/completions`, with `GROQ_API_KEY` from Secrets. Groq's docs checked 2026-10-14 list `openai/gpt-oss-120b` and `openai/gpt-oss-20b` as supporting strict structured outputs. Use the 120B model initially, with fixed extraction/assessment instructions, untrusted content clearly separated, strict JSON schema, low temperature, token/time limits and no automatic retry storms. These are Groq-hosted open-weight models, not calls through Replit-managed OpenAI.
 
 Use separate schemas for extraction, generated question packs and assessment. Format compliance does not prove truth; verify evidence references and support for each field. No tools or delegated application actions.
 
-[Replit documentation](https://docs.replit.com/features/integrations/replit-ai-integrations) says usage is billed through Replit credits at provider public API rates, subject to plan/admin availability. This is not free. The [model page](https://developers.openai.com/api/docs/models/gpt-4.1-mini) lists $0.40 input / $1.60 output per million tokens. Illustratively, 4k input + 1.8k output is about $0.0045; discovery may involve several larger extraction calls, so do not present this as the cost of an entire search. Measure actual usage and enforce shared limits.
+Usage is governed by the learner's Groq account, not Replit AI Integration credits. Do not promise free or unlimited inference. Groq documents organization-level request/token limits, account-specific exceptions and response limit headers. Verify available limits from real responses; size extraction batches below token limits and enforce shared application caps. Strict JSON shape does not guarantee factual correctness: exact source quotes, target attribution and assessment excerpts must still be validated in code.
+
+Observed native caveat: strict-output requests also returned HTTP 400 with complete JSON containing an unsupported eligibility-field enum. Do not equate a documented strict-mode guarantee with a successful shape check. Keep local validation and bounded structural diagnostics; never log raw failed generation. Serialized-schema regression tests guard the discovery/selected-target boundary.
 
 ## Official Source Research and Test Cases
 
@@ -359,7 +374,7 @@ Represent funding components and limits, not a blanket promise of zero student e
 
 ## Verification and Build Order
 
-1. Fresh artifact/skeleton, provider configuration, safety limits; one real TinyFish search/fetch and one managed-AI structured-output smoke test.
+1. Fresh artifact/skeleton, provider configuration, safety limits; one real TinyFish search/fetch and one Groq structured-output smoke test.
 2. Genre taste test → Scout-like preferences → live discovery, progress, filters, save/hide and explicit selection, including an opportunity not in our researched examples.
 3. Selected-source preparation, criteria/unknown states, readiness questions/assessment and manual timetable; local restore/reset.
 4. Shared task construction, one cross-track capacity ledger, overview/timeline, completion/reopen, expired/rolling/conditional stages and at-risk work.
@@ -389,7 +404,7 @@ Schedule: Oct 17 checkpoint for the readiness fallback/photo-timetable stretch; 
 - **Preserved:** official-only evidence, grouped Research/Company timelines, shared steps before earliest served deadline, capacity-aware exam scheduling, manual timetable, paper planner/bold accents.
 - **Accepted technical blueprint:** Express/Vite/Zod, private single-instance source/run/quota stores, explainable scoring, initial limits and deferred unattended hunts. Limits/weights are documented initial tuning parameters, not guarantees of search completeness. Approval is not authorization for paid fallback or a public launch.
 - **Genuine learner uncertainty:** “basic securities” including rate limiting. Concrete mapping: repeated provider calls → quotas/rate limits; malformed input → validation; malicious answer/page instructions → isolated no-tools prompts plus schema/evidence checks. Explain at their build moments.
-- **Early build gates:** TinyFish Secrets setup + actual account limits; managed-AI activation/smoke test; provider freshness metadata; supported source/ATS interpretation; dependency/version/license audit. Paid Agent fallback additionally needs authorized spending and a verified bound/cancellation strategy. No claimed test success before these run.
+- **Early build gates:** TinyFish and Groq Secrets setup + actual account limits; Groq structured-output smoke test; provider freshness metadata; supported source/ATS interpretation; dependency/version/license audit. Paid Agent fallback additionally needs authorized spending and a verified bound/cancellation strategy. No claimed test success before these run.
 - **Not reopenable as an agent shortcut:** fixed catalog instead of discovery, omitting target selection, generating a card per internship, or replacing the downstream roadmap product.
 - **Can wait:** project name (learner's choice), optional publishing, photo timetable parsing and production-scale persistence. These do not block this proof of concept.
 - **Prior work disclosure:** Scout was built for a separate entry. No reused code; feature inspiration and fresh implementation must be disclosed. This document does not draft the learner's submission text.

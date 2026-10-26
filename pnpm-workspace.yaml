@@ -1,0 +1,7 @@
+packages:
+  - artifacts/*
+onlyBuiltDependencies:
+  - esbuild
+overrides:
+  # Vite 7 uses PostCSS/esbuild here; the unused MPL optional transformer is excluded.
+  "vite>lightningcss": "-"

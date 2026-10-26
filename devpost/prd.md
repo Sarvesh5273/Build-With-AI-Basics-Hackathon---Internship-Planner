@@ -143,7 +143,7 @@ Acceptance criteria:
 Develops `scope.md > Inspiration & Identity` ("every requirement shows where it came from").
 - Every claimed official requirement, eligibility criterion, deadline and selection stage shows a quote, link and retrieval/freshness label. Unsupported information stays unknown. Cached content is not claimed to be live-verified; preparation advice and estimated hours are app guidance, not official quotations.
 - Funding filters default to the fully funded focus but may be broadened explicitly. “Fully funded” does not promise zero out-of-pocket costs: show sourced support, exclusions, caps and application fees; uncertain coverage remains unknown.
-- Only official sources drive eligibility, scheduling and status. No student-report sites.
+- Official sources are preferred and labelled. Revised in final review at the learner's request (“i want … to view not only on official sources but see others also … for more info of same internships”): readable third-party pages (announcement/news sites, job-board pages not linked from the organization's site) are shown as **Other source · unverified**, with quotes still checked against the page. When an official page for the same internship is found, it becomes the primary source and the others are attached for extra detail. A target whose primary source is unverified carries an explicit gap telling the student to confirm everything on the official page. Login-walled job boards and student-report/social sites (LinkedIn, Glassdoor, Indeed, Reddit, etc.) remain excluded.
 
 Acceptance criteria:
 - [ ] Clicking an official requirement's source tag shows the quote, link and honest retrieval/cache metadata.
@@ -170,7 +170,7 @@ Acceptance criteria:
 - **Direction informs editable search preferences and skills preparation; the student chooses targets.** Eligibility assesses the choices rather than choosing on their behalf.
 - **Roadmap built from official selection stages.** The learner's point: students need to get through the actual selection process, not just learn skills.
 - **Readiness interview stays a level check** for now; a mock interview is later.
-- **Official sources only.** Glassdoor/Reddit-style reports were considered and left out: sparse for these programs, unverifiable, and scraping-restricted. Learner: "i think official is ok".
+- **Official sources first, other sources labelled.** Glassdoor/Reddit-style reports were considered and left out: sparse for these programs, unverifiable, and scraping-restricted. Learner: "i think official is ok". Revised in final review: readable third-party pages are now shown as unverified other sources (see Official Sources).
 - **Look: paper planner with bold accents**, using ready-made components where possible.
 
 ## What We're Building

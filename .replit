@@ -4,4 +4,22 @@ modules = ["nodejs-24", "python-base-3.13"]
 localPort = 5000
 externalPort = 80
 
+[[ports]]
+localPort = 22950
+externalPort = 3001
+
+[[ports]]
+localPort = 24678
+externalPort = 3000
+
+[workflows]
+runButton = "Project"
+
 [nix]
+channel = "stable-25_05"
+packages = ["chromium"]
+
+[userenv]
+
+[userenv.shared]
+TINYFISH_AGENT_FALLBACK = "on"
