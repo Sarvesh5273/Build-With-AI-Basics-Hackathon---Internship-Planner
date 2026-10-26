@@ -71,12 +71,92 @@ logical_id = "9e224b8e-5488-479b-bcc0-b712b67a0552"
 id = "Pzq99yTdae1e3OpWcNHpG"
 uri = "file://generated-artifacts/demo/internship-planner-demo.mp4"
 type = "video"
-title = "Internship Planner — demo video (2:43)"
-description = "Real live run with no browser errors: taste test, live search, one Research and one Company target, eligibility, readiness, timetable with exam week and both roadmaps. Opening narration is your words in the Raj voice. Shortened waits are labeled."
+title = "Internship Planner — demo with full voiceover (2:45)"
+description = "Raj narrates from start to finish, with captions. Each line plays over the screen it describes. The opening uses your two lines; the rest uses sentences from your approved scope document. Real live run, no errors."
 logical_id = "2ddfd4fa-5042-49eb-9ee8-da78612e33c4"
-content_hash = "sha256:ea3a72586fbcfc09b73be7d1cb6194ef144e9f38319479b9da8fc1f505542955"
-size = 19558045
-mtime_ms = 1793013339636
-storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/2ddfd4fa-5042-49eb-9ee8-da78612e33c4/38bbece9-9375-46e9-aef5-aa73370ddbb5"
-storage_version_token = "1793013456654346"
+content_hash = "sha256:401c50fc81ebde3c561232d2cbbaa0430ff391a8259f2926f99976230323f0c0"
+size = 19487787
+mtime_ms = 1793016174477
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/2ddfd4fa-5042-49eb-9ee8-da78612e33c4/459c31e6-4c1c-4955-86dd-b81e16ba9c49"
+storage_version_token = "1793016193365462"
 content_type = "video/mp4"
+
+[[outputs]]
+id = "FbyZMsG7DQzMS3FRiKlKZ"
+uri = "file://generated-artifacts/demo-audio/n_prefs.mp3"
+type = "audio"
+title = "n_prefs"
+description = "Text-to-speech audio: The programs are discovered from the student's preferences, not restricted to a fixed list of familiar names."
+logical_id = "7152a6ab-1d0e-4af3-b9c2-ce6b8f26d9a8"
+
+[[outputs]]
+id = "7CG_LLzKZzD9ik00MPZ9M"
+uri = "file://generated-artifacts/demo-audio/n_choose.mp3"
+type = "audio"
+title = "n_choose"
+description = "Text-to-speech audio: The student chooses; a fixed program catalog does not."
+logical_id = "cea7fb99-6945-432f-95ed-31c50d2216ee"
+
+[[outputs]]
+id = "unsqO8ebcnst_NWjKQAKm"
+uri = "file://generated-artifacts/demo-audio/n_elig.mp3"
+type = "audio"
+title = "n_elig"
+description = "Text-to-speech audio: An eligibility check on nationality, year, CGPA and branch."
+logical_id = "7f32b82c-9f48-4214-b85a-c6a68c3ab099"
+
+[[outputs]]
+id = "kg6YSz07S5MiXx8l7-J3J"
+uri = "file://generated-artifacts/demo-audio/n_time.mp3"
+type = "audio"
+title = "n_time"
+description = "Text-to-speech audio: Your university timetable, meaning exam weeks and free hours."
+logical_id = "ccb54a63-eb18-4cf5-bcf9-2e07b1c3da74"
+
+[[outputs]]
+id = "gMexIoCr2NwyGNwQv3LoK"
+uri = "file://generated-artifacts/demo-audio/n_road.mp3"
+type = "audio"
+title = "n_road"
+description = "Text-to-speech audio: Study planners don't know the programs, program lists don't know your level, and neither knows your semester. The roadmap puts all of that into one plan."
+logical_id = "da8b0c3a-1c7e-4c62-8032-3de539e0a336"
+
+[[outputs]]
+id = "P4TOcpyiJJgrocd8-1KtR"
+uri = "file://generated-artifacts/demo-audio/n_close.mp3"
+type = "audio"
+title = "n_close"
+description = "Text-to-speech audio: See that roadmap, and plan according to my internships and my university timetable."
+logical_id = "939c9d5e-0f77-42ae-ba7c-21b070122e08"
+
+[[outputs]]
+id = "uW1dqaSuDGSn0T0ccQerr"
+uri = "file://generated-artifacts/demo-audio/n_week.mp3"
+type = "audio"
+title = "n_week"
+description = "Text-to-speech audio: Shared preparation appears once, program-specific steps are tagged, and there is one next step to do this week."
+logical_id = "4ade3659-23c4-425b-8391-16acf8a4dd0e"
+
+[[outputs]]
+id = "i-NT_38LyqYEQwzo-e4tv"
+uri = "file://generated-artifacts/demo-audio/n_sources.mp3"
+type = "audio"
+title = "n_sources"
+description = "Text-to-speech audio: Each requirement has its official source and a quoted line. Missing information is visibly unconfirmed, not invented."
+logical_id = "fb49d2d1-0b6e-4d0e-b1dd-8d877f956c3f"
+
+[[outputs]]
+id = "ZNWxfwYBu7vp0LMSOPPbu"
+uri = "file://generated-artifacts/demo-audio/n_ready.mp3"
+type = "audio"
+title = "n_ready"
+description = "Text-to-speech audio: Evidence of your readiness, from a short interview, not a self-rating."
+logical_id = "95e3fbba-0a6e-4141-8815-cad28b6d73d8"
+
+[[outputs]]
+id = "KwM8EQfa4xUeY9jie02z7"
+uri = "file://generated-artifacts/demo-audio/n_pitch.mp3"
+type = "audio"
+title = "n_pitch"
+description = "Text-to-speech audio: A roadmap tool for Indian undergrads chasing fully funded internships abroad. It shows which real programs you can actually apply to, how ready you really are for each, and a pl…"
+logical_id = "99dcdb8a-6ba1-454d-ac00-0cb3dc824e0a"

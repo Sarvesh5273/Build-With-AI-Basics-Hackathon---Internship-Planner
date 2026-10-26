@@ -48,9 +48,11 @@ if prepared - (elig + 13) < 3:
     segments[4] = (elig + 13, ready, 1.0, None)
 
 parts, labels, t = [], [], 0.0
+spans = []  # (src_start, src_end, out_start, speed)
 for i, (s, e, speed, label) in enumerate(segments):
     if e <= s:
         continue
+    spans.append((s, e, t, speed))
     parts.append(f'[0:v]trim={s:.2f}:{e:.2f},setpts=(PTS-STARTPTS)/{speed},fps=30,scale=1280:800,setsar=1[v{i}]')
     length = (e - s) / speed
     if label:
@@ -59,21 +61,51 @@ for i, (s, e, speed, label) in enumerate(segments):
 ids = ''.join(f'[v{i}]' for i, (s, e, *_ ) in enumerate(segments) if e > s)
 n = ids.count('[')
 body_len = t
-END_CARD = 4.0
+END_CARD = 6.0
 total = body_len + END_CARD
 
-(DEMO / 'cap1.txt').write_text("I didn't know where to look or what to search for,\nand on YouTube the information was scattered.")
-(DEMO / 'cap2.txt').write_text("I didn't know about any website for abroad internships.")
+def out_time(src):
+    """Output-timeline position of a raw-footage timestamp (must lie in a kept span)."""
+    for a, b, o, speed in spans:
+        if a <= src <= b:
+            return o + (src - a) / speed
+    raise SystemExit(f'source time {src} was cut')
+
+import textwrap
+narration_text = json.loads((AUDIO / 'narration.json').read_text())
+# (audio file, output start). Each line is placed on the screen it describes.
+cues = [
+    ('line1', 0.6), ('line2', 0.6 + dur(AUDIO / 'line1.mp3') + 0.5),
+    ('n_pitch', 9.6),
+    ('n_prefs', out_time(prefs + 4)),
+    ('n_sources', out_time(results + 0.5)),
+    ('n_choose', out_time(at('Selected Research') - 1.5)),
+    ('n_elig', out_time(elig + 0.8)),
+    ('n_ready', out_time(ready + 0.6)),
+    ('n_time', out_time(timetable + 0.4)),
+    ('n_road', out_time(roadmap + 0.6)),
+    ('n_week', out_time(at('Research timeline') + 0.8)),
+    ('n_close', body_len + 0.6),
+]
+captions = {'line1': "I didn't know where to look or what to search for, and on YouTube the information was scattered.",
+            'line2': "I didn't know about any website for abroad internships.", **narration_text}
+voice = []
+for k, (name, start) in enumerate(cues):
+    length = dur(AUDIO / f'{name}.mp3')
+    if k and start < voice[-1][2] + 0.3:
+        start = voice[-1][2] + 0.3  # never overlap two lines
+    voice.append((name, start, start + length))
+
 (DEMO / 'end1.txt').write_text('Internship Planner')
 (DEMO / 'end2.txt').write_text('Build With AI: Basics  ·  live sources, recorded end to end')
-l1, l2 = dur(AUDIO / 'line1.mp3'), dur(AUDIO / 'line2.mp3')
-v1, v2 = 0.6, 0.6 + l1 + 0.5
-
-box = 'box=1:boxcolor=0x1d1d2b@0.86:boxborderw=18:fontcolor=white'
-draw = [
-    f"drawtext=fontfile={BOLD}:textfile={DEMO/'cap1.txt'}:fontsize=30:line_spacing=10:x=(w-text_w)/2:y=h-150:{box}:enable='between(t,{v1:.2f},{v1+l1+0.2:.2f})'",
-    f"drawtext=fontfile={BOLD}:textfile={DEMO/'cap2.txt'}:fontsize=30:x=(w-text_w)/2:y=h-120:{box}:enable='between(t,{v2:.2f},{v2+l2+0.4:.2f})'",
-]
+box = 'box=1:boxcolor=0x1d1d2b@0.86:boxborderw=16:fontcolor=white'
+draw = []
+for name, a, b in voice:
+    if name == 'n_close':
+        continue  # spoken over the end card, shown there instead
+    (DEMO / f'cap_{name}.txt').write_text('\n'.join(textwrap.wrap(captions[name], 62)))
+    draw.append(f"drawtext=fontfile={BOLD}:textfile={DEMO/f'cap_{name}.txt'}:fontsize=27:line_spacing=9:x=(w-text_w)/2:y=h-text_h-110:{box}:enable='between(t,{a:.2f},{b+0.25:.2f})'")
+(DEMO / 'end3.txt').write_text('"' + captions['n_close'] + '"')
 for k, (label, a, b) in enumerate(labels):
     (DEMO / f'label{k}.txt').write_text(label)
     draw.append(f"drawtext=fontfile={BOLD}:textfile={DEMO/f'label{k}.txt'}:fontsize=22:x=w-text_w-36:y=h-70:box=1:boxcolor=0xdcf23c@0.95:boxborderw=12:fontcolor=0x1d1d2b:enable='between(t,{a:.2f},{b:.2f})'")
@@ -81,18 +113,19 @@ for k, (label, a, b) in enumerate(labels):
 filt = ';'.join(parts) + f';{ids}concat=n={n}:v=1:a=0[body]'
 filt += f';color=c=0xf6f1e3:s=1280x800:d={END_CARD}:r=30,setsar=1[card0]'
 filt += (f";[card0]drawtext=fontfile={BOLD}:textfile={DEMO/'end1.txt'}:fontsize=64:fontcolor=0x1d1d2b:x=(w-text_w)/2:y=(h/2)-70,"
-         f"drawtext=fontfile={FONT}:textfile={DEMO/'end2.txt'}:fontsize=26:fontcolor=0x1d1d2b:x=(w-text_w)/2:y=(h/2)+20[card]")
+         f"drawtext=fontfile={FONT}:textfile={DEMO/'end2.txt'}:fontsize=26:fontcolor=0x1d1d2b:x=(w-text_w)/2:y=(h/2)+20,"
+         f"drawtext=fontfile={FONT}:textfile={DEMO/'end3.txt'}:fontsize=24:fontcolor=0x55556a:x=(w-text_w)/2:y=(h/2)+90[card]")
 filt += f";[body][card]concat=n=2:v=1:a=0,{','.join(draw)},fade=t=in:st=0:d=0.4,fade=t=out:st={total-0.6:.2f}:d=0.6[v]"
-# Audio: narration on top of a quiet music bed; bed dips while Raj speaks.
-duck = f"volume='if(between(t,{v1-0.2:.2f},{v2+l2+0.3:.2f}),0.07,0.16)':eval=frame"
-filt += (f';[1:a]adelay={int(v1*1000)}:all=1[n1];[2:a]adelay={int(v2*1000)}:all=1[n2]'
-         f';[3:a]atrim=0:{total:.2f},{duck},afade=t=in:d=1,afade=t=out:st={total-2:.2f}:d=2[bed]'
-         f';[n1][n2][bed]amix=inputs=3:normalize=0:duration=longest,atrim=0:{total:.2f},loudnorm=I=-16:TP=-1.5[a]')
-
+# Audio: every narration line on a quiet music bed that dips while Raj speaks.
+speaking = '+'.join(f'between(t,{a-0.2:.2f},{b+0.3:.2f})' for _, a, b in voice)
+filt += ''.join(f';[{i+4}:a]adelay={int(a*1000)}:all=1[n{i}]' for i, (_, a, _b) in enumerate(voice))
+filt += (f";[3:a]atrim=0:{total:.2f},volume='if({speaking},0.05,0.12)':eval=frame,afade=t=in:d=1,afade=t=out:st={total-2:.2f}:d=2[bed]"
+         f";{''.join(f'[n{i}]' for i in range(len(voice)))}[bed]amix=inputs={len(voice)+1}:normalize=0:duration=longest,atrim=0:{total:.2f},loudnorm=I=-16:TP=-1.5[a]")
 out = DEMO / 'internship-planner-demo.mp4'
 cmd = ['ffmpeg', '-v', 'error', '-y', '-i', str(DEMO / 'raw-footage.webm'), '-i', str(AUDIO / 'line1.mp3'),
-       '-i', str(AUDIO / 'line2.mp3'), '-i', str(AUDIO / 'music.mp3'), '-filter_complex', filt,
+       '-i', str(AUDIO / 'line2.mp3'), '-i', str(AUDIO / 'music.mp3'),
+       *[x for name, _, _ in voice for x in ('-i', str(AUDIO / f'{name}.mp3'))], '-filter_complex', filt,
        '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
        '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', str(out)]
 subprocess.run(cmd, check=True)
-print(json.dumps({'output': str(out), 'seconds': round(dur(out), 1), 'labels': labels}))
+print(json.dumps({'output': str(out), 'seconds': round(dur(out), 1), 'voice': [(n, round(a, 1), round(b, 1)) for n, a, b in voice]}))
