@@ -23,3 +23,7 @@ packages = ["chromium"]
 
 [userenv.shared]
 TINYFISH_AGENT_FALLBACK = "on"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000

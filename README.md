@@ -12,6 +12,11 @@ Use Node 24 and pnpm 10. Install the pinned workspace dependencies with `pnpm in
 pnpm --filter @workspace/internship-planner run dev
 ```
 
+After task merges, the configured `scripts/post-merge.sh` hook installs the
+locked workspace dependencies non-interactively and rebuilds the client. It is
+safe to rerun and does not call providers or alter personal progress. Replit
+then reconciles the managed workflow.
+
 The development service binds to `0.0.0.0`, port 22950. API requests are same-origin relative URLs. Use the workspace preview, not a frontend URL pointing at another localhost server.
 
 Configure `SESSION_SECRET`, `TINYFISH_API_KEY` and `GROQ_API_KEY` through Replit Secrets. `TINYFISH_AGENT_FALLBACK=on` (non-secret) enables the capped paid Agent fallback. Never put their values in source, browser storage, committed configuration, screenshots or logs. No Replit-managed inference service is used by the app.
