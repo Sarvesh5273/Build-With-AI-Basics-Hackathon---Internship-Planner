@@ -160,3 +160,17 @@ type = "audio"
 title = "n_pitch"
 description = "Text-to-speech audio: A roadmap tool for Indian undergrads chasing fully funded internships abroad. It shows which real programs you can actually apply to, how ready you really are for each, and a pl…"
 logical_id = "99dcdb8a-6ba1-454d-ac00-0cb3dc824e0a"
+
+[[outputs]]
+id = "0Ftf2IbNTYKSC9s_DwXSe"
+uri = "file://generated-artifacts/internship-planner-demo.mp4"
+type = "video"
+title = "Internship Planner demo (2:45, 11 MB)"
+description = "Smaller copy of the narrated demo. Same content and still sharp. If it doesn't play here, right-click the file in the file tree and choose Download."
+logical_id = "29653925-831e-4bcb-9b97-850744633e01"
+content_hash = "sha256:0b20f15ac4d790872c616bc401d4fce44ebbddcdf510aa6e63b97b9ba65adbae"
+size = 11435806
+mtime_ms = 1793016371663
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/29653925-831e-4bcb-9b97-850744633e01/03bca66e-ea05-48c0-b736-ed0528862eb3"
+storage_version_token = "1793016381568823"
+content_type = "video/mp4"
