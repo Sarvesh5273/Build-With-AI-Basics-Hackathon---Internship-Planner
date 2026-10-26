@@ -174,3 +174,17 @@ mtime_ms = 1793016371663
 storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/29653925-831e-4bcb-9b97-850744633e01/03bca66e-ea05-48c0-b736-ed0528862eb3"
 storage_version_token = "1793016381568823"
 content_type = "video/mp4"
+
+[[outputs]]
+id = "07PN7gjjds9Joxq_k2p8s"
+uri = "file://generated-artifacts/internship-planner-thumbnail.png"
+type = "image"
+title = "Devpost project thumbnail"
+description = "1500 × 1000 PNG, approximately 1 MB. Meets the requested 3:2 ratio and 5 MB limit. Uses the actual roadmap from the recorded live demo."
+logical_id = "5f4f75c4-d7f5-4892-8993-23c2f5a97bc8"
+content_hash = "sha256:bc1799b332a12bd7765c174ea25115b6ccccf7c4928386ad9019deb27d445798"
+size = 1016639
+mtime_ms = 1793017685195
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:95cba02c-8289-4baf-9601-e47a6f6cd509/5f4f75c4-d7f5-4892-8993-23c2f5a97bc8/d29bd410-9717-4b1c-80d1-e5fb66ad1104"
+storage_version_token = "1793017718825271"
+content_type = "image/png"
