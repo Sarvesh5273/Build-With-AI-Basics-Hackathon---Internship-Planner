@@ -2,4 +2,4 @@
 - [Discovery scope and product decisions](discovery-scope.md) — Scout-like discovery rebuilt fresh, label-don't-drop sources, cycle-safe merging, AI provider choice.
 - [Verification environment](verification-environment.md) — native browser runtime, embedded-preview privacy and optional-platform dependency checks.
 - [Provider contracts](provider-contracts.md) — Groq whole-reply rejection + per-model limits, direct job-board reading, Agent quirks and spend caps.
-- [GitHub publication permissions](github-creation-permissions.md) — creation authority differs from push access; authorized workspace Git writes need an explicit opt-in.
+- [GitHub publication](github-creation-permissions.md) — creation versus push permissions, workspace Git-write guards, and managed proxy URL rewrites.
